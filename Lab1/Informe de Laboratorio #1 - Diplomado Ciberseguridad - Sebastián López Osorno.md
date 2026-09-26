@@ -92,6 +92,7 @@ la sección 13.
 |:---|:---|
 | Hipervisor | VMware Workstation Pro 17 |
 | Sistema atacante | Kali Linux 2026.2 (máquina virtual) |
+| Recursos de la máquina virtual | 8 GB de RAM, 8 procesadores y disco de 100 GB |
 | Objetivo | Contenedor Docker "FirstHacking" |
 | Segmento de red aislada | Red interna de Docker `172.17.0.0/16` |
 | Dirección IP del objetivo | `172.17.0.2` |
@@ -145,6 +146,18 @@ objetivo de aprendizaje. Como buena práctica se recomienda, además, tomar una 
 
 *Figura 5.* Entorno de Kali Linux 2026.2 operativo tras la migración.
 
+## 3.3 Recursos de la máquina virtual e instantánea de seguridad
+
+Se verificaron los recursos asignados a la máquina virtual y, como buena práctica del laboratorio, se tomó una **instantánea (*snapshot*)** del entorno **antes de iniciar las pruebas**. La instantánea permite restaurar el sistema a un estado limpio y conocido en cualquier momento, lo que garantiza la repetibilidad del escenario y la recuperación ante cualquier alteración.
+
+![Figura 6](evidencias/recursos_vm.png){ width=6.1in }
+
+*Figura 6.* Recursos asignados a la máquina virtual: 8 GB de memoria RAM, 8 procesadores, disco de 100 GB y adaptador de red.
+
+![Figura 7](evidencias/snapshot.png){ width=6.1in }
+
+*Figura 7.* Instantánea del entorno tomada antes de las pruebas: «Snapshot – Previo a Lab#1».
+
 # 4. Despliegue de la máquina vulnerable
 
 ## 4.1 Exploración del paquete descargado
@@ -154,17 +167,17 @@ inspeccionó el paquete —una buena práctica de seguridad frente a cualquier a
 verificando su naturaleza con el comando `file` y comprobando la herramienta de descompresión
 disponible.
 
-![Figura 6](evidencias/03_file_unzip.png){ width=6.1in }
+![Figura 8](evidencias/03_file_unzip.png){ width=6.1in }
 
-*Figura 6.* Identificación del archivo con `file firsthacking.zip` (Zip archive data) y verificación de `unzip`.
+*Figura 8.* Identificación del archivo con `file firsthacking.zip` (Zip archive data) y verificación de `unzip`.
 
 Al descomprimir, el paquete reveló tres elementos: el script de despliegue `auto_deploy.sh`, la
 imagen del contenedor `firsthacking.tar` (≈ 273 MB) y el propio `.zip`. El script es el orquestador
 que importa la imagen a Docker y levanta el contenedor.
 
-![Figura 7](evidencias/04_tree_paquete.png){ width=6.1in }
+![Figura 9](evidencias/04_tree_paquete.png){ width=6.1in }
 
-*Figura 7.* Estructura del paquete: `auto_deploy.sh`, `firsthacking.tar` y `firsthacking.zip`.
+*Figura 9.* Estructura del paquete: `auto_deploy.sh`, `firsthacking.tar` y `firsthacking.zip`.
 
 ## 4.2 Troubleshooting de permisos y privilegios
 
@@ -172,33 +185,33 @@ El script `auto_deploy.sh` carecía de permiso de ejecución. Se asignó con `ch
 ejecutarlo sin argumentos, el propio script indicó su modo de uso (`Uso: ./auto_deploy.sh
 <archivo_tar>`), lo que confirmó que esperaba recibir la imagen `.tar` como parámetro.
 
-![Figura 8](evidencias/05_chmod_uso_script.png){ width=6.1in }
+![Figura 10](evidencias/05_chmod_uso_script.png){ width=6.1in }
 
-*Figura 8.* Asignación de permisos con `chmod 755 auto_deploy.sh` y mensaje de uso del script.
+*Figura 10.* Asignación de permisos con `chmod 755 auto_deploy.sh` y mensaje de uso del script.
 
 La documentación oficial de la plataforma confirma que el despliegue requiere **privilegios
 elevados**, ejecutándose como `sudo bash auto_deploy.sh <archivo>.tar`, ya que el script necesita
 gestionar el motor Docker (importar la imagen, crear la red y levantar el contenedor), operaciones
 reservadas al superusuario.
 
-![Figura 9](evidencias/09_dockerlabs_sudo.png){ width=6.1in }
+![Figura 11](evidencias/09_dockerlabs_sudo.png){ width=6.1in }
 
-*Figura 9.* Instrucciones oficiales de despliegue, que indican el uso de `sudo`.
+*Figura 11.* Instrucciones oficiales de despliegue, que indican el uso de `sudo`.
 
 Ya sobre Kali 2026.2 se repitió el procedimiento de forma limpia: descompresión y asignación de
 permisos.
 
-![Figura 10](evidencias/10_unzip_chmod_2026.png){ width=6.1in }
+![Figura 12](evidencias/10_unzip_chmod_2026.png){ width=6.1in }
 
-*Figura 10.* Descompresión de `firsthacking.zip` y asignación de permisos en Kali Linux 2026.2.
+*Figura 12.* Descompresión de `firsthacking.zip` y asignación de permisos en Kali Linux 2026.2.
 
 Ejecutado con privilegios, el despliegue desencadenó la **instalación de Docker** y sus dependencias
 (`docker.io`, `containerd`, `runc`, `docker-cli`, entre otras), tras lo cual el contenedor objetivo
 quedó activo en `172.17.0.2`.
 
-![Figura 11](evidencias/11_instalacion_docker.png){ width=6.1in }
+![Figura 13](evidencias/11_instalacion_docker.png){ width=6.1in }
 
-*Figura 11.* Instalación de Docker y dependencias requeridas por el script de despliegue.
+*Figura 13.* Instalación de Docker y dependencias requeridas por el script de despliegue.
 
 # 5. Reconocimiento inicial
 
@@ -209,11 +222,11 @@ ejemplo `nmap -Ss` en lugar de `-sS`, o la orden inexistente `map`), así como d
 `Host seems down ... try -Pn`, que orientó el ajuste de los parámetros del escaneo. Documentar estos
 tanteos refleja el proceso real de aprendizaje de la herramienta.
 
-**Comprobación de conectividad.** Como el objetivo bloquea las sondas ICMP (ping), la conectividad se validó por la misma vía que Nmap emplea en la red local: la respuesta ARP del host (`Host is up, received arp-response`, visible en el escaneo de la Figura 14), que confirma que el objetivo está activo antes de proseguir.
+**Comprobación de conectividad.** Como el objetivo bloquea las sondas ICMP (ping), la conectividad se validó por la misma vía que Nmap emplea en la red local: la respuesta ARP del host (`Host is up, received arp-response`, visible en el escaneo de la Figura 16), que confirma que el objetivo está activo antes de proseguir.
 
-![Figura 12](evidencias/12_nmap_troubleshooting.png){ width=6.1in }
+![Figura 14](evidencias/12_nmap_troubleshooting.png){ width=6.1in }
 
-*Figura 12.* Intentos iniciales de escaneo con Nmap y corrección de errores de sintaxis; el objetivo aparece como "caído" hasta ajustar los parámetros.
+*Figura 14.* Intentos iniciales de escaneo con Nmap y corrección de errores de sintaxis; el objetivo aparece como "caído" hasta ajustar los parámetros.
 
 # 6. Escaneo y enumeración con Nmap
 
@@ -224,9 +237,9 @@ Se ejecutó un escaneo exhaustivo de los 65 535 puertos TCP, deshabilitando el d
 nmap -sS -Pn -n -vvv -p- --min-rate=5000 -oN primer_escaneo 172.17.0.2
 ```
 
-![Figura 13](evidencias/13_nmap_escaneo_puertos.png){ width=6.1in }
+![Figura 15](evidencias/13_nmap_escaneo_puertos.png){ width=6.1in }
 
-*Figura 13.* Escaneo completo de puertos con Nmap sobre `172.17.0.2`.
+*Figura 15.* Escaneo completo de puertos con Nmap sobre `172.17.0.2`.
 
 **Interpretación de los parámetros empleados:**
 
@@ -248,9 +261,9 @@ PORT   STATE SERVICE REASON        VERSION
 Service Info: OS: Unix
 ```
 
-![Figura 14](evidencias/14_nmap_vsftpd234.png){ width=6.1in }
+![Figura 16](evidencias/14_nmap_vsftpd234.png){ width=6.1in }
 
-*Figura 14.* Detección de versión con `-sV`: puerto `21/tcp` abierto ejecutando **vsftpd 2.3.4**.
+*Figura 16.* Detección de versión con `-sV`: puerto `21/tcp` abierto ejecutando **vsftpd 2.3.4**.
 
 **Resultado del reconocimiento.** De 65 535 puertos, solo `21/tcp` está abierto, ejecutando el
 servicio FTP **vsftpd 2.3.4** sobre un sistema Unix. Un servicio FTP de una versión antigua y
@@ -287,9 +300,9 @@ en Python **`49757.py`** (Exploit-DB, EDB-ID 49757). Antes de ejecutarlo se veri
 el intérprete disponible (`Python 3.13.12`), confirmando que el script requiere la dirección del
 objetivo como argumento.
 
-![Figura 15](evidencias/15_exploit_49757_usage.png){ width=6.1in }
+![Figura 17](evidencias/15_exploit_49757_usage.png){ width=6.1in }
 
-*Figura 15.* Prueba de concepto `49757.py` en el directorio de trabajo y verificación del intérprete Python.
+*Figura 17.* Prueba de concepto `49757.py` en el directorio de trabajo y verificación del intérprete Python.
 
 La revisión de la cabecera del script confirma su asociación con **CVE-2011-2523** y documenta su
 mecanismo: se conecta al FTP (puerto 21), envía un nombre de usuario que incluye el disparador `:)` y,
@@ -297,9 +310,9 @@ acto seguido, se conecta al puerto **6200**, donde el propio servidor ha abierto
 comandos. *(Con criterio de buenas prácticas, este informe describe el mecanismo con fines académicos
 y muestra la evidencia, sin reproducir el código completo del exploit.)*
 
-![Figura 16](evidencias/16_exploit_cve.png){ width=6.1in }
+![Figura 18](evidencias/16_exploit_cve.png){ width=6.1in }
 
-*Figura 16.* Cabecera y lógica de la prueba de concepto, con la referencia a CVE-2011-2523.
+*Figura 18.* Cabecera y lógica de la prueba de concepto, con la referencia a CVE-2011-2523.
 
 # 8. Validación controlada (prueba de concepto)
 
@@ -308,33 +321,33 @@ aislada. El primer intento devolvió `ConnectionRefusedError: [Errno 111] Connec
 de la puerta trasera aún no estaba disponible en ese instante—; un segundo intento tuvo éxito y
 devolvió la sesión de comandos con el mensaje "Success, shell opened".
 
-![Figura 17](evidencias/17_exploit_success.png){ width=6.1in }
+![Figura 19](evidencias/17_exploit_success.png){ width=6.1in }
 
-*Figura 17.* Ejecución de la prueba de concepto: primer intento rechazado y segundo intento exitoso.
+*Figura 19.* Ejecución de la prueba de concepto: primer intento rechazado y segundo intento exitoso.
 
 Dentro de la sesión se confirmó la dirección del objetivo y se procedió a **estabilizar el intérprete
 de comandos** (tratamiento de TTY con `script` y ajuste de la variable de entorno `TERM`), un paso
 habitual para trabajar cómodamente en una shell obtenida de forma remota.
 
-![Figura 18](evidencias/18_shell_hostname.png){ width=6.1in }
+![Figura 20](evidencias/18_shell_hostname.png){ width=6.1in }
 
-*Figura 18.* Sesión obtenida en el objetivo; `hostname -I` confirma la dirección `172.17.0.2`.
+*Figura 20.* Sesión obtenida en el objetivo; `hostname -I` confirma la dirección `172.17.0.2`.
 
-![Figura 19](evidencias/19_fuentes_vsftpd.png){ width=6.1in }
+![Figura 21](evidencias/19_fuentes_vsftpd.png){ width=6.1in }
 
-*Figura 19.* Exploración del objetivo: árbol de fuentes del propio `vsftpd-2.3.4` dentro del contenedor.
+*Figura 21.* Exploración del objetivo: árbol de fuentes del propio `vsftpd-2.3.4` dentro del contenedor.
 
-![Figura 20](evidencias/20_tty_estabilizada.png){ width=6.1in }
+![Figura 22](evidencias/20_tty_estabilizada.png){ width=6.1in }
 
-*Figura 20.* Estabilización del intérprete de comandos: el prompt cambia a `root@71aa5f54624b:~/vsftpd-2.3.4#`.
+*Figura 22.* Estabilización del intérprete de comandos: el prompt cambia a `root@71aa5f54624b:~/vsftpd-2.3.4#`.
 
-![Figura 21](evidencias/21_ajuste_term.png){ width=6.1in }
+![Figura 23](evidencias/21_ajuste_term.png){ width=6.1in }
 
-*Figura 21.* Ajuste del entorno de la sesión mediante la variable `TERM`.
+*Figura 23.* Ajuste del entorno de la sesión mediante la variable `TERM`.
 
-![Figura 22](evidencias/22_term_xterm.png){ width=6.1in }
+![Figura 24](evidencias/22_term_xterm.png){ width=6.1in }
 
-*Figura 22.* Confirmación de la variable de entorno `TERM=xterm-256color`.
+*Figura 24.* Confirmación de la variable de entorno `TERM=xterm-256color`.
 
 **Verificación del nivel de acceso.** Cumpliendo el procedimiento del laboratorio, se comprobó el
 usuario de la sesión, el nombre del sistema y la información de red disponible:
@@ -344,13 +357,13 @@ usuario de la sesión, el nombre del sistema y la información de red disponible
 - **Dirección del objetivo:** `172.17.0.2`.
 - **Host atacante (Kali):** puerta de enlace de Docker `172.17.0.1` e interfaz `192.168.5.136`.
 
-![Figura 23](evidencias/23_whoami_root.png){ width=6.1in }
+![Figura 25](evidencias/23_whoami_root.png){ width=6.1in }
 
-*Figura 23.* Verificación simultánea: en el objetivo `whoami` devuelve `root` y `hostname -I` `172.17.0.2`; a la derecha, el host Kali con `172.17.0.1`.
+*Figura 25.* Verificación simultánea: en el objetivo `whoami` devuelve `root` y `hostname -I` `172.17.0.2`; a la derecha, el host Kali con `172.17.0.1`.
 
-![Figura 24](evidencias/24_verificacion_acceso.png){ width=4.5in }
+![Figura 26](evidencias/24_verificacion_acceso.png){ width=4.5in }
 
-*Figura 24.* Detalle de la verificación de acceso con privilegios de `root` sobre el objetivo.
+*Figura 26.* Detalle de la verificación de acceso con privilegios de `root` sobre el objetivo.
 
 Conforme a las condiciones de seguridad, **una vez demostrado el acceso** se dio por cumplido el
 objetivo académico; no se realizó persistencia, movimiento lateral ni acceso a otros sistemas.
@@ -372,22 +385,22 @@ paralelo una conexión FTP (`ftp 172.17.0.2`, con usuario `anonymous`), la captu
 el banner del servicio `220 (vsFTPd 2.3.4)` y el resultado del intento de autenticación
 (`530 Login incorrect`).
 
-![Figura 25](evidencias/25_tcpdump_ftp.png){ width=6.1in }
+![Figura 27](evidencias/25_tcpdump_ftp.png){ width=6.1in }
 
-*Figura 25.* Captura con `tcpdump`: el banner `220 (vsFTPd 2.3.4)` y el diálogo FTP viajan en texto plano.
+*Figura 27.* Captura con `tcpdump`: el banner `220 (vsFTPd 2.3.4)` y el diálogo FTP viajan en texto plano.
 
 El análisis del canal de la puerta trasera (`6200/tcp`) evidenció que **los comandos y su salida**
 también circulan sin cifrado: se observan directamente en la captura la petición de listado de
 directorio, su contenido y las respuestas del sistema, además del tráfico ARP asociado a la
 resolución de direcciones dentro de la red de Docker.
 
-![Figura 26](evidencias/26_tcpdump_6200.png){ width=6.1in }
+![Figura 28](evidencias/26_tcpdump_6200.png){ width=6.1in }
 
-*Figura 26.* Tráfico del canal de la shell (puerto 6200) legible en texto plano.
+*Figura 28.* Tráfico del canal de la shell (puerto 6200) legible en texto plano.
 
-![Figura 27](evidencias/27_tcpdump_comandos.png){ width=6.1in }
+![Figura 29](evidencias/27_tcpdump_comandos.png){ width=6.1in }
 
-*Figura 27.* Comandos ejecutados (`cd /root`, `ls -la`) y su salida, capturados en claro.
+*Figura 29.* Comandos ejecutados (`cd /root`, `ls -la`) y su salida, capturados en claro.
 
 Durante la exploración se buscó además un posible archivo de bandera (`flag`). El comando
 `cat flag.txt` devolvió `No such file or directory` en el directorio de trabajo, por lo que **no se
@@ -396,49 +409,98 @@ por patrón. La evidencia relevante de esta actividad no es una bandera, sino la
 exposición de información en texto plano**, que es precisamente el riesgo que el ejercicio buscaba
 ilustrar.
 
-![Figura 28](evidencias/28_busqueda_flag.png){ width=6.1in }
+![Figura 30](evidencias/28_busqueda_flag.png){ width=6.1in }
 
-*Figura 28.* Búsqueda de un archivo de bandera: `cat flag.txt` → "No such file or directory".
+*Figura 30.* Búsqueda de un archivo de bandera: `cat flag.txt` → "No such file or directory".
 
-![Figura 29](evidencias/29_enumeracion_flags.png){ width=6.1in }
+![Figura 31](evidencias/29_enumeracion_flags.png){ width=6.1in }
 
-*Figura 29.* Enumeración de ficheros por patrón en `/proc`, `/sys` y `/usr/include`.
+*Figura 31.* Enumeración de ficheros por patrón en `/proc`, `/sys` y `/usr/include`.
 
-# 10. Comandos adicionales de Kali Linux documentados
+# 10. Documentación de comandos: propósito y evidencia
 
-Además de las herramientas centrales de la demostración (Nmap y la prueba de concepto), a lo largo
-del laboratorio se investigaron, ejecutaron y documentaron los siguientes comandos de Kali Linux,
-comprendiendo la función de cada uno —no solo copiándolos—. Todos fueron ejecutados de forma real
-durante la práctica; la columna *Evidencia* remite a la figura donde se observa su uso.
+Conforme a la indicación de la actividad —investigar, ejecutar y documentar comandos comprendiendo la función de cada uno—, este apartado consolida los **comandos empleados durante el desarrollo del laboratorio** y, además, **veinte comandos adicionales** investigados y ejecutados de forma independiente. Cada comando se acompaña de su propósito y de la figura donde se evidencia su ejecución.
 
-| N.° | Comando | Función | Evidencia |
+## 10.1 Comandos empleados en la práctica
+
+| N.° | Comando | Propósito / función | Evidencia |
 |:---:|:---|:---|:---:|
-| 1 | `file` | Identifica el tipo real de un archivo a partir de su contenido, no de su extensión. | Fig. 6 |
-| 2 | `unzip` | Descomprime archivos en formato `.zip`. | Fig. 6, 10 |
-| 3 | `ls -la` | Lista archivos con detalle: permisos, propietario, tamaño y elementos ocultos. | Fig. 6, 7 |
-| 4 | `tree` | Muestra la estructura de directorios en forma de árbol. | Fig. 7 |
-| 5 | `chmod` | Modifica los permisos de un archivo (aquí, otorgar ejecución al script). | Fig. 8, 10 |
-| 6 | `sudo` | Ejecuta un comando con privilegios de superusuario. | Fig. 9 |
-| 7 | `su` | Cambia la sesión al usuario `root` (superusuario). | Fig. 12 |
-| 8 | `apt` | Gestor de paquetes: actualizar el sistema e instalar software (Docker). | Fig. 2, 11 |
-| 9 | `hostname -I` | Muestra las direcciones IP asignadas al equipo. | Fig. 18, 23 |
-| 10 | `whoami` | Muestra el usuario efectivo de la sesión actual. | Fig. 23 |
-| 11 | `script` | Registra y estabiliza una sesión de terminal (mejora la TTY de la shell). | Fig. 20 |
-| 12 | `export` | Define una variable de entorno (aquí, `TERM`). | Fig. 21 |
-| 13 | `echo` | Imprime texto o el valor de una variable de entorno. | Fig. 21, 22 |
-| 14 | `cd` | Cambia el directorio de trabajo actual. | Fig. 27 |
-| 15 | `cat` | Muestra por pantalla el contenido de un archivo. | Fig. 28 |
-| 16 | `ftp` | Cliente de línea de comandos para conectarse a un servidor FTP. | Fig. 25 |
-| 17 | `tcpdump` | Captura y analiza el tráfico de red de una interfaz. | Fig. 25–27 |
-| 18 | `man` | Muestra el manual de referencia de un comando. | Fig. 12 |
-| 19 | `find` | Busca archivos por nombre o patrón en el sistema de ficheros. | Fig. 29 |
-| 20 | `python3` | Ejecuta scripts en Python (aquí, la prueba de concepto) y consulta la versión del intérprete. | Fig. 15 |
+| 1 | `file` | Identifica el tipo real de un archivo por su contenido, no por su extensión. | Fig. 8 |
+| 2 | `unzip` | Descomprime archivos en formato `.zip`. | Fig. 8 |
+| 3 | `ls -la` | Lista archivos con detalle: permisos, propietario, tamaño y ocultos. | Fig. 8 |
+| 4 | `tree` | Muestra la estructura de directorios en forma de árbol. | Fig. 9 |
+| 5 | `chmod` | Modifica los permisos de un archivo (otorgar ejecución al script). | Fig. 10 |
+| 6 | `sudo` | Ejecuta un comando con privilegios de superusuario. | Fig. 11 |
+| 7 | `su` | Cambia la sesión al usuario `root`. | Fig. 14 |
+| 8 | `apt` | Gestor de paquetes: actualiza el sistema e instala software. | Fig. 13 |
+| 9 | `nmap` | Escanea puertos, servicios y versiones de un objetivo. | Fig. 16 |
+| 10 | `python3` | Ejecuta scripts en Python (la prueba de concepto). | Fig. 19 |
+| 11 | `hostname -I` | Muestra las direcciones IP asignadas al equipo. | Fig. 20 |
+| 12 | `whoami` | Muestra el usuario efectivo de la sesión. | Fig. 25 |
+| 13 | `script` | Estabiliza la sesión de terminal (mejora la TTY). | Fig. 22 |
+| 14 | `export` | Define una variable de entorno (`TERM`). | Fig. 23 |
+| 15 | `echo` | Imprime texto o el valor de una variable. | Fig. 24 |
+| 16 | `cd` | Cambia el directorio de trabajo. | Fig. 29 |
+| 17 | `cat` | Muestra el contenido de un archivo. | Fig. 30 |
+| 18 | `ftp` | Cliente de línea de comandos para conectarse a un servidor FTP. | Fig. 27 |
+| 19 | `tcpdump` | Captura y analiza el tráfico de red de una interfaz. | Fig. 28 |
+| 20 | `man` | Muestra el manual de referencia de un comando. | Fig. 14 |
+| 21 | `find` | Busca archivos por nombre o patrón en el sistema de ficheros. | Fig. 31 |
 
-Este conjunto abarca las principales categorías de uso en una práctica de seguridad: gestión de
-archivos y permisos (`file`, `unzip`, `ls`, `tree`, `chmod`, `cat`, `find`), administración y
-privilegios (`sudo`, `su`, `apt`, `export`, `echo`), información del sistema y de red
-(`hostname`, `whoami`), estabilización de sesiones (`script`), y análisis y conexión de red
-(`ftp`, `tcpdump`, `man`, `python3`).
+## 10.2 Comandos adicionales investigados y ejecutados
+
+Se seleccionaron veinte comandos **distintos de los anteriores**, relevantes para tres áreas del trabajo de un analista de seguridad: información del sistema, reconocimiento de red y análisis de archivos. Todos fueron ejecutados en Kali Linux; su evidencia se presenta en las figuras posteriores a la tabla.
+
+| N.° | Comando | Propósito / función | Evidencia |
+|:---:|:---|:---|:---:|
+| 1 | `id` | Muestra el UID, el GID y los grupos de la sesión actual. | Fig. 32 |
+| 2 | `uname -a` | Información del kernel y del sistema operativo (versión, arquitectura). | Fig. 32 |
+| 3 | `uptime` | Tiempo que lleva encendido el sistema y su carga promedio. | Fig. 32 |
+| 4 | `free -h` | Uso de memoria RAM y de intercambio (*swap*). | Fig. 32 |
+| 5 | `df -h` | Espacio total, usado y disponible de los sistemas de archivos. | Fig. 32 |
+| 6 | `ps aux` | Instantánea de todos los procesos en ejecución. | Fig. 32 |
+| 7 | `top` | Monitor de procesos y recursos en tiempo real. | Fig. 33 |
+| 8 | `ip a` | Interfaces de red y direcciones IP asignadas. | Fig. 34 |
+| 9 | `ip route` | Tabla de enrutamiento (puerta de enlace y rutas). | Fig. 34 |
+| 10 | `ss -tuln` | Puertos y sockets en escucha (TCP/UDP). | Fig. 34 |
+| 11 | `arp -a` | Tabla ARP: correspondencia entre direcciones IP y MAC. | Fig. 35 |
+| 12 | `ping` | Comprueba la conectividad con un host mediante ICMP. | Fig. 35 |
+| 13 | `traceroute` | Traza los saltos de red intermedios hasta un destino. | Fig. 35 |
+| 14 | `nc (Netcat)` | Abre conexiones, comprueba puertos y captura *banners*. | Fig. 38 |
+| 15 | `wget` | Descarga archivos desde la red por HTTP, HTTPS o FTP. | Fig. 36 |
+| 16 | `dig` | Realiza consultas al sistema de nombres de dominio (DNS). | Fig. 36 |
+| 17 | `grep` | Filtra las líneas que coinciden con un patrón. | Fig. 38 |
+| 18 | `head / tail` | Muestran las primeras o las últimas líneas de un archivo. | Fig. 37 |
+| 19 | `wc` | Cuenta líneas, palabras y bytes de un archivo. | Fig. 37 |
+| 20 | `sha256sum / md5sum` | Calculan el *hash* de un archivo para verificar su integridad. | Fig. 36 |
+
+![Figura 32](evidencias/cmd_sistema.png){ width=6.1in }
+
+*Figura 32.* Información del sistema: `id`, `uname -a`, `uptime`, `free -h`, `df -h` y `ps aux`.
+
+![Figura 33](evidencias/cmd_top.png){ width=6.1in }
+
+*Figura 33.* Monitor de procesos y recursos en tiempo real con `top`.
+
+![Figura 34](evidencias/cmd_red_ip.png){ width=6.1in }
+
+*Figura 34.* Configuración de red: `ip a`, `ip route` y `ss -tuln`.
+
+![Figura 35](evidencias/cmd_red_ping.png){ width=6.1in }
+
+*Figura 35.* Diagnóstico de red: `arp -a`, `ping` y `traceroute` (a `172.17.0.1` y al objetivo `172.17.0.2`).
+
+![Figura 36](evidencias/cmd_hash_dns.png){ width=6.1in }
+
+*Figura 36.* Integridad y consultas: `sha256sum`, `md5sum`, `dig` (DNS) y `wget` (descarga).
+
+![Figura 37](evidencias/cmd_archivos.png){ width=6.1in }
+
+*Figura 37.* Análisis de archivos: `head`, `tail` y `wc` sobre la salida del escaneo.
+
+![Figura 38](evidencias/cmd_nc_grep.png){ width=6.1in }
+
+*Figura 38.* Comprobación de puerto con `nc` y filtrado con `grep`.
 
 # 11. Análisis de resultados
 
