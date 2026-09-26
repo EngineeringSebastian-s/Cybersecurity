@@ -1,0 +1,11 @@
+# ===== Contexto de sesión Claude (SOLO LOCAL, no se versiona) =====
+# Documentación de la sesión de asistencia + herramientas/scripts usados.
+/contexto-claude/
+claude.md
+CLAUDE.md
+*.claude.md
+
+# Artefactos de trabajo / temporales
+/**/_qa/
+*.tmp
+.DS_Store
