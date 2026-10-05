@@ -1,0 +1,48 @@
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Segoe UI, Arial','fontSize':'14px','primaryColor':'#EBF2FA','primaryBorderColor':'#2C5282','primaryTextColor':'#1A202C','lineColor':'#4A5568'}}}%%
+flowchart TB
+  U["Usuarios · Clientes · Empleados remotos"]:::ext
+  U -->|HTTPS/TLS| WAF
+  WAF["WAF + CDN · Anti-DDoS"]:::edge
+  WAF --> ID
+  ID["IAM + MFA + RBAC<br/>Mínimo privilegio · VPN / ZTNA"]:::idn
+  ID --> LB
+  subgraph VPC["Red segmentada (VPC)"]
+    direction TB
+    LB["Balanceador de carga"]:::net
+    subgraph SAPP["Subred privada · aplicaciones"]
+      APP["App web clientes"]:::app
+      CRM["CRM"]:::app
+      FIN["Sistema financiero"]:::app
+      DOC["Gestión documental"]:::app
+    end
+    subgraph SDAT["Subred privada · datos"]
+      DB[("Base de datos<br/>cifrada")]:::data
+      ST[("Almacenamiento<br/>cifrado · CSPM")]:::data
+    end
+    LB --> APP
+    LB --> CRM
+    LB --> FIN
+    LB --> DOC
+    APP --> DB
+    CRM --> DB
+    FIN --> DB
+    DOC --> ST
+  end
+  KMS["KMS · Gestión de claves<br/>Cifrado en reposo"]:::key
+  KMS -.-> DB
+  KMS -.-> ST
+  BK[("Backups inmutables / offline<br/>regla 3-2-1 · probados")]:::bk
+  DB -. copias .-> BK
+  ST -. copias .-> BK
+  SIEM["Logging centralizado + SIEM + Monitoreo<br/>(transversal: observa todas las capas)"]:::mon
+  SIEM -.-> ID
+  SIEM -.-> SDAT
+  classDef ext fill:#F2F3F4,stroke:#566573,color:#1A202C;
+  classDef edge fill:#FDEBD0,stroke:#B9770E,color:#1A202C;
+  classDef idn fill:#FADBD8,stroke:#C0392B,color:#1A202C;
+  classDef net fill:#D6EAF8,stroke:#2E86C1,color:#1A202C;
+  classDef app fill:#EBF2FA,stroke:#2C5282,color:#1A202C;
+  classDef data fill:#D5F0DD,stroke:#1E8449,color:#1A202C;
+  classDef key fill:#E8DAEF,stroke:#7D3C98,color:#1A202C;
+  classDef bk fill:#D1F2EB,stroke:#148F77,color:#1A202C;
+  classDef mon fill:#FCF3CF,stroke:#B7950B,color:#1A202C;

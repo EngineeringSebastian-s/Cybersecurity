@@ -1,0 +1,17 @@
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Segoe UI, Arial','fontSize':'16px','primaryColor':'#EBF2FA','primaryBorderColor':'#2C5282','primaryTextColor':'#1A202C','lineColor':'#4A5568'}}}%%
+flowchart TB
+  A1["AMENAZA · Ingeniería social / phishing"]:::imp -.-> C1["Formación anti-phishing + filtrado de correo (DMARC)"]:::ctrl
+  A2["VULNERABILIDAD · Sin MFA, exceso de privilegios, VM sin parche, datos sin cifrar"]:::imp -.-> C2["MFA, mínimo privilegio, gestión de parches, cifrado"]:::ctrl
+  A3["EXPLOTACIÓN · Uso de credenciales robadas"]:::comp -.-> C3["MFA + detección de accesos imposibles"]:::ctrl
+  A4["COMPROMISO · Acceso cloud y movimiento lateral"]:::comp -.-> C4["Segmentación / Zero Trust + IAM"]:::ctrl
+  A5["IMPACTO · Cifrado + exfiltración (doble extorsión)"]:::imp -.-> C5["DLP, cifrado en reposo, CSPM"]:::ctrl
+  A6["DETECCIÓN · Accesos anómalos, archivos cifrados"]:::warn -.-> C6["SIEM, EDR/XDR, monitoreo y alertas"]:::ctrl
+  A7["CONTENCIÓN · Aislar, revocar sesiones, bloquear cuentas"]:::ok -.-> C7["Plan de respuesta a incidentes (CSIRT)"]:::ctrl
+  A8["RECUPERACIÓN · Restaurar desde backups limpios"]:::ok -.-> C8["Backups inmutables / offline probados (3-2-1)"]:::ctrl
+  A9["RESILIENCIA · Lecciones aprendidas, mejora continua"]:::ok -.-> C9["DRP, auditorías, simulacros periódicos"]:::ctrl
+  A1 --> A2 --> A3 --> A4 --> A5 --> A6 --> A7 --> A8 --> A9
+  classDef imp fill:#F8D7DA,stroke:#C0392B,color:#1A202C;
+  classDef comp fill:#EBF2FA,stroke:#2C5282,color:#1A202C;
+  classDef warn fill:#FFF3CD,stroke:#B7791F,color:#1A202C;
+  classDef ok fill:#D5F0DD,stroke:#2E7D32,color:#1A202C;
+  classDef ctrl fill:#EDE7F6,stroke:#5E35B1,color:#1A202C;

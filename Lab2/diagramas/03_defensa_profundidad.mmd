@@ -1,0 +1,15 @@
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Segoe UI, Arial','fontSize':'16px','primaryColor':'#EBF2FA','primaryBorderColor':'#2C5282','primaryTextColor':'#1A202C','lineColor':'#4A5568'},'flowchart':{'wrappingWidth':900,'nodeSpacing':25,'rankSpacing':20}}}%%
+flowchart TB
+  L1["<b>CAPA 1 · USUARIO</b><br/>Formación anti-phishing · simulacros · cultura de reporte no punitivo · políticas de uso"]:::c1
+  L2["<b>CAPA 2 · IDENTIDAD Y ACCESO</b><br/>MFA · SSO · mínimo privilegio · RBAC · PAM · revisión periódica de cuentas"]:::c2
+  L3["<b>CAPA 3 · RED</b><br/>Segmentación (VLAN / VPC) · NGFW · IDS / IPS · VPN · modelo Zero Trust"]:::c3
+  L4["<b>CAPA 4 · APLICACIONES</b><br/>WAF · gestión de parches · hardening · gestión de vulnerabilidades"]:::c4
+  L5["<b>CAPA 5 · DATOS (núcleo)</b><br/>Cifrado en reposo y tránsito · DLP · clasificación · KMS · backups inmutables"]:::c5
+  L6["<b>CAPA 6 · MONITOREO Y RESPUESTA (transversal)</b><br/>SIEM · EDR / XDR · logging centralizado · SOC · plan de respuesta a incidentes"]:::c6
+  L1 --> L2 --> L3 --> L4 --> L5 --> L6
+  classDef c1 fill:#FDEBD0,stroke:#B9770E,color:#1A202C;
+  classDef c2 fill:#FADBD8,stroke:#C0392B,color:#1A202C;
+  classDef c3 fill:#D6EAF8,stroke:#2E86C1,color:#1A202C;
+  classDef c4 fill:#D1F2EB,stroke:#148F77,color:#1A202C;
+  classDef c5 fill:#D5F0DD,stroke:#1E8449,color:#1A202C;
+  classDef c6 fill:#E8DAEF,stroke:#7D3C98,color:#1A202C;
