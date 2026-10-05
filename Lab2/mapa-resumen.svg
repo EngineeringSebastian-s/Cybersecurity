@@ -1,0 +1,226 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1600" width="1400" height="1600" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <style>
+      text{fill:#1A202C;}
+      .sec{fill:#1F3A5F;font-weight:700;font-size:23px;}
+      .body{font-size:15px;fill:#1A202C;}
+      .small{font-size:13px;fill:#475569;}
+      .mini{font-size:12px;fill:#475569;}
+      .ct{font-weight:700;font-size:17px;}
+      .w{fill:#FFFFFF;}
+      .b{font-weight:700;}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="1600" fill="#FFFFFF"/>
+
+  <!-- ===== Header ===== -->
+  <rect x="0" y="0" width="1400" height="138" fill="#1F3A5F"/>
+  <rect x="0" y="138" width="1400" height="5" fill="#C0392B"/>
+  <text x="48" y="58" class="w b" font-size="35">NOVACOM DIGITAL S.A.S.</text>
+  <text x="48" y="94" fill="#CBD5E0" font-size="21">Diagnóstico de Seguridad y Plan de Protección</text>
+  <text x="48" y="120" fill="#9FB3C8" font-size="14.5">Resumen visual · Ejercicio Práctico N.° 2 — Análisis y respuesta ante un ciberataque</text>
+  <g>
+    <rect x="1118" y="34" width="234" height="70" rx="8" fill="#2C5282" stroke="#4A6FA5"/>
+    <text x="1235" y="62" text-anchor="middle" class="w b" font-size="15">Caso de estudio</text>
+    <text x="1235" y="85" text-anchor="middle" fill="#CBD5E0" font-size="13">ransomware multietapa</text>
+  </g>
+
+  <!-- ===== Contexto: chips ===== -->
+  <g>
+    <rect x="40" y="166" width="309" height="74" rx="9" fill="#F1F5F9" stroke="#E2E8F0"/>
+    <text x="60" y="200" class="b" font-size="22" fill="#1F3A5F">~180</text>
+    <text x="130" y="195" class="body b">empleados</text>
+    <text x="130" y="216" class="small">PYME de servicios TI</text>
+
+    <rect x="363" y="166" width="309" height="74" rx="9" fill="#F1F5F9" stroke="#E2E8F0"/>
+    <text x="383" y="200" font-size="22">☁️</text>
+    <text x="430" y="195" class="body b">Infraestructura cloud</text>
+    <text x="430" y="216" class="small">modelo híbrido, migración rápida</text>
+
+    <rect x="686" y="166" width="309" height="74" rx="9" fill="#FEE2E2" stroke="#FCA5A5"/>
+    <text x="706" y="200" font-size="22">🔒</text>
+    <text x="752" y="195" class="body b">Ransomware</text>
+    <text x="752" y="216" class="small">archivos cifrados (2:40 p. m.)</text>
+
+    <rect x="1009" y="166" width="343" height="74" rx="9" fill="#FEE2E2" stroke="#FCA5A5"/>
+    <text x="1029" y="200" font-size="22">⚠️</text>
+    <text x="1075" y="195" class="body b">Doble extorsión</text>
+    <text x="1075" y="216" class="small">cifrado + exfiltración de datos</text>
+  </g>
+
+  <!-- ===== Cadena del ataque ===== -->
+  <text x="40" y="285" class="sec">1 · La cadena del ataque</text>
+  <text x="330" y="285" class="small">Ninguna etapa usó una técnica sofisticada: todas aprovecharon un control ausente o mal configurado.</text>
+
+  <!-- fila 1 -->
+  <g>
+    <!-- nodo 1 -->
+    <rect x="40" y="302" width="300" height="70" rx="9" fill="#FEF3C7" stroke="#D97706"/>
+    <circle cx="62" cy="324" r="12" fill="#D97706"/><text x="62" y="329" text-anchor="middle" class="w b" font-size="13">1</text>
+    <text x="84" y="329" class="b" font-size="15">8:15 a. m. · Phishing</text>
+    <text x="84" y="352" class="small">correo falso de RR. HH.</text>
+    <!-- nodo 2 -->
+    <rect x="380" y="302" width="300" height="70" rx="9" fill="#FEF3C7" stroke="#D97706"/>
+    <circle cx="402" cy="324" r="12" fill="#D97706"/><text x="402" y="329" text-anchor="middle" class="w b" font-size="13">2</text>
+    <text x="424" y="329" class="b" font-size="15">Robo de credenciales</text>
+    <text x="424" y="352" class="small">no había MFA</text>
+    <!-- nodo 3 -->
+    <rect x="720" y="302" width="300" height="70" rx="9" fill="#DBEAFE" stroke="#2563EB"/>
+    <circle cx="742" cy="324" r="12" fill="#2563EB"/><text x="742" y="329" text-anchor="middle" class="w b" font-size="13">3</text>
+    <text x="764" y="329" class="b" font-size="15">~10:15 a. m. · Acceso nube</text>
+    <text x="764" y="352" class="small">accesos desde otras regiones</text>
+    <!-- nodo 4 -->
+    <rect x="1060" y="302" width="300" height="70" rx="9" fill="#DBEAFE" stroke="#2563EB"/>
+    <circle cx="1082" cy="324" r="12" fill="#2563EB"/><text x="1082" y="329" text-anchor="middle" class="w b" font-size="13">4</text>
+    <text x="1104" y="329" class="b" font-size="15">Escalamiento</text>
+    <text x="1104" y="352" class="small">cuenta con exceso de privilegios</text>
+    <!-- chevrons fila1 -->
+    <path d="M350,330 l12,7 l-12,7 z" fill="#94A3B8"/>
+    <path d="M690,330 l12,7 l-12,7 z" fill="#94A3B8"/>
+    <path d="M1030,330 l12,7 l-12,7 z" fill="#94A3B8"/>
+  </g>
+  <!-- conector fila1 -> fila2 -->
+  <path d="M1210,372 C1210,388 700,388 700,392" stroke="#94A3B8" stroke-width="2" fill="none" stroke-dasharray="4,4"/>
+  <path d="M700,386 l-7,12 l14,0 z" fill="#94A3B8"/>
+  <!-- fila 2 -->
+  <g>
+    <rect x="40" y="398" width="300" height="70" rx="9" fill="#DBEAFE" stroke="#2563EB"/>
+    <circle cx="62" cy="420" r="12" fill="#2563EB"/><text x="62" y="425" text-anchor="middle" class="w b" font-size="13">5</text>
+    <text x="84" y="425" class="b" font-size="15">VM sin parche</text>
+    <text x="84" y="448" class="small">vulnerabilidad conocida</text>
+
+    <rect x="380" y="398" width="300" height="70" rx="9" fill="#DBEAFE" stroke="#2563EB"/>
+    <circle cx="402" cy="420" r="12" fill="#2563EB"/><text x="402" y="425" text-anchor="middle" class="w b" font-size="13">6</text>
+    <text x="424" y="425" class="b" font-size="15">Datos sin cifrar</text>
+    <text x="424" y="448" class="small">+ bucket mal configurado</text>
+
+    <rect x="720" y="398" width="300" height="70" rx="9" fill="#FEE2E2" stroke="#DC2626"/>
+    <circle cx="742" cy="420" r="12" fill="#DC2626"/><text x="742" y="425" text-anchor="middle" class="w b" font-size="13">7</text>
+    <text x="764" y="425" class="b" font-size="15">2:40 p. m. · Ransomware</text>
+    <text x="764" y="448" class="small">con exfiltración previa</text>
+
+    <rect x="1060" y="398" width="300" height="70" rx="9" fill="#FEE2E2" stroke="#DC2626"/>
+    <circle cx="1082" cy="420" r="12" fill="#DC2626"/><text x="1082" y="425" text-anchor="middle" class="w b" font-size="13">8</text>
+    <text x="1104" y="425" class="b" font-size="15">Recuperación fallida</text>
+    <text x="1104" y="448" class="small">backups conectados y sin probar</text>
+
+    <path d="M350,426 l12,7 l-12,7 z" fill="#94A3B8"/>
+    <path d="M690,426 l12,7 l-12,7 z" fill="#94A3B8"/>
+    <path d="M1030,426 l12,7 l-12,7 z" fill="#94A3B8"/>
+  </g>
+
+  <!-- ===== Impacto CID ===== -->
+  <text x="40" y="520" class="sec">2 · Impacto en la tríada CID</text>
+  <g>
+    <rect x="40" y="536" width="426" height="118" rx="9" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <rect x="40" y="536" width="426" height="30" rx="9" fill="#C0392B"/>
+    <rect x="40" y="551" width="426" height="15" fill="#C0392B"/>
+    <text x="60" y="557" class="w b" font-size="16">Confidencialidad</text>
+    <text x="60" y="590" class="body">Credenciales robadas y datos de clientes</text>
+    <text x="60" y="610" class="body">(PII) sin cifrar, copiados por el atacante.</text>
+    <text x="60" y="638" class="small b" fill="#C0392B">Control: MFA · cifrado · DLP · mínimo privilegio</text>
+
+    <rect x="487" y="536" width="426" height="118" rx="9" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <rect x="487" y="536" width="426" height="30" rx="9" fill="#B7791F"/>
+    <rect x="487" y="551" width="426" height="15" fill="#B7791F"/>
+    <text x="507" y="557" class="w b" font-size="16">Integridad</text>
+    <text x="507" y="590" class="body">Cifrado masivo de archivos y posible</text>
+    <text x="507" y="610" class="body">borrado de registros de actividad.</text>
+    <text x="507" y="638" class="small b" fill="#B7791F">Control: hashing · versiones · IDS · auditoría</text>
+
+    <rect x="934" y="536" width="426" height="118" rx="9" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <rect x="934" y="536" width="426" height="30" rx="9" fill="#2563EB"/>
+    <rect x="934" y="551" width="426" height="15" fill="#2563EB"/>
+    <text x="954" y="557" class="w b" font-size="16">Disponibilidad</text>
+    <text x="954" y="590" class="body">Archivos cifrados y copias de seguridad</text>
+    <text x="954" y="610" class="body">inservibles; sin canal de comunicación alterno.</text>
+    <text x="954" y="638" class="small b" fill="#2563EB">Control: backups 3-2-1 · redundancia · DRP</text>
+  </g>
+
+  <!-- ===== Defensa en profundidad ===== -->
+  <text x="40" y="700" class="sec">3 · Defensa en profundidad (6 capas)</text>
+  <g font-size="14.5">
+    <rect x="40" y="716" width="1320" height="40" rx="7" fill="#FDEBD0" stroke="#B9770E"/>
+    <text x="58" y="741" class="b">Capa 1 · Usuario</text><text x="330" y="741" class="small">Formación anti-phishing · simulacros · cultura de reporte no punitivo · políticas de uso</text>
+    <rect x="40" y="761" width="1320" height="40" rx="7" fill="#FADBD8" stroke="#C0392B"/>
+    <text x="58" y="786" class="b">Capa 2 · Identidad y acceso</text><text x="330" y="786" class="small">MFA · SSO · mínimo privilegio · RBAC · PAM · revisión periódica de cuentas</text>
+    <rect x="40" y="806" width="1320" height="40" rx="7" fill="#D6EAF8" stroke="#2E86C1"/>
+    <text x="58" y="831" class="b">Capa 3 · Red</text><text x="330" y="831" class="small">Segmentación (VLAN/VPC) · NGFW · IDS/IPS · VPN · modelo Zero Trust</text>
+    <rect x="40" y="851" width="1320" height="40" rx="7" fill="#D1F2EB" stroke="#148F77"/>
+    <text x="58" y="876" class="b">Capa 4 · Aplicaciones</text><text x="330" y="876" class="small">WAF · gestión de parches · hardening · gestión de vulnerabilidades</text>
+    <rect x="40" y="896" width="1320" height="40" rx="7" fill="#D5F0DD" stroke="#1E8449"/>
+    <text x="58" y="921" class="b">Capa 5 · Datos</text><text x="330" y="921" class="small">Cifrado en reposo y tránsito · DLP · clasificación · KMS · backups inmutables</text>
+    <rect x="40" y="941" width="1320" height="40" rx="7" fill="#E8DAEF" stroke="#7D3C98"/>
+    <text x="58" y="966" class="b">Capa 6 · Monitoreo y respuesta</text><text x="330" y="966" class="small">SIEM · EDR/XDR · logging centralizado · SOC · plan de respuesta a incidentes</text>
+  </g>
+
+  <!-- ===== Respuesta + Recuperación ===== -->
+  <text x="40" y="1025" class="sec">4 · Respuesta al incidente</text>
+  <text x="700" y="1025" class="sec">5 · Recuperación y resiliencia</text>
+  <g>
+    <rect x="40" y="1041" width="630" height="246" rx="9" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="60" y="1068" class="small b" fill="#1F3A5F">Orden (NIST SP 800-61) — «los minutos son oro»</text>
+    <text x="60" y="1096" class="body">1 · Activar el CSIRT y declarar el incidente</text>
+    <text x="60" y="1120" class="body">2 · Contener: aislar, revocar sesiones, bloquear cuentas</text>
+    <text x="60" y="1144" class="body">3 · Preservar la evidencia (forense)</text>
+    <text x="60" y="1168" class="body">4 · Erradicar: reset de claves, MFA, parches</text>
+    <text x="60" y="1192" class="body">5 · Evaluar el alcance (qué datos se vieron/copiaron)</text>
+    <text x="60" y="1216" class="body">6 · Recuperar desde backups limpios y priorizados</text>
+    <text x="60" y="1240" class="body">7 · Notificar (SIC — Ley 1581; 72 h si aplica RGPD)</text>
+    <text x="60" y="1264" class="body">8 · Lecciones aprendidas y cierre de brechas</text>
+
+    <rect x="700" y="1041" width="660" height="246" rx="9" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <rect x="720" y="1061" width="620" height="54" rx="8" fill="#D5F0DD" stroke="#1E8449"/>
+    <text x="740" y="1085" class="b" font-size="16" fill="#1E8449">Regla 3-2-1-1-0</text>
+    <text x="740" y="1105" class="small">3 copias · 2 medios · 1 fuera de sitio · 1 inmutable/offline · 0 errores (probadas)</text>
+    <text x="720" y="1142" class="body"><tspan class="b">Prioriza:</tspan> sistema financiero, CRM, BD de clientes y correo.</text>
+    <text x="720" y="1168" class="body"><tspan class="b">Redundancia</tspan> (alta disponibilidad) y <tspan class="b">DRP</tspan> con RTO/RPO.</text>
+    <text x="720" y="1194" class="body"><tspan class="b">Canal de comunicación alterno</tspan> durante la crisis.</text>
+    <rect x="720" y="1210" width="620" height="60" rx="8" fill="#EEF2FF" stroke="#C7D2FE"/>
+    <text x="740" y="1233" class="small b" fill="#1F3A5F">El riesgo cero no existe</text>
+    <text x="740" y="1255" class="small">La meta es la resiliencia: detectar pronto, responder bien y recuperarse rápido.</text>
+  </g>
+
+  <!-- ===== 30 días ===== -->
+  <text x="40" y="1326" class="sec">6 · Primeras 5 decisiones (primeros 30 días)</text>
+  <g>
+    <rect x="40" y="1342" width="252" height="92" rx="9" fill="#F8FAFC" stroke="#CBD5E0"/>
+    <circle cx="66" cy="1368" r="13" fill="#1F3A5F"/><text x="66" y="1373" text-anchor="middle" class="w b" font-size="14">1</text>
+    <text x="88" y="1373" class="body b">MFA + reset</text>
+    <text x="58" y="1400" class="mini">de credenciales</text>
+    <text x="58" y="1420" class="mini" fill="#C0392B">↓ credenciales robadas</text>
+
+    <rect x="307" y="1342" width="252" height="92" rx="9" fill="#F8FAFC" stroke="#CBD5E0"/>
+    <circle cx="333" cy="1368" r="13" fill="#1F3A5F"/><text x="333" y="1373" text-anchor="middle" class="w b" font-size="14">2</text>
+    <text x="355" y="1373" class="body b">Backups</text>
+    <text x="325" y="1400" class="mini">inmutables + prueba</text>
+    <text x="325" y="1420" class="mini" fill="#C0392B">↓ pérdida de datos</text>
+
+    <rect x="574" y="1342" width="252" height="92" rx="9" fill="#F8FAFC" stroke="#CBD5E0"/>
+    <circle cx="600" cy="1368" r="13" fill="#1F3A5F"/><text x="600" y="1373" text-anchor="middle" class="w b" font-size="14">3</text>
+    <text x="622" y="1373" class="body b">Mínimo privilegio</text>
+    <text x="592" y="1400" class="mini">RBAC · bajas de cuentas</text>
+    <text x="592" y="1420" class="mini" fill="#C0392B">↓ escalamiento</text>
+
+    <rect x="841" y="1342" width="252" height="92" rx="9" fill="#F8FAFC" stroke="#CBD5E0"/>
+    <circle cx="867" cy="1368" r="13" fill="#1F3A5F"/><text x="867" y="1373" text-anchor="middle" class="w b" font-size="14">4</text>
+    <text x="889" y="1373" class="body b">Parches + CSPM</text>
+    <text x="859" y="1400" class="mini">configuraciones cloud</text>
+    <text x="859" y="1420" class="mini" fill="#C0392B">↓ VM y misconfig.</text>
+
+    <rect x="1108" y="1342" width="252" height="92" rx="9" fill="#F8FAFC" stroke="#CBD5E0"/>
+    <circle cx="1134" cy="1368" r="13" fill="#1F3A5F"/><text x="1134" y="1373" text-anchor="middle" class="w b" font-size="14">5</text>
+    <text x="1156" y="1373" class="body b">SIEM + plan</text>
+    <text x="1126" y="1400" class="mini">+ formación</text>
+    <text x="1126" y="1420" class="mini" fill="#C0392B">↓ detección/humano</text>
+  </g>
+
+  <!-- ===== Footer ===== -->
+  <line x1="40" y1="1476" x2="1360" y2="1476" stroke="#E2E8F0"/>
+  <text x="40" y="1506" class="small"><tspan class="b" fill="#1F3A5F">Sebastián López Osorno</tspan> · Grupo 02 · Politécnico Colombiano Jaime Isaza Cadavid</text>
+  <text x="40" y="1528" class="mini">Facultad de Ingenierías · Diplomado en Ciberseguridad Informática · Docente: Edwin Andrés Ochoa Agudelo</text>
+  <text x="1360" y="1506" text-anchor="end" class="small b" fill="#1F3A5F">Marcos de referencia</text>
+  <text x="1360" y="1528" text-anchor="end" class="mini">ISO/IEC 27001 · NIST CSF / 800-61 / 800-34 · RGPD · Directiva NIS · Ley 1581 y 1273 (Colombia)</text>
+  <text x="40" y="1560" class="mini" fill="#94A3B8">Resumen visual del Informe de Diagnóstico y Plan de Protección — NOVACOM DIGITAL S.A.S. · 5 de octubre de 2026</text>
+</svg>
