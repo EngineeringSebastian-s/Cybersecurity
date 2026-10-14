@@ -50,19 +50,29 @@ El laboratorio se desarrolló sobre Kali Linux 2026.2 ejecutándose en VMware Wo
 
 *Nota.* Laboratorio aislado en máquina virtual dedicada; todas las acciones posteriores se ejecutan dentro de este entorno autorizado.
 
-La máquina vulnerable se obtuvo de la plataforma educativa DockerLabs y se desplegó con el script `auto_deploy.sh`. Tras descomprimir el paquete y otorgar permisos de ejecución (`chmod +x`), el despliegue (`sudo ./auto_deploy.sh borazuwarahctf.tar`) importó la imagen y asignó al contenedor la dirección `172.17.0.2` (Figura 2). Conviene subrayar que el script deja la terminal ocupada y advierte que `Ctrl+C` elimina la máquina; por ello el resto del trabajo se realizó en una segunda terminal, conservando la primera como "ancla" del laboratorio.
+La máquina vulnerable se obtuvo de la plataforma educativa DockerLabs, que publica máquinas intencionalmente vulnerables para fines formativos junto con sus instrucciones de despliegue (Figura 2). Esta procedencia es relevante para el marco ético: el objetivo es un artefacto didáctico, concebido para ser atacado en un laboratorio.
 
 **Figura 2**
 
-*Descompresión del paquete, asignación de permisos y despliegue de la máquina vulnerable*
+*Procedencia del objetivo: descarga e instrucciones de despliegue en DockerLabs*
+
+![](evidencias/cap04.png){ width=6.3in }
+
+*Nota.* La máquina es un recurso educativo; sus instrucciones oficiales indican el despliegue con `auto_deploy.sh` y la IP asignada.
+
+Tras descomprimir el paquete y otorgar permisos de ejecución (`chmod +x`), se obtuvieron el script `auto_deploy.sh` y la imagen `borazuwarahctf.tar` (Figura 3). El despliegue (`sudo ./auto_deploy.sh borazuwarahctf.tar`) importó la imagen y asignó al contenedor la dirección `172.17.0.2`. Conviene subrayar que el script deja la terminal ocupada y advierte que `Ctrl+C` elimina la máquina; por ello el resto del trabajo se realizó en una segunda terminal, conservando la primera como "ancla" del laboratorio.
+
+**Figura 3**
+
+*Descompresión del paquete y asignación de permisos de ejecución*
 
 ![](evidencias/cap11.png){ width=6.3in }
 
 *Nota.* `unzip` genera `auto_deploy.sh` y `borazuwarahctf.tar`; `chmod +x` habilita la ejecución del script de despliegue.
 
-La conectividad con el objetivo se verificó con `ping` (cuatro paquetes, 0 % de pérdida, latencia media inferior a 0,1 ms), confirmando que el contenedor estaba activo y alcanzable dentro de la red interna de Docker (Figura 3).
+La conectividad con el objetivo se verificó con `ping` (cuatro paquetes, 0 % de pérdida, latencia media inferior a 0,1 ms), confirmando que el contenedor estaba activo y alcanzable dentro de la red interna de Docker (Figura 4).
 
-**Figura 3**
+**Figura 4**
 
 *Despliegue exitoso con IP 172.17.0.2 y verificación de conectividad con ping*
 
@@ -70,9 +80,9 @@ La conectividad con el objetivo se verificó con `ping` (cuatro paquetes, 0 % de
 
 *Nota.* La respuesta sin pérdida de paquetes valida el enlace de red antes de iniciar la enumeración.
 
-El direccionamiento del laboratorio se confirmó con `ip a` (interfaz `docker0` y pares `veth`) y `docker ps`, que listó el contenedor `borazuwarahctf_container` en ejecución (Figura 4). Este paso es relevante en términos metodológicos: antes de enumerar se debe comprender la topología, distinguir el host de la VM del objetivo y asegurarse de operar sobre la IP correcta.
+El direccionamiento del laboratorio se confirmó con `ip a` (interfaz `docker0` y pares `veth`) y `docker ps`, que listó el contenedor `borazuwarahctf_container` en ejecución (Figura 5). Este paso es relevante en términos metodológicos: antes de enumerar se debe comprender la topología, distinguir el host de la VM del objetivo y asegurarse de operar sobre la IP correcta.
 
-**Figura 4**
+**Figura 5**
 
 *Direccionamiento de la red de laboratorio (ip a) y contenedor activo (docker ps)*
 
@@ -82,9 +92,9 @@ El direccionamiento del laboratorio se confirmó con `ip a` (interfaz `docker0` 
 
 ## 3.2 Reconocimiento y enumeración de servicios
 
-El reconocimiento activo se realizó con Nmap en dos variantes complementarias (Figura 5). El escaneo agresivo `nmap -sC -sV --min-rate 5000 172.17.0.2` ejecuta los scripts NSE por defecto (`-sC`), identifica versiones (`-sV`) y acelera el envío de paquetes (`--min-rate 5000`). Reportó dos servicios expuestos: **`22/tcp` OpenSSH 9.2p1 Debian 2+deb12u2** y **`80/tcp` Apache httpd 2.4.59 (Debian)**, además de las claves de host SSH (ECDSA y ED25519) y la ausencia de título en la página web. La variante sigilosa `sudo nmap -sS -sV 172.17.0.2` (escaneo SYN, que no completa la conexión TCP) confirmó el mismo resultado con menor "ruido" y sin aceleración forzada.
+El reconocimiento activo se realizó con Nmap en dos variantes complementarias (Figura 6). El escaneo agresivo `nmap -sC -sV --min-rate 5000 172.17.0.2` ejecuta los scripts NSE por defecto (`-sC`), identifica versiones (`-sV`) y acelera el envío de paquetes (`--min-rate 5000`). Reportó dos servicios expuestos: **`22/tcp` OpenSSH 9.2p1 Debian 2+deb12u2** y **`80/tcp` Apache httpd 2.4.59 (Debian)**, además de las claves de host SSH (ECDSA y ED25519) y la ausencia de título en la página web. La variante sigilosa `sudo nmap -sS -sV 172.17.0.2` (escaneo SYN, que no completa la conexión TCP) confirmó el mismo resultado con menor "ruido" y sin aceleración forzada.
 
-**Figura 5**
+**Figura 6**
 
 *Enumeración de servicios: escaneo agresivo (-sC -sV --min-rate) y escaneo sigiloso (-sS)*
 
@@ -96,9 +106,9 @@ La diferencia entre ambos escaneos tiene valor didáctico y operativo. El escane
 
 ## 3.3 Exploración del servicio web y fuga de información
 
-Con solo dos puertos abiertos, y sin acceso directo por SSH, la superficie de ataque se concentró en el servicio web. La petición `curl -I http://172.17.0.2` devolvió `HTTP/1.1 200 OK`, servidor `Apache/2.4.59 (Debian)` y un `Content-Length` de apenas 50 bytes (Figura 6), lo que anticipaba una página mínima. En efecto, al abrirla en el navegador se mostró únicamente una imagen (un "Kinder Sorpresa", Figura 7): un recurso aparentemente inocuo que, como se verá, contenía la pista decisiva.
+Con solo dos puertos abiertos, y sin acceso directo por SSH, la superficie de ataque se concentró en el servicio web. La petición `curl -I http://172.17.0.2` devolvió `HTTP/1.1 200 OK`, servidor `Apache/2.4.59 (Debian)` y un `Content-Length` de apenas 50 bytes (Figura 7), lo que anticipaba una página mínima. En efecto, al abrirla en el navegador se mostró únicamente una imagen (un "Kinder Sorpresa", Figura 8): un recurso aparentemente inocuo que, como se verá, contenía la pista decisiva.
 
-**Figura 6**
+**Figura 7**
 
 *Cabeceras HTTP del servicio web (curl -I): Apache 2.4.59 y respuesta de 50 bytes*
 
@@ -106,7 +116,7 @@ Con solo dos puertos abiertos, y sin acceso directo por SSH, la superficie de at
 
 *Nota.* La cabecera `Content-Length: 50` sugiere una página sin apenas contenido textual, orientando la búsqueda hacia recursos embebidos.
 
-**Figura 7**
+**Figura 8**
 
 *Contenido del servicio web: imagen publicada en la raíz del sitio*
 
@@ -114,9 +124,9 @@ Con solo dos puertos abiertos, y sin acceso directo por SSH, la superficie de at
 
 *Nota.* Un recurso visualmente trivial puede ser un portador de información (esteganografía o metadatos); no debe descartarse en la enumeración.
 
-Para localizar el nombre exacto del recurso se inspeccionó el código fuente con `curl -s http://172.17.0.2/ | grep -iE 'src=|href=|img'`, que reveló `<img src='imagen.jpeg'>`. A continuación se descargó el archivo con `wget` (18 667 bytes, imagen JPEG 455×455) para analizarlo localmente (Figura 8). Descargar la evidencia en lugar de examinarla en línea es una buena práctica: permite el análisis forense sin dejar rastro adicional en el servidor y preserva el artefacto original.
+Para localizar el nombre exacto del recurso se inspeccionó el código fuente con `curl -s http://172.17.0.2/ | grep -iE 'src=|href=|img'`, que reveló `<img src='imagen.jpeg'>`. A continuación se descargó el archivo con `wget` (18 667 bytes, imagen JPEG 455×455) para analizarlo localmente (Figura 9). Descargar la evidencia en lugar de examinarla en línea es una buena práctica: permite el análisis forense sin dejar rastro adicional en el servidor y preserva el artefacto original.
 
-**Figura 8**
+**Figura 9**
 
 *Identificación del recurso (curl + grep) y descarga del archivo con wget*
 
@@ -124,9 +134,9 @@ Para localizar el nombre exacto del recurso se inspeccionó el código fuente co
 
 *Nota.* `grep` sobre el HTML revela el nombre `imagen.jpeg`; `wget` lo descarga para su análisis offline.
 
-El análisis de metadatos con `exiftool imagen.jpeg` fue el punto de inflexión del laboratorio (Figura 9). Los campos EXIF/XMP contenían información deliberadamente filtrada: el campo *Description* incluía `User: borazuwarah` y el campo *Title* anunciaba `Password:` (vacío en el metadato). Es decir, la imagen revelaba directamente un **nombre de usuario válido** del sistema, reduciendo el problema de autenticación a la mitad: ya no era necesario adivinar usuario y contraseña, sino únicamente la contraseña.
+El análisis de metadatos con `exiftool imagen.jpeg` fue el punto de inflexión del laboratorio (Figura 10). Los campos EXIF/XMP contenían información deliberadamente filtrada: el campo *Description* incluía `User: borazuwarah` y el campo *Title* anunciaba `Password:` (vacío en el metadato). Es decir, la imagen revelaba directamente un **nombre de usuario válido** del sistema, reduciendo el problema de autenticación a la mitad: ya no era necesario adivinar usuario y contraseña, sino únicamente la contraseña.
 
-**Figura 9**
+**Figura 10**
 
 *Análisis de metadatos con Exiftool (usuario filtrado) e inicio de la fuerza bruta con Hydra*
 
@@ -136,11 +146,11 @@ El análisis de metadatos con `exiftool imagen.jpeg` fue el punto de inflexión 
 
 ## 3.4 Acceso autorizado por fuerza bruta y acceso inicial
 
-Con el usuario conocido, se ejecutó una prueba de credenciales autorizada contra SSH: `hydra -l borazuwarah -P /usr/share/wordlists/rockyou.txt.gz ssh://172.17.0.2 -t 64`. Hydra identificó la credencial `borazuwarah:123456` casi instantáneamente (Figura 9), pues `123456` es la primera entrada del diccionario `rockyou`, el conjunto de contraseñas filtradas más utilizado en pruebas de seguridad. Este resultado evidencia de forma contundente el riesgo de las **contraseñas triviales**: ninguna complejidad criptográfica protege una clave que figura en la primera línea de un diccionario público.
+Con el usuario conocido, se ejecutó una prueba de credenciales autorizada contra SSH: `hydra -l borazuwarah -P /usr/share/wordlists/rockyou.txt.gz ssh://172.17.0.2 -t 64`. Hydra identificó la credencial `borazuwarah:123456` casi instantáneamente (Figura 10), pues `123456` es la primera entrada del diccionario `rockyou`, el conjunto de contraseñas filtradas más utilizado en pruebas de seguridad. Este resultado evidencia de forma contundente el riesgo de las **contraseñas triviales**: ninguna complejidad criptográfica protege una clave que figura en la primera línea de un diccionario público.
 
-El acceso se materializó con `ssh borazuwarah@172.17.0.2`. La sesión inició correctamente en el contenedor, cuyo nombre de host es `27e578921d7d` (Figura 10). La inspección del entorno con `env` confirmó la identidad de la sesión y la conexión entrante desde `172.17.0.1` (el host) hacia `172.17.0.2:22`.
+El acceso se materializó con `ssh borazuwarah@172.17.0.2`. La sesión inició correctamente en el contenedor, cuyo nombre de host es `27e578921d7d` (Figura 11). La inspección del entorno con `env` confirmó la identidad de la sesión y la conexión entrante desde `172.17.0.1` (el host) hacia `172.17.0.2:22`.
 
-**Figura 10**
+**Figura 11**
 
 *Acceso inicial por SSH con las credenciales obtenidas y revisión del entorno*
 
@@ -148,9 +158,9 @@ El acceso se materializó con `ssh borazuwarah@172.17.0.2`. La sesión inició c
 
 *Nota.* La sesión se establece como `borazuwarah@27e578921d7d`; `SSH_CONNECTION` documenta el origen y destino de la conexión.
 
-El reconocimiento interno (`whoami`, `id`, `hostname`, `pwd`, `ls -la`) situó al atacante en el contexto del sistema (Figura 11). El dato crítico lo aportó `id`: el usuario `borazuwarah` (uid 1000) pertenece al grupo **`27(sudo)`**. La pertenencia a este grupo es, en Debian, la puerta a la administración total del sistema, y constituyó el vector de escalada de privilegios.
+El reconocimiento interno (`whoami`, `id`, `hostname`, `pwd`, `ls -la`) situó al atacante en el contexto del sistema (Figura 12). El dato crítico lo aportó `id`: el usuario `borazuwarah` (uid 1000) pertenece al grupo **`27(sudo)`**. La pertenencia a este grupo es, en Debian, la puerta a la administración total del sistema, y constituyó el vector de escalada de privilegios.
 
-**Figura 11**
+**Figura 12**
 
 *Post-explotación: identificación de contexto (whoami, id, hostname, pwd, ls -la)*
 
@@ -160,9 +170,9 @@ El reconocimiento interno (`whoami`, `id`, `hostname`, `pwd`, `ls -la`) situó a
 
 ## 3.5 Escalada de privilegios y demostración de impacto
 
-La escalada se consumó con `sudo su`, que —tras solicitar la contraseña del propio usuario— otorgó una shell de `root` (uid 0) en el contenedor (Figura 12). La verificación posterior de la política con `sudo -l` confirmó la causa raíz: la configuración de `sudoers` permitía ejecutar **todos** los comandos (`(ALL : ALL) ALL`). En términos de seguridad, un usuario estándar con capacidad de convertirse en `root` sin restricciones anula por completo la separación de privilegios.
+La escalada se consumó con `sudo su`, que —tras solicitar la contraseña del propio usuario— otorgó una shell de `root` (uid 0) en el contenedor (Figura 13). La verificación de la política con `sudo -l` confirmó la causa raíz: la configuración de `sudoers` permitía ejecutar **todos** los comandos (`(ALL : ALL) ALL`), como se observa en la Figura 14. En términos de seguridad, un usuario estándar con capacidad de convertirse en `root` sin restricciones anula por completo la separación de privilegios.
 
-**Figura 12**
+**Figura 13**
 
 *Escalada de privilegios a root mediante sudo su*
 
@@ -170,9 +180,17 @@ La escalada se consumó con `sudo su`, que —tras solicitar la contraseña del 
 
 *Nota.* El cambio de `borazuwarah` (uid 1000) a `root` (uid 0) completa el compromiso total de la máquina.
 
-Para dimensionar el impacto de un compromiso con privilegios de `root`, se demostró —dentro del laboratorio— una acción de persistencia típica: la creación de un usuario de puerta trasera con `adduser backdoor` (Figura 13). Un atacante con `root` puede crear cuentas, alterar servicios, borrar registros o instalar implantes; esta demostración ilustra por qué la contención del privilegio es el control más determinante. El usuario creado quedó visible posteriormente en `/etc/passwd` (`backdoor:x:1001:1001`).
+**Figura 14**
 
-**Figura 13**
+*Verificación de la política de privilegios con sudo -l (permiso total ALL : ALL)*
+
+![](evidencias/cap26.png){ width=6.3in }
+
+*Nota.* La política `(ALL : ALL) ALL` es la causa raíz de la escalada: viola el principio de mínimo privilegio.
+
+Para dimensionar el impacto de un compromiso con privilegios de `root`, se demostró —dentro del laboratorio— una acción de persistencia típica: la creación de un usuario de puerta trasera con `adduser backdoor` (Figura 15). Un atacante con `root` puede crear cuentas, alterar servicios, borrar registros o instalar implantes; esta demostración ilustra por qué la contención del privilegio es el control más determinante. El usuario creado quedó visible posteriormente en `/etc/passwd` (`backdoor:x:1001:1001`).
+
+**Figura 15**
 
 *Demostración de impacto: creación de un usuario de puerta trasera (persistencia)*
 
@@ -180,11 +198,11 @@ Para dimensionar el impacto de un compromiso con privilegios de `root`, se demos
 
 *Nota.* Con privilegios de `root`, la creación de cuentas persistentes es inmediata; evidencia el valor de limitar quién puede escalar.
 
-## 3.6 Profundización técnica (perfil avanzado)
+## 3.6 Profundización técnica
 
-Más allá del recorrido mínimo, se aplicó una metodología profesional de reconocimiento y manejo de evidencia. Se estableció un espacio de trabajo ordenado (`mkdir -p {nmap,web,loot,logs}`) y se registró la sesión completa con `script`, de modo que cada comando y su salida quedaran trazados con marca de tiempo (Figura 14). Los escaneos se guardaron en los tres formatos de Nmap con `-oA` (texto, *grepable* y XML), práctica que permite el posproceso y la reproducibilidad.
+El reconocimiento y el manejo de la evidencia se abordaron con una metodología sistemática y reproducible. Se estableció un espacio de trabajo ordenado (`mkdir -p {nmap,web,loot,logs}`) y se registró la sesión completa con `script`, de modo que cada comando y su salida quedaran trazados con marca de tiempo (Figura 16). Los escaneos se guardaron en los tres formatos de Nmap con `-oA` (texto, *grepable* y XML), práctica que permite el posproceso y la reproducibilidad.
 
-**Figura 14**
+**Figura 16**
 
 *Espacio de trabajo estructurado, registro de sesión y escaneo guardado con nmap -oA*
 
@@ -192,9 +210,9 @@ Más allá del recorrido mínimo, se aplicó una metodología profesional de rec
 
 *Nota.* `-oA` genera simultáneamente `.nmap`, `.gnmap` y `.xml`; la salida estructurada es la base de una evidencia profesional.
 
-Se amplió el reconocimiento con un barrido completo de los 65 535 puertos TCP (`nmap -p-`) y con un escaneo de los 20 puertos UDP más comunes (`sudo nmap -sU --top-ports 20`), mostrados en la Figura 15. El barrido completo confirmó que **no existen puertos ocultos** más allá del 22 y el 80 —dato relevante, pues el escaneo por defecto solo cubre los 1000 más frecuentes—, y el escaneo UDP no reveló servicios reales (los estados `open|filtered` corresponden a puertos sin respuesta, no a servicios activos). Esta exhaustividad descarta vías alternativas y refuerza que la superficie real se limita a SSH y HTTP.
+Se amplió el reconocimiento con un barrido completo de los 65 535 puertos TCP (`nmap -p-`) y con un escaneo de los 20 puertos UDP más comunes (`sudo nmap -sU --top-ports 20`), mostrados en la Figura 17. El barrido completo confirmó que **no existen puertos ocultos** más allá del 22 y el 80 —dato relevante, pues el escaneo por defecto solo cubre los 1000 más frecuentes—, y el escaneo UDP no reveló servicios reales (los estados `open|filtered` corresponden a puertos sin respuesta, no a servicios activos). Esta exhaustividad descarta vías alternativas y refuerza que la superficie real se limita a SSH y HTTP.
 
-**Figura 15**
+**Figura 17**
 
 *Barrido completo de puertos TCP (-p-) y escaneo de puertos UDP (-sU)*
 
@@ -202,9 +220,9 @@ Se amplió el reconocimiento con un barrido completo de los 65 535 puertos TCP (
 
 *Nota.* El `-p-` descarta puertos ocultos; el `-sU` confirma la ausencia de servicios UDP explotables.
 
-Se complementó con scripts NSE de enumeración web (`http-enum`, `http-headers`, `http-title`) y se transformó el XML de Nmap en un informe HTML presentable mediante `xsltproc` (Figura 16), evidenciando un flujo de reporte reutilizable. El conjunto de salidas estructuradas quedó organizado en el directorio `nmap/` (Figura 17), con los tres formatos por cada escaneo.
+Se complementó con scripts NSE de enumeración web (`http-enum`, `http-headers`, `http-title`) y se transformó el XML de Nmap en un informe HTML presentable mediante `xsltproc` (Figura 18), evidenciando un flujo de reporte reutilizable. El conjunto de salidas estructuradas quedó organizado en el directorio `nmap/` (Figura 19), con los tres formatos por cada escaneo.
 
-**Figura 16**
+**Figura 18**
 
 *Scripts NSE de enumeración web y generación de informe HTML con xsltproc*
 
@@ -212,7 +230,7 @@ Se complementó con scripts NSE de enumeración web (`http-enum`, `http-headers`
 
 *Nota.* `xsltproc` convierte el XML de Nmap en un informe navegable, útil para la documentación y la entrega a terceros.
 
-**Figura 17**
+**Figura 19**
 
 *Evidencia estructurada: salidas de escaneo guardadas en múltiples formatos*
 
@@ -220,9 +238,9 @@ Se complementó con scripts NSE de enumeración web (`http-enum`, `http-headers`
 
 *Nota.* Conservar `.nmap/.gnmap/.xml/.html` por cada escaneo garantiza trazabilidad y permite el posproceso automatizado.
 
-La enumeración web se profundizó con tres herramientas especializadas (Figura 18): `whatweb` identificó la tecnología (`Apache/2.4.59`, Debian Linux); `nikto` ejecutó una batería de comprobaciones de configuraciones inseguras; y `gobuster` realizó fuerza bruta de rutas con el diccionario `dirb/common.txt`, encontrando `index.html` (200) y rutas protegidas como `.htaccess` y `server-status` (403). La ausencia de rutas sensibles expuestas confirma que el vector previsto era la imagen, no una ruta oculta.
+La enumeración web se profundizó con tres herramientas especializadas (Figura 20): `whatweb` identificó la tecnología (`Apache/2.4.59`, Debian Linux); `nikto` ejecutó una batería de comprobaciones de configuraciones inseguras; y `gobuster` realizó fuerza bruta de rutas con el diccionario `dirb/common.txt`, encontrando `index.html` (200) y rutas protegidas como `.htaccess` y `server-status` (403). La ausencia de rutas sensibles expuestas confirma que el vector previsto era la imagen, no una ruta oculta.
 
-**Figura 18**
+**Figura 20**
 
 *Enumeración web en profundidad con WhatWeb, Nikto y Gobuster*
 
@@ -230,19 +248,27 @@ La enumeración web se profundizó con tres herramientas especializadas (Figura 
 
 *Nota.* La combinación de huellado (WhatWeb), auditoría (Nikto) y descubrimiento de rutas (Gobuster) cubre la superficie web de forma sistemática.
 
-Como parte del análisis de vulnerabilidades, se correlacionaron las versiones detectadas con la base de datos Exploit-DB mediante `searchsploit` (Figura 19). La consulta para OpenSSH 9.2 no arrojó exploits, y la de Apache 2.4.59 devolvió únicamente resultados históricos aplicables a versiones muy anteriores. Esta verificación es metodológicamente importante porque **confirma que el compromiso no se debió a un fallo de software**: ni SSH ni Apache presentaban vulnerabilidades explotables en sus versiones instaladas. La brecha fue, en su totalidad, de **configuración y factor humano**.
+Como parte del análisis de vulnerabilidades, se correlacionaron las versiones detectadas con la base de datos Exploit-DB mediante `searchsploit`. La consulta para OpenSSH 9.2 no arrojó ningún exploit (Figura 21), y la de Apache 2.4.59 devolvió únicamente resultados históricos aplicables a versiones muy anteriores (Figura 22). Esta verificación es metodológicamente importante porque **confirma que el compromiso no se debió a un fallo de software**: ni SSH ni Apache presentaban vulnerabilidades explotables en sus versiones instaladas. La brecha fue, en su totalidad, de **configuración y factor humano**.
 
-**Figura 19**
+**Figura 21**
 
-*Correlación de versiones con exploits conocidos (searchsploit)*
+*Correlación de OpenSSH 9.2 con Exploit-DB (searchsploit): sin exploits aplicables*
+
+![](evidencias/cap33.png){ width=6.3in }
+
+*Nota.* "No Results" para OpenSSH 9.2 descarta la vía de un exploit de servicio; el servicio estaba actualizado.
+
+**Figura 22**
+
+*Correlación de Apache 2.4.59 con Exploit-DB (solo resultados históricos)*
 
 ![](evidencias/cap34.png){ width=6.3in }
 
-*Nota.* La ausencia de exploits aplicables demuestra que la causa raíz no es un CVE, sino la fuga de credenciales y la configuración laxa.
+*Nota.* Los resultados corresponden a versiones antiguas; ninguno aplica a la 2.4.59, reforzando que la causa fue de configuración.
 
-La prueba de fuerza bruta se documentó con opciones profesionales (`-V` verboso, `-f` detención al primer acierto, `-o` guardado del resultado), confirmando `borazuwarah:123456` (Figura 20). Ya con acceso de `root`, se realizó una enumeración interna orientada a la escalada y a la comprensión del sistema: versión del kernel y distribución (`uname -a`, `cat /etc/os-release` → Debian 12 "bookworm"), usuarios del sistema (`/etc/passwd`), binarios con bit SUID (`find / -perm -4000 -type f`) y tareas programadas (`/etc/cron.*`), mostrados en las Figuras 21 y 22.
+La prueba de fuerza bruta se documentó con opciones profesionales (`-V` verboso, `-f` detención al primer acierto, `-o` guardado del resultado), confirmando `borazuwarah:123456` (Figura 23). Ya con acceso de `root`, se realizó una enumeración interna orientada a la escalada y a la comprensión del sistema: versión del kernel y distribución (`uname -a`, `cat /etc/os-release` → Debian 12 "bookworm"), usuarios del sistema (`/etc/passwd`), binarios con bit SUID (`find / -perm -4000 -type f`) y tareas programadas (`/etc/cron.*`), mostrados en las Figuras 24 y 25.
 
-**Figura 20**
+**Figura 23**
 
 *Fuerza bruta documentada con Hydra (-V -f -o) y credencial confirmada*
 
@@ -250,7 +276,7 @@ La prueba de fuerza bruta se documentó con opciones profesionales (`-V` verboso
 
 *Nota.* El resultado se persiste en `loot/hydra_ssh.txt`; `-f` detiene la prueba al hallar la primera credencial válida.
 
-**Figura 21**
+**Figura 24**
 
 *Enumeración interna del sistema comprometido (uname, os-release, passwd)*
 
@@ -258,7 +284,7 @@ La prueba de fuerza bruta se documentó con opciones profesionales (`-V` verboso
 
 *Nota.* Caracterizar el sistema (Debian 12, kernel Kali) orienta las vías de escalada y el inventario de cuentas.
 
-**Figura 22**
+**Figura 25**
 
 *Enumeración de binarios SUID y tareas programadas como vías potenciales de escalada*
 
@@ -266,9 +292,9 @@ La prueba de fuerza bruta se documentó con opciones profesionales (`-V` verboso
 
 *Nota.* La revisión de SUID y `cron` es la enumeración estándar de escalada; en este caso la vía efectiva fue la pertenencia al grupo `sudo`.
 
-Finalmente, se garantizó la **integridad de la evidencia** calculando el hash SHA-256 de todos los artefactos recolectados (`sha256sum ... > loot/HASHES.txt`), como se observa en la Figura 23. Este paso materializa el principio de Integridad del CID aplicado al propio trabajo forense: cualquier alteración posterior de un archivo de evidencia sería detectable al recomputar su hash, lo que sustenta una eventual cadena de custodia.
+Finalmente, se garantizó la **integridad de la evidencia** calculando el hash SHA-256 de todos los artefactos recolectados (`sha256sum ... > loot/HASHES.txt`), como se observa en la Figura 26. Este paso materializa el principio de Integridad del CID aplicado al propio trabajo forense: cualquier alteración posterior de un archivo de evidencia sería detectable al recomputar su hash, lo que sustenta una eventual cadena de custodia.
 
-**Figura 23**
+**Figura 26**
 
 *Verificación de integridad de la evidencia mediante hash SHA-256*
 
@@ -317,19 +343,35 @@ El archivo de despliegue define dos servicios —`db` (MySQL 5.7) y `wordpress` 
 
 ## 4.2 Despliegue del entorno
 
-Tras verificar que el servicio Docker estaba activo (`systemctl status docker`), el primer intento de `docker-compose up -d` indicó que el binario no estaba instalado; se procedió a instalar el paquete `docker-compose` (versión 2.40.3), como muestra la Figura 24. Este detalle, lejos de ser un error, documenta fielmente la resolución de dependencias del entorno.
+El entorno se preparó en un directorio dedicado (`wpcron`), donde se ubicó el archivo `docker-compose.yaml` proporcionado por el docente (Figura 27). Tras verificar que el servicio Docker estaba activo (`systemctl status docker`, Figura 28), el primer intento de `docker-compose up -d` indicó que el binario no estaba instalado; se procedió a instalar el paquete `docker-compose` (versión 2.40.3), como muestra la Figura 29. Este detalle, lejos de ser un error, documenta fielmente la resolución de dependencias del entorno.
 
-**Figura 24**
+**Figura 27**
 
-*Verificación del servicio Docker e instalación del paquete docker-compose*
+*Preparación del directorio de trabajo y del archivo docker-compose.yaml*
+
+![](evidencias/cap06.png){ width=6.3in }
+
+*Nota.* El `docker-compose.yaml` entregado por el docente es la pieza que sustituye a la antigua máquina `cron-kill`.
+
+**Figura 28**
+
+*Verificación del estado del servicio Docker (systemctl status docker)*
+
+![](evidencias/cap41.png){ width=6.3in }
+
+*Nota.* El demonio Docker debe estar activo antes de orquestar los contenedores; aquí figura `active (running)`.
+
+**Figura 29**
+
+*Instalación del paquete docker-compose*
 
 ![](evidencias/cap42.png){ width=6.3in }
 
-*Nota.* La instalación de `docker-compose` es el requisito previo para orquestar los contenedores del laboratorio.
+*Nota.* La instalación de `docker-compose` (v2.40.3) es el requisito previo para orquestar los contenedores del laboratorio.
 
-La ejecución de `docker-compose up -d` descargó las imágenes y levantó la pila: red `wpcron_default`, volumen `wpcron_db_data` y los contenedores `wpcron-db-1` y `wpcron-wordpress-1`, todos en estado *Started* (Figura 25). La verificación con `docker ps` y `docker-compose ps` confirmó ambos contenedores en ejecución, con el servicio web publicado en `0.0.0.0:80->80/tcp` (Figura 26).
+La ejecución de `docker-compose up -d` descargó las imágenes y levantó la pila: red `wpcron_default`, volumen `wpcron_db_data` y los contenedores `wpcron-db-1` y `wpcron-wordpress-1`, todos en estado *Started* (Figura 30). La verificación con `docker ps` y `docker-compose ps` confirmó ambos contenedores en ejecución, con el servicio web publicado en `0.0.0.0:80->80/tcp` (Figura 31).
 
-**Figura 25**
+**Figura 30**
 
 *Despliegue de la pila WordPress + MySQL con docker-compose up -d*
 
@@ -337,7 +379,7 @@ La ejecución de `docker-compose up -d` descargó las imágenes y levantó la pi
 
 *Nota.* "Running 4/4" confirma la creación de red, volumen y los dos contenedores del servicio.
 
-**Figura 26**
+**Figura 31**
 
 *Verificación de contenedores en ejecución (docker ps / docker-compose ps)*
 
@@ -345,9 +387,9 @@ La ejecución de `docker-compose up -d` descargó las imágenes y levantó la pi
 
 *Nota.* El puerto 80 del contenedor se publica en el host; `wpcron-wordpress-1` y `wpcron-db-1` están operativos.
 
-Para disponer de una línea base realista, se completó la instalación de WordPress desde el navegador (`http://localhost/wp-admin/install.php`), configurando el sitio "WebSite Testing" y el usuario administrador (Figura 27). Una vez instalado, el panel de administración confirmó la versión **WordPress 7.1.3** (Figura 28) y el sitio público quedó operativo mostrando la entrada por defecto "¡Hola mundo!" (Figura 30). Completar la instalación es importante metodológicamente: un WordPress operativo ejecuta tareas reales en `wp-cron.php`, lo que hace la prueba representativa.
+Para disponer de una línea base realista, se completó la instalación de WordPress desde el navegador (`http://localhost/wp-admin/install.php`), configurando el sitio "WebSite Testing" y el usuario administrador (Figura 32). Una vez instalado, el panel de administración confirmó la versión **WordPress 7.1.3** (Figura 33). Completar la instalación es importante metodológicamente: un WordPress operativo ejecuta tareas reales en `wp-cron.php`, lo que hace la prueba representativa.
 
-**Figura 27**
+**Figura 32**
 
 *Configuración de la instalación de WordPress (sitio, usuario administrador)*
 
@@ -355,7 +397,7 @@ Para disponer de una línea base realista, se completó la instalación de WordP
 
 *Nota.* La instalación guiada deja el sitio operativo y con tareas programadas reales, condición para una prueba representativa.
 
-**Figura 28**
+**Figura 33**
 
 *Panel de administración de WordPress 7.1.3 tras la instalación*
 
@@ -365,9 +407,9 @@ Para disponer de una línea base realista, se completó la instalación de WordP
 
 ## 4.3 Exposición del endpoint y línea base
 
-El endpoint `wp-cron.php` es el *pseudo-cron* de WordPress: un script que ejecuta las tareas programadas del sitio y que, por diseño, se dispara en cada visita. Al abrirlo directamente (`http://localhost/wp-cron.php`) responde con una página en blanco (Figura 29), comportamiento normal que confirma que el endpoint es **accesible públicamente y sin autenticación**. Esta accesibilidad, inofensiva en condiciones normales, es la que lo convierte en un vector de consumo de recursos cuando se invoca de forma repetida y concurrente.
+El endpoint `wp-cron.php` es el *pseudo-cron* de WordPress: un script que ejecuta las tareas programadas del sitio y que, por diseño, se dispara en cada visita. Al abrirlo directamente (`http://localhost/wp-cron.php`) responde con una página en blanco (Figura 34), comportamiento normal que confirma que el endpoint es **accesible públicamente y sin autenticación**. Esta accesibilidad, inofensiva en condiciones normales, es la que lo convierte en un vector de consumo de recursos cuando se invoca de forma repetida y concurrente. El sitio público, por su parte, respondía con normalidad (Figura 35), estableciendo el estado de referencia.
 
-**Figura 29**
+**Figura 34**
 
 *Exposición del endpoint wp-cron.php (respuesta en blanco, accesible sin autenticación)*
 
@@ -375,7 +417,7 @@ El endpoint `wp-cron.php` es el *pseudo-cron* de WordPress: un script que ejecut
 
 *Nota.* La página en blanco indica que el endpoint ejecuta y responde; su accesibilidad pública es el elemento clave del vector.
 
-**Figura 30**
+**Figura 35**
 
 *Sitio público operativo "WebSite Testing" (línea base de disponibilidad)*
 
@@ -383,9 +425,9 @@ El endpoint `wp-cron.php` es el *pseudo-cron* de WordPress: un script que ejecut
 
 *Nota.* Estado de referencia: el sitio responde con normalidad antes de la prueba de carga.
 
-La línea base de recursos se estableció con `docker stats` en reposo: el contenedor `wordpress` consumía **0,00 % de CPU y 121,2 MiB de memoria (23,68 %)** (Figura 31). En paralelo, las cabeceras de `curl -I` confirmaron que el servicio respondía con normalidad (`HTTP/1.1 200 OK` para `wp-cron.php`), estableciendo el punto de comparación objetivo para la fase de carga.
+La línea base de recursos se estableció con `docker stats` en reposo: el contenedor `wordpress` consumía **0,00 % de CPU y 121,2 MiB de memoria (23,68 %)** (Figura 36). En paralelo, las cabeceras de `curl -I` confirmaron que el servicio respondía con normalidad (`HTTP/1.1 200 OK` para `wp-cron.php`), estableciendo el punto de comparación objetivo para la fase de carga.
 
-**Figura 31**
+**Figura 36**
 
 *Monitoreo en reposo (docker stats) y cabeceras de referencia (curl -I)*
 
@@ -395,9 +437,9 @@ La línea base de recursos se estableció con `docker stats` en reposo: el conte
 
 ## 4.4 Prueba de carga controlada y observación del impacto
 
-La prueba se ejecutó con ApacheBench: `ab -n 5000 -c 50 -k -H "Accept-Encoding: gzip, deflate" http://localhost/wp-cron.php`, es decir, 5000 solicitudes con 50 conexiones concurrentes y *keep-alive*. Desde el primer momento, el monitoreo en vivo mostró el efecto: la CPU del contenedor `wordpress` saltó de 0 % a cerca del **49 %** (Figura 32) y la memoria comenzó a ascender, alcanzando el **66 %** mientras ApacheBench completaba las primeras 1000 solicitudes (Figura 33).
+La prueba se ejecutó con ApacheBench: `ab -n 5000 -c 50 -k -H "Accept-Encoding: gzip, deflate" http://localhost/wp-cron.php`, es decir, 5000 solicitudes con 50 conexiones concurrentes y *keep-alive*. El monitoreo en vivo documentó la progresión del consumo. En el instante inicial, la CPU del contenedor `wordpress` saltó de 0 % a cerca del **49 %** (Figura 37); a medida que ApacheBench avanzaba, la memoria ascendió al **66 %** (Figura 38) y se mantuvo en ese rango mientras el consumo de CPU permanecía fijo en su techo (Figuras 39 y 40). Esta secuencia de capturas evidencia, en tiempo real, la relación directa entre la concurrencia sostenida y el agotamiento progresivo de los recursos.
 
-**Figura 32**
+**Figura 37**
 
 *Inicio de la prueba de carga (ApacheBench) y primer salto de CPU en docker stats*
 
@@ -405,17 +447,33 @@ La prueba se ejecutó con ApacheBench: `ab -n 5000 -c 50 -k -H "Accept-Encoding:
 
 *Nota.* La CPU pasa de 0 % a ~49 % casi de inmediato; el techo del 50 % corresponde al límite de 0,5 núcleos del contenedor.
 
-**Figura 33**
+**Figura 38**
 
-*Monitoreo durante la carga: CPU ~49 % y memoria en ascenso (66 %)*
+*Progresión del consumo: CPU ~49 % y memoria en 66 % (1000 solicitudes completadas)*
 
 ![](evidencias/cap54.png){ width=6.3in }
 
 *Nota.* El consumo de memoria crece con la concurrencia; la relación carga-recursos se hace visible en tiempo real.
 
-Al finalizar, ApacheBench entregó los resultados cuantitativos (Figura 34): **5000 solicitudes completadas, 0 fallidas**, una tasa de **33,20 solicitudes por segundo**, un tiempo medio por solicitud de **1506 ms** y, lo más revelador, una solicitud más lenta de **10 977 ms** (casi 11 segundos). La distribución de percentiles mostró que el 99 % de las peticiones tardó hasta 3806 ms. El dato de "0 fallidas" es importante para la interpretación: el servicio **no se cae, pero se degrada hasta volverse inutilizable**, que es precisamente la forma en que una denegación de servicio por agotamiento de recursos afecta la disponibilidad real.
+**Figura 39**
 
-**Figura 34**
+*Progresión sostenida del consumo (2500 solicitudes completadas)*
+
+![](evidencias/cap55.png){ width=6.3in }
+
+*Nota.* La CPU se mantiene fija en su techo (~49 %) mientras la carga continúa; la memoria se estabiliza en torno al 66 %.
+
+**Figura 40**
+
+*Progresión del consumo cerca del final de la corrida (4000 solicitudes)*
+
+![](evidencias/cap56.png){ width=6.3in }
+
+*Nota.* El patrón confirma que el límite de CPU del contenedor actúa como cuello de botella durante toda la prueba.
+
+Al finalizar, ApacheBench entregó los resultados cuantitativos (Figura 41): **5000 solicitudes completadas, 0 fallidas**, una tasa de **33,20 solicitudes por segundo**, un tiempo medio por solicitud de **1506 ms** y, lo más revelador, una solicitud más lenta de **10 977 ms** (casi 11 segundos). La distribución de percentiles mostró que el 99 % de las peticiones tardó hasta 3806 ms. El dato de "0 fallidas" es importante para la interpretación: el servicio **no se cae, pero se degrada hasta volverse inutilizable**, que es precisamente la forma en que una denegación de servicio por agotamiento de recursos afecta la disponibilidad real.
+
+**Figura 41**
 
 *Resultados de ApacheBench: 5000 solicitudes, 33,2 req/s, latencia media 1506 ms, máximo 10 977 ms*
 
@@ -423,9 +481,9 @@ Al finalizar, ApacheBench entregó los resultados cuantitativos (Figura 34): **5
 
 *Nota.* La latencia media se multiplica por un factor de ~30 frente a la línea base; la petición más lenta supera los 10 s.
 
-El efecto sobre la experiencia de usuario se verificó intentando cargar el sitio en el navegador durante la prueba: la página quedó en estado de carga, sin responder con fluidez (Figura 35). Una vez finalizada la prueba, el sitio se recuperó y volvió a mostrarse con normalidad (Figura 36), confirmando que la degradación era directamente atribuible a la carga y que el servicio era resiliente una vez cesada.
+El efecto sobre la experiencia de usuario se verificó intentando cargar el sitio en el navegador durante la prueba: la página quedó en estado de carga, sin responder con fluidez (Figura 42). Una vez finalizada la prueba, el sitio se recuperó y volvió a mostrarse con normalidad (Figura 43), confirmando que la degradación era directamente atribuible a la carga y que el servicio era resiliente una vez cesada.
 
-**Figura 35**
+**Figura 42**
 
 *Efecto visible: el sitio no responde con fluidez durante la prueba de carga*
 
@@ -433,7 +491,7 @@ El efecto sobre la experiencia de usuario se verificó intentando cargar el siti
 
 *Nota.* La degradación de disponibilidad es perceptible para el usuario final mientras la prueba está en curso.
 
-**Figura 36**
+**Figura 43**
 
 *Recuperación del servicio una vez finalizada la prueba*
 
@@ -441,19 +499,19 @@ El efecto sobre la experiencia de usuario se verificó intentando cargar el siti
 
 *Nota.* La disponibilidad se restablece al cesar la carga; el impacto es transitorio y acotado al periodo de la prueba.
 
-## 4.5 Profundización técnica (perfil avanzado)
+## 4.5 Profundización técnica
 
-Para sustentar las observaciones con mediciones objetivas, se complementó la prueba con varias técnicas. Primero, se midió la latencia con `curl` de forma directa: bajo carga, el tiempo total de respuesta fue de **7,25 segundos**, frente a **0,045 segundos** una vez recuperado el servicio (Figura 37) —una degradación de dos órdenes de magnitud—. Se formalizó además una plantilla de métricas (`curl-format.txt`) que confirmó una línea base de **0,0488 s** con código 200 (Figura 38), objetivando el "antes" de la comparación.
+Las observaciones anteriores se sustentaron con mediciones objetivas obtenidas mediante varias técnicas complementarias. En primer lugar, se midió la latencia con `curl` de forma directa: bajo carga, el tiempo total de respuesta fue de **7,25 segundos** (Figura 44), frente a los **0,0488 segundos** de la línea base medida con una plantilla de métricas (`curl-format.txt`, Figura 45) —una degradación de dos órdenes de magnitud—. Objetivar el "antes" y el "después" con cifras concretas es preferible a describir la lentitud de forma cualitativa.
 
-**Figura 37**
+**Figura 44**
 
-*Medición de latencia con curl: 7,25 s bajo carga frente a 0,045 s en recuperación*
+*Medición de latencia con curl bajo carga: 7,25 s de tiempo total de respuesta*
 
-![](evidencias/cap61.png){ width=6.3in }
+![](evidencias/cap60.png){ width=6.3in }
 
-*Nota.* La comparación directa de `time_total` cuantifica la degradación mejor que una apreciación subjetiva de "lentitud".
+*Nota.* Frente a los 0,045 s de la línea base, la respuesta tarda 7,25 s: la degradación es objetiva y cuantificada.
 
-**Figura 38**
+**Figura 45**
 
 *Línea base medible con plantilla curl-format (tiempo total 0,0488 s, HTTP 200)*
 
@@ -461,19 +519,19 @@ Para sustentar las observaciones con mediciones objetivas, se complementó la pr
 
 *Nota.* `curl-format.txt` estandariza la medición de conexión, TTFB y tiempo total, útil para comparaciones reproducibles.
 
-Se intentó un reconocimiento del WordPress con `wpscan`; la herramienta requería actualizar su base de datos de vulnerabilidades y abortó el escaneo (Figura 39). Aunque no completó la enumeración, el intento documenta la metodología correcta: identificar versión, plugins y usuarios es el paso previo a evaluar la superficie de ataque de un CMS. En un entorno con conectividad, bastaría `wpscan --update` o el uso de un token de API.
+Se intentó un reconocimiento del WordPress con `wpscan`; la herramienta requería actualizar su base de datos de vulnerabilidades y abortó el escaneo (Figura 46). Aunque no completó la enumeración, el intento documenta la metodología correcta: identificar versión, plugins y usuarios es el paso previo a evaluar la superficie de ataque de un CMS. En un entorno con conectividad, bastaría `wpscan --update` o el uso de un token de API.
 
-**Figura 39**
+**Figura 46**
 
-*Intento de reconocimiento con WPScan (requiere actualización de base de datos)*
+*Reconocimiento del CMS con WPScan (requiere actualización de base de datos)*
 
 ![](evidencias/cap64.png){ width=6.3in }
 
 *Nota.* El escaneo se aborta por falta de base de datos actualizada; se documenta como metodología, no como hallazgo.
 
-Para capturar la dinámica del consumo, se construyó una **serie temporal** muestreando `docker stats` cada dos segundos hacia un archivo CSV (Figura 40). Los datos muestran con claridad la transición: de `0,00 %, 23,67 %` en reposo a `49,22 %, 35,18 %` y `51,82 %, 65,41 %` a medida que la carga se intensifica. Disponer de la serie permite graficar la evolución y correlacionarla con las fases de la prueba, un nivel de evidencia superior a una captura puntual.
+Para capturar la dinámica del consumo, se construyó una **serie temporal** muestreando `docker stats` cada dos segundos hacia un archivo CSV (Figura 47). Los datos muestran con claridad la transición: de `0,00 %, 23,67 %` en reposo a `49,22 %, 35,18 %` y `51,82 %, 65,41 %` a medida que la carga se intensifica, hasta superar el 85 % de memoria (Figura 48). Disponer de la serie permite graficar la evolución y correlacionarla con las fases de la prueba, un nivel de evidencia superior a una captura puntual.
 
-**Figura 40**
+**Figura 47**
 
 *Serie temporal de CPU y memoria (docker stats muestreado a CSV)*
 
@@ -481,9 +539,17 @@ Para capturar la dinámica del consumo, se construyó una **serie temporal** mue
 
 *Nota.* La serie documenta la curva de saturación completa (antes, durante y después), no solo un instante.
 
-La medición se corroboró con una segunda herramienta, `wrk` (4 hilos, 50 conexiones, 30 s), cuyo resultado fue contundente (Figura 41): una **latencia media de 1,43 s**, solo **9,67 solicitudes por segundo** y **213 conexiones expiradas (*timeouts*)**. La aparición de *timeouts* —ausentes en ApacheBench porque este espera indefinidamente— demuestra que, bajo clientes con tiempo de espera acotado (como un navegador real), la saturación se traduce directamente en **errores de conexión**, es decir, en indisponibilidad efectiva. En ese momento la memoria del contenedor alcanzó el **99,97 %**, al borde del agotamiento.
+**Figura 48**
 
-**Figura 41**
+*Continuación de la serie temporal: memoria por encima del 85 % e inicio de la corroboración con wrk*
+
+![](evidencias/cap66.png){ width=6.3in }
+
+*Nota.* La memoria se acerca a su límite mientras se lanza una segunda herramienta de medición en paralelo.
+
+La medición se corroboró con `wrk` (4 hilos, 50 conexiones, 30 s), cuyo resultado fue contundente (Figura 49): una **latencia media de 1,43 s**, solo **9,67 solicitudes por segundo** y **213 conexiones expiradas (*timeouts*)**. La aparición de *timeouts* —ausentes en ApacheBench porque este espera indefinidamente— demuestra que, bajo clientes con tiempo de espera acotado (como un navegador real), la saturación se traduce directamente en **errores de conexión**, es decir, en indisponibilidad efectiva. En ese momento la memoria del contenedor alcanzó el **99,97 %**, al borde del agotamiento.
+
+**Figura 49**
 
 *Corroboración con wrk: 213 timeouts y memoria del contenedor al 99,97 %*
 
@@ -491,9 +557,9 @@ La medición se corroboró con una segunda herramienta, `wrk` (4 hilos, 50 conex
 
 *Nota.* Los *timeouts* de `wrk` representan peticiones efectivamente denegadas; la memoria casi exhausta anticipa un posible fallo del contenedor.
 
-Como evidencia desde el lado del servidor, se guardaron los registros del contenedor (`docker compose logs`) para su análisis posterior (Figura 42), correlacionando la tormenta de peticiones con el consumo observado. Finalmente, una tercera ejecución de ApacheBench —realizada en paralelo con el monitoreo y `wrk`, es decir, en el escenario de mayor presión— arrojó los peores números de toda la prueba (Figura 43): **26,49 solicitudes por segundo**, tiempo medio de **1887 ms** y una petición máxima de **40 496 ms** (más de 40 segundos), con el 99 % por debajo de 8514 ms. Este resultado ilustra el efecto acumulativo de la concurrencia múltiple sobre un recurso con techo fijo.
+Como evidencia desde el lado del servidor, se guardaron los registros del contenedor (`docker compose logs`) para su análisis posterior (Figura 50), correlacionando la tormenta de peticiones con el consumo observado. Finalmente, una tercera ejecución de ApacheBench —realizada en paralelo con el monitoreo y `wrk`, es decir, en el escenario de mayor presión— arrojó los peores números de toda la prueba (Figura 51): **26,49 solicitudes por segundo**, tiempo medio de **1887 ms** y una petición máxima de **40 496 ms** (más de 40 segundos), con el 99 % por debajo de 8514 ms. Este resultado ilustra el efecto acumulativo de la concurrencia múltiple sobre un recurso con techo fijo.
 
-**Figura 42**
+**Figura 50**
 
 *Recolección de registros del contenedor para análisis (docker compose logs)*
 
@@ -501,9 +567,9 @@ Como evidencia desde el lado del servidor, se guardaron los registros del conten
 
 *Nota.* Los *logs* del servidor correlacionan la carga externa con los eventos internos del contenedor.
 
-**Figura 43**
+**Figura 51**
 
-*Tercera medición bajo presión máxima: 1887 ms de media y pico de 40 496 ms*
+*Medición bajo presión máxima: 1887 ms de media y pico de 40 496 ms*
 
 ![](evidencias/cap70.png){ width=6.3in }
 
@@ -511,9 +577,9 @@ Como evidencia desde el lado del servidor, se guardaron los registros del conten
 
 ## 4.6 Validación de la mitigación y matriz de controles
 
-Para cerrar el ciclo de forma defensiva, se inició una validación de mitigación re-ejecutando la prueba hacia `ab/ab_mitigado.txt` (Figura 44). Esta fase arroja una lección técnica de primer orden: deshabilitar el *pseudo-cron* (`define('DISABLE_WP_CRON', true);`) evita que `wp-cron.php` se dispare en cada visita **legítima**, pero **no impide que una petición dirigida directamente al endpoint lo siga ejecutando**. En efecto, durante esta fase la CPU volvió a repuntar hacia el 50 %. La conclusión es que la mitigación no puede ser un único ajuste: `DISABLE_WP_CRON` debe combinarse con el **bloqueo o la limitación de tasa del endpoint** (en el servidor web, un proxy inverso o un WAF) para que el control sea efectivo frente a una invocación directa.
+Para cerrar el ciclo de forma defensiva, se inició una validación de mitigación re-ejecutando la prueba hacia `ab/ab_mitigado.txt` (Figura 52). Esta fase arroja una lección técnica de primer orden: deshabilitar el *pseudo-cron* (`define('DISABLE_WP_CRON', true);`) evita que `wp-cron.php` se dispare en cada visita **legítima**, pero **no impide que una petición dirigida directamente al endpoint lo siga ejecutando**. En efecto, durante esta fase la CPU volvió a repuntar hacia el 50 %. La conclusión es que la mitigación no puede ser un único ajuste: `DISABLE_WP_CRON` debe combinarse con el **bloqueo o la limitación de tasa del endpoint** (en el servidor web, un proxy inverso o un WAF) para que el control sea efectivo frente a una invocación directa.
 
-**Figura 44**
+**Figura 52**
 
 *Validación de mitigación: re-ejecución de la prueba (ab_mitigado) y observación del consumo*
 
@@ -572,7 +638,7 @@ A partir de los hallazgos, se proponen las siguientes recomendaciones de endurec
 
 # 7. Anexos
 
-La evidencia completa de ambos laboratorios se presenta de forma numerada a lo largo del documento (Figuras 1 a 44), integrada en la sección correspondiente a cada fase para facilitar su interpretación en contexto. Las 71 capturas originales tomadas durante la ejecución se conservan en el directorio `Lab3/evidencias/`; las figuras del informe corresponden a los momentos representativos de cada etapa, consolidando las capturas de progreso equivalentes (por ejemplo, el avance incremental de ApacheBench) para preservar la claridad del documento.
+La evidencia de ambos laboratorios se presenta de forma numerada a lo largo del documento (Figuras 1 a 52), integrada en la sección correspondiente a cada fase para facilitar su interpretación en contexto. Las 71 capturas originales tomadas durante la ejecución se conservan en el directorio `evidencias/`; las figuras del informe corresponden a los momentos representativos de cada etapa, incluyendo la progresión del consumo de recursos durante la prueba de carga, y consolidan las capturas estrictamente redundantes para preservar la claridad del documento.
 
 **Artefactos de evidencia estructurada (Laboratorio 1):** salidas de Nmap en formatos `.nmap/.gnmap/.xml` y el informe HTML (`nmap/borazuwarah_tcp.html`); resultados de `whatweb`, `nikto` y `gobuster` (`web/`); resultado de Hydra (`loot/hydra_ssh.txt`); metadatos completos (`loot/exif_completo.txt`); y el registro de integridad `loot/HASHES.txt` (SHA-256).
 
