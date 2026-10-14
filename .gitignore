@@ -9,3 +9,6 @@ CLAUDE.md
 /**/_qa/
 *.tmp
 .DS_Store
+
+# Archivos temporales de Office (bloqueo de Word)
+~$*
