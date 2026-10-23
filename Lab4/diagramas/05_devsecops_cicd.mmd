@@ -1,0 +1,24 @@
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Arial','fontSize':'15px','primaryColor':'#dbe5f1','primaryBorderColor':'#1f3864','lineColor':'#1f3864'},'flowchart':{'wrappingWidth':210}}}%%
+flowchart LR
+    DEV["Desarrollador<br/>commit / push"] --> PR["Pull request<br/>revisión por pares"]
+    PR --> GHA["GitHub Actions<br/>pipeline CI/CD"]
+
+    subgraph GATES["Controles de seguridad automáticos"]
+        direction TB
+        SEC["Gitleaks + TruffleHog<br/>secretos y credenciales"]
+        SAST["SAST / análisis estático"]
+        SCA["SCA<br/>dependencias vulnerables"]
+        DAST["DAST + pruebas<br/>de penetración"]
+    end
+
+    GHA --> SEC --> SAST --> SCA --> DAST
+    DAST -->|falla| STOP["Se detiene el despliegue<br/>y se corrige"]
+    DAST -->|pasa| DEPLOY["Despliegue a producción<br/>firmado y versionado"]
+    DEPLOY --> MON["Monitoreo post-despliegue<br/>Prometheus / Grafana / Loki"]
+
+    classDef gate fill:#fde2b3,stroke:#8a5a00,color:#4a2f00;
+    classDef stop fill:#f4b6b0,stroke:#9c2a21,color:#4a0f0a;
+    classDef ok fill:#cfe3cf,stroke:#1e5631,color:#10311a;
+    class SEC,SAST,SCA,DAST gate;
+    class STOP stop;
+    class DEPLOY,MON ok;

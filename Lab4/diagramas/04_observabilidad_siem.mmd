@@ -1,0 +1,29 @@
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Arial','fontSize':'15px','primaryColor':'#dbe5f1','primaryBorderColor':'#1f3864','lineColor':'#1f3864'},'flowchart':{'wrappingWidth':230}}}%%
+flowchart LR
+    subgraph FUENTES["Fuentes de telemetría"]
+        direction TB
+        APP["Plataforma EduData<br/>logs de acceso y consultas"]
+        DB["Base de datos<br/>auditoría de consultas"]
+        IAM["IAM / MFA<br/>inicios de sesión"]
+        INFRA["Servidores y red<br/>métricas de sistema"]
+    end
+
+    APP --> PT["Promtail<br/>agente de recolección"]
+    DB --> PT
+    IAM --> PT
+    INFRA --> PROM["Prometheus<br/>métricas y alertas"]
+
+    PT --> LOKI["Loki<br/>almacén central de logs"]
+    LOKI --> GRAF["Grafana<br/>paneles y correlación"]
+    PROM --> GRAF
+    PROM --> AM["Alertmanager<br/>reglas de alerta"]
+
+    GRAF --> SOC["SOC / analista<br/>respuesta a incidentes"]
+    AM --> SOC
+    SOC -->|casos y correlación| SIEM["SIEM<br/>correlación y forense"]
+    LOKI --> SIEM
+
+    classDef store fill:#fde2b3,stroke:#8a5a00,color:#4a2f00;
+    classDef act fill:#cfe3cf,stroke:#1e5631,color:#10311a;
+    class LOKI,PROM,SIEM store;
+    class SOC act;

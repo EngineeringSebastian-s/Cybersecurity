@@ -1,0 +1,22 @@
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Arial','fontSize':'15px','primaryColor':'#dbe5f1','primaryBorderColor':'#1f3864','lineColor':'#1f3864'},'flowchart':{'wrappingWidth':240}}}%%
+flowchart LR
+    subgraph IAM["Gestión de identidad y acceso (RBAC + mínimo privilegio)"]
+        direction TB
+        A["Autenticación<br/>MFA obligatorio + SSO"] --> B["Autorización por rol<br/>necesidad de saber"]
+    end
+
+    B --> D1["Docente<br/>Calificaciones y asistencia<br/>de sus grupos"]
+    B --> D2["Orientador<br/>Datos de salud y<br/>diagnósticos, con registro"]
+    B --> D3["Rector / Coordinador<br/>Reportes agregados<br/>de su sede"]
+    B --> D4["Administrativo<br/>Pagos y matrícula"]
+    B --> D5["Familia / Estudiante<br/>Solo su propia ficha"]
+    B --> D6["Proveedor tecnológico<br/>Acceso temporal<br/>y auditado"]
+
+    D1 -.->|bloqueado| X["Información médica,<br/>familiar y de otras sedes"]
+    D3 -.->|bloqueado| X
+    D4 -.->|bloqueado| X
+
+    classDef deny fill:#f4b6b0,stroke:#9c2a21,color:#4a0f0a;
+    classDef allow fill:#cfe3cf,stroke:#1e5631,color:#10311a;
+    class X deny;
+    class D2 allow;

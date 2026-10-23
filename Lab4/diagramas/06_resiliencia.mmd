@@ -1,0 +1,32 @@
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Arial','fontSize':'15px','primaryColor':'#dbe5f1','primaryBorderColor':'#1f3864','lineColor':'#1f3864'},'flowchart':{'wrappingWidth':240}}}%%
+flowchart TB
+    subgraph ANTES["ANTES · Preparación"]
+        direction TB
+        A1["Backups 3-2-1 inmutables<br/>y probados (RTO/RPO definidos)"]
+        A2["Plan de respuesta a incidentes<br/>y de continuidad (BCP/DRP)"]
+        A3["Roles, contactos y<br/>comunicación de crisis"]
+    end
+
+    subgraph DURANTE["DURANTE · Respuesta (plataforma caída 72 h)"]
+        direction TB
+        B1["Activar el equipo de respuesta<br/>y contener (aislar la cuenta y la IP)"]
+        B2["Comunicar a afectados y<br/>notificar a la autoridad (72 h)"]
+        B3["Operar en modo degradado<br/>y preservar evidencia forense"]
+    end
+
+    subgraph DESPUES["DESPUÉS · Recuperación y mejora"]
+        direction TB
+        C1["Restaurar desde copia limpia<br/>y verificar integridad"]
+        C2["Análisis de causa raíz<br/>y lecciones aprendidas"]
+        C3["Cerrar brechas y actualizar<br/>controles y políticas"]
+    end
+
+    ANTES --> DURANTE --> DESPUES
+    DESPUES -.->|realimentación| ANTES
+
+    classDef antes fill:#cfe3cf,stroke:#1e5631,color:#10311a;
+    classDef durante fill:#fde2b3,stroke:#8a5a00,color:#4a2f00;
+    classDef despues fill:#dbe5f1,stroke:#1f3864,color:#10203a;
+    class A1,A2,A3 antes;
+    class B1,B2,B3 durante;
+    class C1,C2,C3 despues;

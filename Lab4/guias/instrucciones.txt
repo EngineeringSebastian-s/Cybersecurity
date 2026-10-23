@@ -1,0 +1,81 @@
+Para este Ejercicio Práctico #4 del Diplomado en Ciberseguridad, debes analizar el caso de estudio de "EDUDATA", una plataforma de gestión escolar que sufrió una fuga de datos masiva debido a malas prácticas de seguridad, falta de controles de acceso y un ciclo de desarrollo deficiente.
+
+Las respuestas no deben limitarse a los apuntes de clase; es obligatorio argumentarlas técnicamente utilizando las lecturas sobre ciberdelitos, regulación y el video asignado.
+
+### El Entregable (Producto Final)
+
+El documento que debes entregar debe contener exactamente los siguientes elementos:
+
+* Análisis de los Principios CIA (Confidencialidad, Integridad y Disponibilidad).
+
+
+* Tabla de Controles de acceso.
+
+
+* Análisis de Protección de datos, privacidad, intimidad y habeas data.
+
+
+* Análisis de Autodeterminación informativa y dignidad humana.
+
+
+* Matriz completa de identificación y valoración de riesgos.
+
+
+* Tabla con mínimo 10 Controles de seguridad.
+
+
+* Respuestas sobre Monitoreo y respuesta (uso de logs, alertas y SIEM).
+
+
+* Tabla de SDLC (Ciclo de Vida de Desarrollo de Software) seguro.
+
+
+* Plan de Resiliencia digital (acciones antes, durante y después del incidente).
+
+
+* Plan de 10 acciones priorizadas.
+
+
+* Conclusión argumentada a la pregunta final.
+
+
+* Referencias de los documentos y el video utilizados.
+
+
+
+### ¿Qué toca hacer paso a paso?
+
+El taller se divide en 10 partes (A - J) que debes resolver estructuradamente:
+
+* **Parte A - Principios de Seguridad:** Responder cuatro preguntas específicas sobre qué información quedó expuesta y cómo se vieron afectados los principios de confidencialidad, integridad y disponibilidad.
+
+
+* **Parte B - Controles de Acceso:** Llenar una tabla proponiendo soluciones a problemas como cuentas compartidas o usuarios inactivos. Además, debes argumentar por qué un docente no debe tener acceso a toda la información médica basándote en el principio de mínimo privilegio y finalidad del tratamiento.
+
+
+* **Parte C - Protección de Datos:** Llenar una tabla evaluando cómo la recolección de datos médicos innecesarios, la falta de claridad en los términos de uso y el compartirlos con terceros vulnera el habeas data y la privacidad.
+
+
+* **Parte D - Identificación de Riesgos:** Llenar una matriz exhaustiva detallando activos, información, amenazas, vulnerabilidades, consecuencias, probabilidad, impacto, nivel de riesgo y los controles.
+
+
+* **Parte E - Controles de Seguridad:** Seleccionar al menos 10 controles técnicos y organizacionales en una tabla, definiendo si son preventivos, detectivos o correctivos.
+
+
+* **Parte F - Monitoreo y Respuesta:** Responder 5 preguntas sobre la gestión de logs, generación de alertas y uso de un SIEM. Al proponer la recolección de logs y monitoreo, resulta ideal estructurar la respuesta en torno al despliegue de un stack de observabilidad mediante Prometheus, Grafana, Loki y Promtail para centralizar la auditoría de accesos.
+
+
+* **Parte G - Desarrollo Seguro:** Definir acciones de seguridad para las fases de diseño, codificación, pruebas, despliegue y mantenimiento del software. Para las etapas de codificación y despliegue, puedes argumentar la necesidad de flujos automatizados de CI/CD en GitHub Actions que integren escáneres de seguridad (como Gitleaks o TruffleHog) antes de desplegar los servicios integrados.
+
+
+* **Parte H - Resiliencia Digital:** Diseñar un plan de acción para el antes, durante y después de un ataque que deje la plataforma fuera de servicio por 72 horas, contemplando copias de seguridad y continuidad.
+
+
+* **Parte I - Plan de Acciones:** Priorizar del 1 al 10 las acciones más urgentes para reducir los riesgos identificados, justificando cada una.
+
+
+* **Parte J - Pregunta Final:** Seleccionar y defender si el problema principal de EduData fue tecnológico, jurídico, organizacional o humano, explicando cómo se relacionan los demás factores.
+
+
+
+Ten en cuenta que el criterio de evaluación exige que justifiques técnicamente los controles y los relaciones con el caso concreto, no solo que identifiques los conceptos.
