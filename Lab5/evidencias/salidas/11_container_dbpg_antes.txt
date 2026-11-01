@@ -1,0 +1,886 @@
+PS SmartPot-DB-Postgre> docker build -t smartpot-db-postgre:lab5-antes .   # main (1f6067f)
+PS SmartPot-DB-Postgre> snyk container test smartpot-db-postgre:lab5-antes --file=Dockerfile --org=smartpot
+
+Testing smartpot-db-postgre:lab5-antes...
+
+Organization:      smartpot
+Package manager:   apk
+Target file:       Dockerfile
+Project name:      docker-image|smartpot-db-postgre
+Docker image:      smartpot-db-postgre:lab5-antes
+Platform:          linux/amd64
+Target OS:         Alpine Linux v3.21
+Base image:        timescale/timescaledb:2.17.2-pg17
+Licenses:          enabled
+
+✔ Tested 121 dependencies for known issues, no vulnerable paths found.
+
+Recommendations for your base image (timescale/timescaledb:2.17.2-pg17) are not available.
+See above for details and fixes on individual vulnerabilities
+
+-------------------------------------------------------
+
+Testing smartpot-db-postgre:lab5-antes...
+
+✗ Low severity vulnerability found in stdlib
+  Description: Information Exposure
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOTLS-14545641
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.11, 1.18.3
+
+✗ Low severity vulnerability found in stdlib
+  Description: Incorrect Behavior Order: Early Validation
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOTLS-15139694
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.12, 1.25.6
+
+✗ Low severity vulnerability found in stdlib
+  Description: Cross-site Scripting (XSS)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-15928853
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.9, 1.26.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDARCHIVETAR-14548497
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.8, 1.25.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDARCHIVETAR-15928858
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.9, 1.26.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Interpretation Conflict
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDARCHIVEZIP-14564383
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.21.11, 1.22.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: HTTP Request Smuggling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCMDCGO-15239123
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.13, 1.25.7
+
+✗ Medium severity vulnerability found in stdlib
+  Description: External Control of File Name or Path
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCMDGO-15145704
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.12, 1.25.6
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Symlink Attack
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCMDGO-16535173
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Timing Attack
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOINTERNALNISTEC-14565601
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.22.12, 1.23.6, 1.24.0-rc.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOINTERNALNISTEC-14565632
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.7, 1.20.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Encoding or Escaping of Output
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOTLS-14548484
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.8, 1.25.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOTLS-14565078
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.12, 1.20.7, 1.21.0-rc.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Certificate Validation
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOTLS-15238826
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.13, 1.25.7, 1.26.0-rc.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Cleartext Transmission of Sensitive Information
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOTLS-17905406
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.12, 1.26.5, 1.27.0-rc.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Certificate Validation
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-14545540
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.11, 1.25.5
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-14545541
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.11, 1.25.5
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Certificate Validation
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-14545631
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.22.11, 1.23.5, 1.24.0-rc.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-15928852
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.9, 1.26.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDENCODINGASN1-14545543
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.8, 1.25.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDGOPARSER-14545523
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.22.7, 1.23.1
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDGOPARSER-14550562
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.12, 1.18.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Encoding or Escaping of Output
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-14548478
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.20.8, 1.21.1
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Encoding or Escaping of Output
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-14548480
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.20.8, 1.21.1
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Neutralization of Special Elements Used in a Template Engine
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-14548481
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.9, 1.20.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Cross-site Scripting (XSS)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-14548483
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.9, 1.20.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Cross-site Scripting (XSS)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-14548523
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.21.8, 1.22.1
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Cross-site Scripting (XSS)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-15440731
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.8, 1.26.1
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Encoding or Escaping of Output
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-16535164
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Cross-site Scripting (XSS)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-16535165
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Cross-site Scripting (XSS)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-18858461
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.13, 1.26.6, 1.27.0-rc.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14546365
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.8, 1.25.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Removal of Sensitive Information Before Storage or Transfer
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14548594
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.21.8, 1.22.1
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Insertion of Sensitive Information Into Sent Data
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14548597
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.22.11, 1.23.5, 1.24.0-rc.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Insertion of Sensitive Information Into Sent Data
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14548605
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.12, 1.18.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: HTTP Request Smuggling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14548606
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.12, 1.18.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14565076
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.18.9, 1.19.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Removal of Sensitive Information Before Storage or Transfer
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTPCOOKIEJAR-14548595
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.21.8, 1.22.1
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Information Exposure
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTPHTTPUTIL-16535163
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTPINTERNAL-14548521
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.20.12, 1.21.5
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETMAIL-16535168
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETTEXTPROTO-14548492
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.8, 1.25.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Output Neutralization for Logs
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETTEXTPROTO-17135843
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.11, 1.26.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Exposure of Sensitive System Information to an Unauthorized Control Sphere
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETURL-14546349
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.8, 1.25.2
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Server-side Request Forgery (SSRF)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETURL-15440727
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.8, 1.26.1
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Symlink Attack
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDOS-14548505
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.23.10, 1.24.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Relative Path Traversal
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDOS-15236034
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.23.9, 1.24.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Directory Traversal
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDOS-15440726
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.8, 1.26.1
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Neutralization of Null Byte or NUL Character
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDOSEXEC-14546536
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.18.8, 1.19.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Use of Incorrectly-Resolved Name or Reference
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDOSEXEC-14552249
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.23.12, 1.24.6
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Check for Unusual or Exceptional Conditions
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDPATHFILEPATH-14548530
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.20.11, 1.21.4
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Improper Neutralization of Null Byte or NUL Character
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDSYSCALL-14546535
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.18.8, 1.19.3
+
+✗ Medium severity vulnerability found in stdlib
+  Description: Symlink Attack
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDSYSCALL-14548504
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.23.10, 1.24.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDARCHIVETAR-14564379
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.18.7, 1.19.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDARCHIVEZIP-15139795
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.12, 1.25.6
+
+✗ High severity vulnerability found in stdlib
+  Description: Resources Downloaded over Insecure Protocol
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCMDGO-16535172
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Directory Traversal
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCMDGO-16535174
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCOMPRESSGZIP-14564381
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.12, 1.18.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTORAND-14565598
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.11, 1.18.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncaught Exception
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOTLS-14545635
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.6, 1.20.1
+
+✗ High severity vulnerability found in stdlib
+  Description: Timing Attack
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOTLS-14565531
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.20.0
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOTLS-15928849
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.9, 1.26.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Denial of Service (DoS)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOTLS-18858453
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.13, 1.26.6, 1.27.0-rc.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncaught Exception
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-14545542
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.8, 1.25.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-14545554
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.9, 1.25.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncaught Exception
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-14545632
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.21.8, 1.22.1
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-15928851
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.9, 1.26.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-17135840
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.11, 1.26.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Improper Check for Certificate Revocation
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-21400137
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.26.10, 1.27.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Race Condition
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDDATABASESQL-14545642
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.23.12, 1.24.6
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDENCODINGASN1-18858463
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.13, 1.26.6, 1.27.0-rc.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDENCODINGGOB-14545582
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.12, 1.18.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDENCODINGGOB-14545643
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.22.7, 1.23.1
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDENCODINGPEM-14545563
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.8, 1.25.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDENCODINGXML-14545645
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.12, 1.18.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDENCODINGXML-14545649
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.12, 1.18.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDENCODINGXML-18858455
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.13, 1.26.6, 1.27.0-rc.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDGOBUILDCONSTRAINT-14545644
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.22.7, 1.23.1
+
+✗ High severity vulnerability found in stdlib
+  Description: Infinite loop
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDGOSCANNER-14550550
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.8, 1.20.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Relative Path Traversal
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDINTERNALSAFEFILEPATH-14606269
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.20.11, 1.21.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Time-of-check Time-of-use (TOCTOU) Race Condition
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDINTERNALSYSCALLUNIX-16086164
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.9, 1.26.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDIOFS-14545646
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.12, 1.18.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncaught Exception
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDMATHBIG-14548568
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.13, 1.18.5
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDMIME-17135844
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.11, 1.26.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDMIMEMULTIPART-14548565
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.6, 1.20.1
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDMIMEMULTIPART-14552568
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.8, 1.20.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Double Free
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNET-16535159
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncaught Exception
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNET-16535161
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Directory Traversal
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14545515
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.18.9, 1.19.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Insertion of Sensitive Information Into Sent Data
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14548596
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.23.10, 1.24.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14548598
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.21.12, 1.22.5
+
+✗ High severity vulnerability found in stdlib
+  Description: HTTP Response Splitting
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14548601
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.11, 1.20.6
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14565071
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.21.9, 1.22.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14565072
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.20.10, 1.21.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Infinite loop
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14565075
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.18.6, 1.19.1
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-14565077
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.6, 1.20.1
+
+✗ High severity vulnerability found in stdlib
+  Description: Infinite loop
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-16535158
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Denial of Service (DoS)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTP-18858429
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.13, 1.26.6, 1.27.0-rc.3
+
+✗ High severity vulnerability found in stdlib
+  Description: HTTP Request Smuggling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTPHTTPUTIL-14548566
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.18.7, 1.19.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETMAIL-14548482
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.8, 1.25.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Improper Neutralization
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETMAIL-14548677
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.21.8, 1.22.1
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETMAIL-16535166
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.10, 1.26.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETTEXTPROTO-14552561
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.21.8, 1.22.1
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETTEXTPROTO-14552562
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.8, 1.20.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETTEXTPROTO-14552569
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.8, 1.20.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETURL-15139468
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.24.12, 1.25.6
+
+✗ High severity vulnerability found in stdlib
+  Description: Denial of Service (DoS)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETURL-18858438
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.13, 1.26.6, 1.27.0-rc.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Directory Traversal
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDOS-14545514
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.18.9, 1.19.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Symlink Attack
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDOS-17905377
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.25.12, 1.26.5, 1.27.0-rc.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Untrusted Search Path
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDOSEXEC-14552362
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.11, 1.18.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Directory Traversal
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDPATHFILEPATH-14552363
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.11, 1.18.3
+
+✗ High severity vulnerability found in stdlib
+  Description: Uncontrolled Recursion
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDPATHFILEPATH-14552364
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.17.12, 1.18.4
+
+✗ High severity vulnerability found in stdlib
+  Description: Directory Traversal
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDPATHFILEPATH-14552560
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.6, 1.20.1
+
+✗ High severity vulnerability found in stdlib
+  Description: Relative Path Traversal
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDPATHFILEPATH-14606268
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.20.12, 1.21.5
+
+✗ High severity vulnerability found in stdlib
+  Description: Allocation of Resources Without Limits or Throttling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDREGEXPSYNTAX-14548567
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.18.7, 1.19.2
+
+✗ High severity vulnerability found in stdlib
+  Description: Incorrect Privilege Assignment
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDRUNTIME-14548560
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.10, 1.20.5
+
+✗ Critical severity vulnerability found in stdlib
+  Description: Improper Encoding or Escaping of Output
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-14548479
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.9, 1.20.4
+
+✗ Critical severity vulnerability found in stdlib
+  Description: Cross-site Scripting (XSS)
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDHTMLTEMPLATE-14548487
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.19.8, 1.20.3
+
+✗ Critical severity vulnerability found in stdlib
+  Description: HTTP Request Smuggling
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETHTTPINTERNAL-14548500
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.23.8, 1.24.2
+
+✗ Critical severity vulnerability found in stdlib
+  Description: Improper Check for Unusual or Exceptional Conditions
+  Info: https://security.snyk.io/vuln/SNYK-GOLANG-STDNETNETIP-14548515
+  Introduced through: stdlib@1.18.2
+  From: stdlib@1.18.2
+  Fixed in: 1.21.11, 1.22.4
+
+
+
+Organization:      smartpot
+Package manager:   gomodules
+Target file:       \usr\local\bin\gosu
+Project name:      github.com/tianon/gosu
+Docker image:      smartpot-db-postgre:lab5-antes
+Licenses:          enabled
+
+Tested 3 dependencies for known issues, found 120 issues.
+
+Pro tip: use `--exclude-base-image-vulns` to exclude from display Docker base image vulnerabilities.
+
+Snyk found some vulnerabilities in your image applications (Snyk searches for these vulnerabilities by default). See https://snyk.co/app-vulns for more information.
+
+To remove these messages in the future, please run `snyk config set disableSuggestions=true`
+
+
+Tested 2 projects, 1 contained vulnerable paths.
+
+
+

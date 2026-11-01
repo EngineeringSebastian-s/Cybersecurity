@@ -1,0 +1,30 @@
+%%{init: {"theme": "base", "fontFamily": "Segoe UI, Arial, sans-serif", "themeVariables": {"fontFamily": "Segoe UI, Arial, sans-serif", "fontSize": "15px", "primaryColor": "#DDF5EA", "primaryTextColor": "#17261F", "primaryBorderColor": "#067A52", "secondaryColor": "#E3F2FB", "secondaryTextColor": "#17261F", "secondaryBorderColor": "#1F6FA0", "tertiaryColor": "#F2F7F4", "tertiaryTextColor": "#17261F", "tertiaryBorderColor": "#D5E3DC", "lineColor": "#5B6B63", "textColor": "#17261F", "mainBkg": "#DDF5EA", "nodeBorder": "#067A52", "clusterBkg": "#F7FAF8", "clusterBorder": "#D5E3DC", "edgeLabelBackground": "#FFFFFF", "actorBkg": "#067A52", "actorBorder": "#0B3D2B", "actorTextColor": "#FFFFFF", "actorLineColor": "#5B6B63", "signalColor": "#17261F", "signalTextColor": "#17261F", "labelBoxBkgColor": "#0B3D2B", "labelBoxBorderColor": "#0B3D2B", "labelTextColor": "#FFFFFF", "loopTextColor": "#0B3D2B", "noteBkgColor": "#FDF4DD", "noteBorderColor": "#C98D12", "noteTextColor": "#17261F", "activationBkgColor": "#DDF5EA", "activationBorderColor": "#067A52", "attributeBackgroundColorOdd": "#FFFFFF", "attributeBackgroundColorEven": "#F2F7F4"}}}%%
+flowchart LR
+  subgraph antes["Antes · 23 capas · 762 MB"]
+    direction TB
+    c3["Capa 3 · base<br/>gosu en Go 1.18.2<br/>2 355 481 bytes"]
+    c19["Capa 19 · SmartPot<br/>gosu → enlace a su-exec"]
+    fs1["Visible al ejecutar<br/>gosu = su-exec"]
+    sc1["Snyk lee la capa 3<br/>120 hallazgos · 4 críticos"]
+    c3 --> c19 --> fs1 --> sc1
+  end
+  subgraph despues["Después · 1 capa · 629 MB"]
+    direction TB
+    st["Etapa base<br/>mismos ajustes"]
+    sc["FROM scratch<br/>COPY --from=base / /"]
+    fs2["Capa única<br/>gosu = su-exec · 14 152 bytes"]
+    sc2["Snyk Container<br/>0 hallazgos"]
+    st --> sc --> fs2 --> sc2
+  end
+  antes ==> despues
+
+  classDef core fill:#DDF5EA,stroke:#067A52,color:#17261F
+  classDef platform fill:#E3F2FB,stroke:#1F6FA0,color:#17261F
+  classDef store fill:#F2F7F4,stroke:#5B6B63,color:#17261F
+  classDef device fill:#FDF4DD,stroke:#C98D12,color:#17261F
+  classDef alert fill:#FBE4E4,stroke:#B83232,color:#17261F
+  classDef dark fill:#0B3D2B,stroke:#06281C,color:#FFFFFF
+  class c3,sc1 alert
+  class c19 store
+  class fs1 platform
+  class st,sc,fs2,sc2 core

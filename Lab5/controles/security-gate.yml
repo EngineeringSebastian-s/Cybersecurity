@@ -1,0 +1,77 @@
+# Quality Gate de seguridad propuesto para cada servicio de SmartPot (.github/workflows/security-gate.yml).
+# Bloquea el PR con hallazgos críticos o altos, deja el SARIF en GitHub Security y exige el reescaneo del artefacto.
+name: Security Gate
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 7 * * 1'   # semanal: CVE nuevas sobre código que no cambió
+
+permissions:
+  contents: read
+  security-events: write
+
+env:
+  SNYK_TOKEN: ${{ secrets.SNYK_PAT_ORG }}   # secret de organización; nunca en el repositorio
+
+jobs:
+  sca-sast:
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: snyk/actions/setup@11b673cfb4b0dc0d860a1323caa199d54950dcce   # fijada por SHA
+      - name: SCA · bloquea con alta o crítica
+        run: snyk test --severity-threshold=high --sarif-file-output=snyk-sca.sarif
+      - name: SAST · bloquea con alta
+        run: snyk code test --severity-threshold=high --sarif-file-output=snyk-code.sarif
+      - name: Semgrep · reglas propias
+        run: pipx run semgrep --config .github/semgrep/smartpot-appsec.yml --error --metrics=off
+      - uses: github/codeql-action/upload-sarif@v4
+        if: always()
+        with:
+          sarif_file: .
+          category: snyk
+
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: snyk/actions/setup@11b673cfb4b0dc0d860a1323caa199d54950dcce
+      - name: Construir la imagen que se va a publicar
+        run: docker build -t candidate:${{ github.sha }} .
+      # La verificación se hace sobre el artefacto, no sobre el manifiesto: así se detectó que el enlace de gosu no
+      # quitaba el binario (V3) y que el JAR publicado sí traía Jackson 3.1.8 (falso positivo de la V2).
+      - name: Snyk Container · bloquea con alta o crítica
+        run: snyk container test candidate:${{ github.sha }} --file=Dockerfile --severity-threshold=high
+
+  toolchain-go:
+    if: hashFiles('go.mod') != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: La línea toolchain de go.mod coincide con la imagen de compilación (V4)
+        run: |
+          mod=$(sed -n 's/^toolchain go//p' go.mod)
+          img=$(sed -n 's/^FROM golang:\([0-9.]*\).*/\1/p' Dockerfile | head -1)
+          test -n "$mod" && test "$mod" = "$img" || { echo "::error::toolchain ($mod) distinto de la imagen ($img)"; exit 1; }
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - name: govulncheck (alcanzabilidad por símbolo)
+        run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+
+# Protección de rama (una vez, como administrador):
+#   gh api -X PUT repos/SmartPotTech/<repo>/branches/main/protection \
+#     -f required_status_checks.strict=true \
+#     -f 'required_status_checks.contexts[]=sca-sast' -f 'required_status_checks.contexts[]=container' \
+#     -F enforce_admins=true -F required_pull_request_reviews.required_approving_review_count=1 -F restrictions=

@@ -1,0 +1,59 @@
+PS C:\auditoria-lab5\sca-api\antes> snyk test --org=smartpot --severity-threshold=high
+
+Testing  (pom.xml) ...
+
+Tested 119 dependencies for known issues, found 2 issues, 2 vulnerable paths.
+
+Open Security issues: 2
+
+ ✗ [CRITICAL] Deserialization of Untrusted Data
+   Finding ID: SNYK-JAVA-COMFASTERXMLJACKSONCORE-21761837
+   Info: https://snyk.io/vuln/SNYK-JAVA-COMFASTERXMLJACKSONCORE-21761837
+   Introduced by: com.fasterxml.jackson.core:jackson-databind
+   Introduced through: app.smartpot:smartpot-api@2.0.0 > org.springdoc:springdoc-openapi-starter-webmvc-ui@3.2.0 > org.springdoc:springdoc-openapi-starter-webmvc-api@3.2.0 > org.springdoc:springdoc-openapi-starter-common@3.2.0 > com.fasterxml.jackson.core:jackson-databind@2.21.7
+
+ ✗ [CRITICAL] Deserialization of Untrusted Data
+   Finding ID: SNYK-JAVA-TOOLSJACKSONCORE-21761838
+   Info: https://snyk.io/vuln/SNYK-JAVA-TOOLSJACKSONCORE-21761838
+   Introduced by: tools.jackson.core:jackson-databind
+   Introduced through: app.smartpot:smartpot-api@2.0.0 > org.springframework.boot:spring-boot-starter-webmvc@4.1.2 > org.springframework.boot:spring-boot-starter-jackson@4.1.2 > org.springframework.boot:spring-boot-jackson@4.1.2 > tools.jackson.core:jackson-databind@3.1.7
+
+
+Issues with no direct upgrade or patch:
+  ✗ Deserialization of Untrusted Data [CRITICAL] [https://security.snyk.io/vuln/SNYK-JAVA-COMFASTERXMLJACKSONCORE-21761837] in com.fasterxml.jackson.core:jackson-databind@2.21.7
+    introduced by app.smartpot:smartpot-api@2.0.0 > org.springdoc:springdoc-openapi-starter-webmvc-ui@3.2.0 > org.springdoc:springdoc-openapi-starter-webmvc-api@3.2.0 > org.springdoc:springdoc-openapi-starter-common@3.2.0 > com.fasterxml.jackson.core:jackson-databind@2.21.7
+  This issue was fixed in: 2.18.12, 2.21.8, 2.22.4
+  ✗ Deserialization of Untrusted Data [CRITICAL] [https://security.snyk.io/vuln/SNYK-JAVA-TOOLSJACKSONCORE-21761838] in tools.jackson.core:jackson-databind@3.1.7
+    introduced by app.smartpot:smartpot-api@2.0.0 > org.springframework.boot:spring-boot-starter-webmvc@4.1.2 > org.springframework.boot:spring-boot-starter-jackson@4.1.2 > org.springframework.boot:spring-boot-jackson@4.1.2 > tools.jackson.core:jackson-databind@3.1.7
+  This issue was fixed in: 3.1.8, 3.2.4
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Test Summary                                                                                                                                                                                 │
+│                                                                                                                                                                                              │
+│   Organization:      smartpot                                                                                                                                                                │
+│   Test type:         Software Composition Analysis                                                                                                                                           │
+│   Project name:      app.smartpot:smartpot-api                                                                                                                                               │
+│   Project path:      C:\auditoria-lab5\sca-api\antes    │
+│   Target file:       pom.xml                                                                                                                                                                 │
+│                                                                                                                                                                                              │
+│   Total security issues: 2                                                                                                                                                                   │
+│   Ignored: 0 [ 0 CRITICAL  0 HIGH  0 MEDIUM  0 LOW ]                                                                                                                                         │
+│   Open   : 2 [ 2 CRITICAL  0 HIGH  0 MEDIUM  0 LOW ]                                                                                                                                         │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+💡 Tip
+
+   Some capabilities, including the ability to apply ignores, are unavailable. Retest the project with the --remote-repo-url parameter or from within a repository to enable full functionality.
+                                                                                                                                                                                                
+
+💡 Tip
+
+   You are currently viewing results with --severity-threshold applied.
+   To view all issues, remove the --severity-threshold flag            
+                                                                       
+
+💡 Tip
+
+   To view ignored issues, use the --include-ignores option.
+                                                            
+

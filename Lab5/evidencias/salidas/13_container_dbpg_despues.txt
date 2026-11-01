@@ -1,0 +1,20 @@
+PS SmartPot-DB-Postgre> docker build -t smartpot-db-postgre:lab5-despues .   # rama security/snyk/gosu-symlink-base-layer
+PS SmartPot-DB-Postgre> snyk container test smartpot-db-postgre:lab5-despues --file=Dockerfile --org=smartpot
+
+Testing smartpot-db-postgre:lab5-despues...
+
+Organization:      smartpot
+Package manager:   apk
+Target file:       Dockerfile
+Project name:      docker-image|smartpot-db-postgre
+Docker image:      smartpot-db-postgre:lab5-despues
+Platform:          linux/amd64
+Target OS:         Alpine Linux v3.21
+Base image:        scratch
+Licenses:          enabled
+
+✔ Tested 121 dependencies for known issues, no vulnerable paths found.
+
+
+
+

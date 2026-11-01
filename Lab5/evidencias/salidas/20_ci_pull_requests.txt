@@ -1,0 +1,39 @@
+PS> gh pr checks 8 -R SmartPotTech/.github      # security/snyk/qa-scripts-ssrf | OPEN
+  pass     API (Spring Boot)
+  pass     Analyze (actions)
+  pass     Analyze (python)
+  pass     CodeQL
+  pass     End-to-End
+  pass     SmartPot-AI
+  pass     SmartPot-Broker
+  pass     SmartPot-Cache
+  pass     SmartPot-DB
+  pass     SmartPot-DataGenerator
+  pass     SmartPot-IoT
+  pass     SmartPot-Mail
+  pass     Web (React)
+
+PS> gh pr checks 10 -R SmartPotTech/SmartPot-DB-Postgre      # security/snyk/gosu-symlink-base-layer | OPEN
+  skipping Snyk Container
+  pass     Analyze (actions)
+  pass     Build and Validate Image (demo=false)
+  pass     Build and Validate Image (demo=true)
+  pass     CodeQL
+  pass     Snyk Container (PostgreSQL & TimescaleDB)
+
+PS> gh pr checks 14 -R SmartPotTech/SmartPot-API-Go      # security/snyk/go-toolchain-x509-revocation | OPEN
+  fail     security/snyk (SmartPot)
+  pass     Analyze (actions)
+  pass     Analyze (go)
+  pass     Build and Test
+  pass     CodeQL
+  pass     Snyk Open Source
+  pass     Snyk Open Source & Monitor (Go)
+
+PS> gh api repos/SmartPotTech/SmartPot-API-Go/commits/<sha>/status   # detalle del check externo
+  security/snyk (SmartPot) | error | You have used your limit of private tests
+
+PS> gh run view 41342664142 -R SmartPotTech/SmartPot-DB-Postgre --log | Select-String 'Base image|Tested'   # job Snyk Container del PR #10
+  Target OS:         Alpine Linux v3.21
+  Base image:        scratch
+  ✔ Tested 121 dependencies for known issues, no vulnerable paths found.

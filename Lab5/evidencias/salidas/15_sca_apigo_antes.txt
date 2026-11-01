@@ -1,0 +1,35 @@
+PS SmartPot-API-Go> go version   ->   go version go1.27.0 windows/amd64   (go.mod: go 1.26.10, sin toolchain)
+PS SmartPot-API-Go> snyk test --org=smartpot
+
+Testing  (go.mod) ...
+
+Tested 280 dependencies for known issues, found 1 issues, 20 vulnerable paths.
+
+Open Security issues: 1
+
+ ✗ [HIGH] Improper Check for Certificate Revocation
+   Finding ID: SNYK-GOLANG-STDCRYPTOX509-21400137
+   Info: https://snyk.io/vuln/SNYK-GOLANG-STDCRYPTOX509-21400137
+   Introduced by: std/crypto/x509
+   Introduced through: github.com/SmartPotTech/SmartPot-API-Go@0.0.0 > github.com/jackc/pgx/v5/pgconn@5.11.0 > std/crypto/x509@1.27.0
+
+╭──────────────────────────────────────────────────────────────────────────────────────────╮
+│ Test Summary                                                                             │
+│                                                                                          │
+│   Organization:      smartpot                                                            │
+│   Test type:         Software Composition Analysis                                       │
+│   Project name:      github.com/SmartPotTech/SmartPot-API-Go                             │
+│   Project path:      C:\Users\auditor\Documents\GitHub\SmartPot\SmartPot-API-Go    │
+│   Target file:       go.mod                                                              │
+│                                                                                          │
+│   Total security issues: 4                                                               │
+│   Ignored: 3 [ 0 CRITICAL  0 HIGH  3 MEDIUM  0 LOW ]                                     │
+│   Open   : 1 [ 0 CRITICAL  1 HIGH  0 MEDIUM  0 LOW ]                                     │
+╰──────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+💡 Tip
+
+   To view ignored issues, use the --include-ignores option.
+                                                            
+

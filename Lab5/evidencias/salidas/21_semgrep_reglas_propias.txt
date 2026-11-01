@@ -1,0 +1,29 @@
+PS> docker run semgrep/semgrep:1.182.1 semgrep --config controles/semgrep/smartpot-appsec.yml --error ./antes
+  antes/db/Dockerfile
+    regla: smartpot-dockerfile-enlace-sobre-binario-base
+  17┆ RUN apk upgrade --no-cache     && apk add --no-cache su-exec     && rm -f      
+  antes/scripts/diff_contract_suite.py
+  ❯  regla: smartpot-qa-url-base-sin-validar
+  51┆ self.url_a = url_a.rstrip("/")
+  52┆ self.url_b = url_b.rstrip("/") if url_b else None
+  antes/scripts/qa_audit_ab.py
+  ❯  regla: smartpot-qa-url-base-sin-validar
+  31┆ self.base_url = base_url.rstrip("/").replace("localhost", "127.0.0.1")
+  antes/scripts/stress_ingestion_query.py
+  ❯  regla: smartpot-qa-argumento-url-directo
+  128┆ tok = get_demo_token(args.url)
+  129┆ run_stress_test(args.url, tok, args.workers, args.duration)
+  hallazgos: 6 · código de salida: 1
+
+PS> docker run semgrep/semgrep:1.182.1 semgrep --config controles/semgrep/smartpot-appsec.yml --error ./despues
+  hallazgos: 0 · código de salida: 0
+
+PS> docker run semgrep/semgrep:1.182.1 semgrep --config controles/semgrep/smartpot-appsec.yml --error ./positivo
+  positivo/Mapper.java
+  ❯  regla: smartpot-jackson-tipado-polimorfico
+  7┆ mapper.activateDefaultTyping(BasicPolymorphicTypeValidator.builder().build(),
+  hallazgos: 1 · código de salida: 1
+
+PS> semgrep --config controles/semgrep/smartpot-appsec.yml --error SmartPot-API/src   # alcanzabilidad de la V2
+  Ran 1 rule on 176 files: 0 findings.
+  código de salida: 0

@@ -1,0 +1,19 @@
+PS> snyk container test ghcr.io/smartpottech/smartpot-<componente>:latest --org=smartpot --json
+PS> docker manifest inspect -v <imagen>   # suma de capas linux/amd64 según el registro
+
+componente     imagen                 stack      MB capas paquetes   C   H   M    L
+--------------------------------------------------------------------------------------
+API            smartpot-api           A       125.1     8       73   2   0   2    1
+API            smartpot-api-go        B        10.1     2        0   0   0   3    0
+Base de datos  smartpot-db            A       316.4    11      128   0  24  50    4
+Base de datos  smartpot-db-postgre    B       761.7    23      121   4  63  50    3
+Caché          smartpot-cache         A        39.5     9       22   0   1   0    1
+Caché          smartpot-cache-valkey  B        22.4    11       23   0   0   0    0
+Broker MQTT    smartpot-broker        A        13.0     5       35   0   0   0    0
+Broker MQTT    smartpot-broker-emqx   B       134.1     9      106   0   8   7  125
+PWA            smartpot-web           A        26.6    12       71   1   1   0   25
+PWA            smartpot-web-solid     B        26.6    12       71   1   1   0   25
+Simulador      smartpot-datagenerator A        50.6     7       97   1   8   8   99
+Simulador      smartpot-datagenerator-rust B        36.7     6       91   1   4   2   89
+--------------------------------------------------------------------------------------
+C/H/M/L = críticas/altas/medias/bajas únicas · imágenes :latest del 2026-11-01

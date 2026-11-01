@@ -1,0 +1,25 @@
+%%{init: {"theme": "base", "fontFamily": "Segoe UI, Arial, sans-serif", "themeVariables": {"fontFamily": "Segoe UI, Arial, sans-serif", "fontSize": "15px", "primaryColor": "#DDF5EA", "primaryTextColor": "#17261F", "primaryBorderColor": "#067A52", "secondaryColor": "#E3F2FB", "secondaryTextColor": "#17261F", "secondaryBorderColor": "#1F6FA0", "tertiaryColor": "#F2F7F4", "tertiaryTextColor": "#17261F", "tertiaryBorderColor": "#D5E3DC", "lineColor": "#5B6B63", "textColor": "#17261F", "mainBkg": "#DDF5EA", "nodeBorder": "#067A52", "clusterBkg": "#F7FAF8", "clusterBorder": "#D5E3DC", "edgeLabelBackground": "#FFFFFF", "actorBkg": "#067A52", "actorBorder": "#0B3D2B", "actorTextColor": "#FFFFFF", "actorLineColor": "#5B6B63", "signalColor": "#17261F", "signalTextColor": "#17261F", "labelBoxBkgColor": "#0B3D2B", "labelBoxBorderColor": "#0B3D2B", "labelTextColor": "#FFFFFF", "loopTextColor": "#0B3D2B", "noteBkgColor": "#FDF4DD", "noteBorderColor": "#C98D12", "noteTextColor": "#17261F", "activationBkgColor": "#DDF5EA", "activationBorderColor": "#067A52", "attributeBackgroundColorOdd": "#FFFFFF", "attributeBackgroundColorEven": "#F2F7F4"}}}%%
+flowchart TB
+  subgraph ver["Versiones de Go para CVE-2026-111943"]
+    direction LR
+    v1260["1.26.0 – 1.26.9<br/>afectadas"] --> v12610["1.26.10<br/>corregida"] --> v1270["1.27.0 – 1.27.2<br/>afectadas"] --> v1273["1.27.3<br/>corregida"]
+  end
+  subgraph fija["Qué fija cada pieza de SmartPot-API-Go"]
+    direction LR
+    gomod["go.mod: go 1.26.10<br/>solo un mínimo:<br/>acepta 1.27.0"]
+    local["Equipo del auditor<br/>go1.27.0 → afectado"]
+    tc["toolchain go1.27.3<br/>el comando go<br/>cambia a 1.27.3"]
+    img["Dockerfile<br/>golang:1.27.3"]
+    gomod ~~~ local ~~~ tc ~~~ img
+  end
+  ver ~~~ fija
+
+  classDef core fill:#DDF5EA,stroke:#067A52,color:#17261F
+  classDef platform fill:#E3F2FB,stroke:#1F6FA0,color:#17261F
+  classDef store fill:#F2F7F4,stroke:#5B6B63,color:#17261F
+  classDef device fill:#FDF4DD,stroke:#C98D12,color:#17261F
+  classDef alert fill:#FBE4E4,stroke:#B83232,color:#17261F
+  classDef dark fill:#0B3D2B,stroke:#06281C,color:#FFFFFF
+  class v1260,v1270,local alert
+  class v12610,v1273,tc,img core
+  class gomod store

@@ -1,0 +1,50 @@
+PS SmartPot\.github> snyk code test --org=smartpot      # rama security/snyk/qa-scripts-ssrf
+
+Testing C:\Users\auditor\Documents\GitHub\SmartPot\.github ...
+
+Open Issues
+
+ ✗ [LOW] Use of Hardcoded Passwords
+   Finding ID: 4954cdfa-72d3-41dc-b2df-08cef5d82dab
+   Path: docker/demo-beta/test.py, line 109
+   Info: Do not hardcode passwords in code. Found hardcoded password used in a dictionary key.
+
+ ✗ [LOW] Path Traversal
+   Finding ID: 6fc3a7fd-ab83-4d86-aad1-b1f03610b05f
+   Path: docs/tools/md_to_docx.py, line 843
+   Info: Unsanitized input from a command line argument flows into zipfile.ZipFile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [MEDIUM] Command Injection
+   Finding ID: 9fa04415-6d45-47a5-aad9-5f96406cde7f
+   Path: docs/tools/md_to_docx.py, line 867
+   Info: Unsanitized input from a command line argument flows into subprocess.run, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+ ✗ [MEDIUM] Use of Hardcoded Passwords
+   Finding ID: 75a0c8ad-46ab-433f-bf37-a4bb9222dfdd
+   Path: scripts/qa_audit_ab.py, line 93
+   Info: Do not hardcode passwords in code. Found hardcoded password used in a dictionary key.
+
+ ✗ [MEDIUM] Use of Hardcoded Passwords
+   Finding ID: 84c32237-dcb1-49fd-9f04-fc8769526001
+   Path: scripts/stress_ingestion_query.py, line 115
+   Info: Do not hardcode passwords in code. Found hardcoded password used in a dictionary key.
+
+
+
+╭──────────────────────────────────────────────────────────────────────────────────╮
+│ Test Summary                                                                     │
+│                                                                                  │
+│   Organization:      smartpot                                                    │
+│   Test type:         Static code analysis                                        │
+│   Project path:      C:\Users\auditor\Documents\GitHub\SmartPot\.github    │
+│                                                                                  │
+│   Total issues:   5                                                              │
+│   Ignored issues: 0 [ 0 HIGH  0 MEDIUM  0 LOW ]                                  │
+│   Open issues:    5 [ 0 HIGH  3 MEDIUM  2 LOW ]                                  │
+╰──────────────────────────────────────────────────────────────────────────────────╯
+    
+💡 Tip
+
+   To view ignored issues, use the --include-ignores option.
+                                                            
+

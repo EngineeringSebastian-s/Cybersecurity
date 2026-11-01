@@ -1,0 +1,50 @@
+GET https://api.snyk.io/rest/orgs/<org SmartPot>/projects?meta.latest_issue_counts=true   (token OAuth del CLI, oculto)
+
+origen  tipo       proyecto                                           C   H   M    L  creado      último análisis (UTC)
+----------------------------------------------------------------------------------------------------------------------
+cli     gomodules  SmartPot-API-Go:go.mod                             0   0   0    0  2026-10-31  2026-11-01 17:15
+cli     gomodules  SmartPot-API-Go:go.mod                             0   1   0    0  2026-10-31  2026-10-31 00:22
+cli     k8sconfig  .github:kubernetes/k8s-deployment.yml              0   0   0   11  2026-10-31  2026-11-01 17:14
+cli     k8sconfig  .github:kubernetes/k8s-deployment.yml              0   0   0   11  2026-10-31  2026-10-31 00:25
+cli     maven      SmartPot-API                                       0   0   0    1  2026-11-01  2026-11-01 19:39
+cli     maven      SmartPot-API                                       0   0   0    1  2026-10-31  2026-11-01 17:15
+cli     npm        SmartPot-Web-Solid                                 0   0   0    0  2026-10-31  2026-11-01 17:15
+cli     npm        SmartPot-Web-Solid                                 0   0   0    0  2026-10-31  2026-10-31 00:24
+cli     pip        SmartPot-AI                                        0   0   0    0  2026-10-31  2026-11-01 17:14
+cli     pip        SmartPot-DataGenerator                             0   0   0    0  2026-10-31  2026-11-01 17:15
+cli     pip        SmartPot-MCP                                       0   0   0    0  2026-11-01  2026-11-01 16:22
+cli     pnpm       smartpot-web                                       0   0   0    0  2026-10-31  2026-11-01 17:15
+github  dockerfile SmartPot-AI:Dockerfile                             4   9   5  119  2026-10-29  2026-10-30 21:04
+github  dockerfile SmartPot-API-Go:Dockerfile                         0   0   0    0  2026-10-29  2026-10-29 19:29
+github  dockerfile SmartPot-API:Dockerfile                            1  10   7   19  2026-10-29  2026-10-29 19:29
+github  dockerfile SmartPot-Broker-EMQX:Dockerfile                    0   0   0    0  2026-10-29  2026-10-29 19:29
+github  dockerfile SmartPot-Broker:Dockerfile                         0   0   0    0  2026-10-29  2026-10-29 19:29
+github  dockerfile SmartPot-Cache-Valkey:Dockerfile                   0   0   0    0  2026-10-29  2026-10-29 19:29
+github  dockerfile SmartPot-Cache:Dockerfile                          0   0   0    0  2026-10-29  2026-10-29 19:29
+github  dockerfile SmartPot-DB-Postgre:Dockerfile                     0   0   0    0  2026-10-29  2026-10-29 19:29
+github  dockerfile SmartPot-DB:Dockerfile                             0   2  60   28  2026-10-29  2026-10-30 22:49
+github  dockerfile SmartPot-DataGenerator-Rust:Dockerfile             4   9   5   97  2026-10-29  2026-10-29 19:29
+github  dockerfile SmartPot-DataGenerator:Dockerfile                  4   9   5  119  2026-10-29  2026-10-30 21:03
+github  dockerfile SmartPot-Mail:Dockerfile                           0   0   0    0  2026-10-29  2026-10-29 19:29
+github  dockerfile SmartPot-Proxy:Dockerfile                          3   9   7  106  2026-10-29  2026-10-30 21:03
+github  dockerfile SmartPot-Web-Solid:Dockerfile                      0   0   0    0  2026-10-29  2026-10-29 19:29
+github  dockerfile SmartPot-Web:Dockerfile                            0   0   0    0  2026-10-29  2026-10-29 19:29
+github  gomodules  SmartPot-API-Go:go.mod                             0   7  11    1  2026-10-29  2026-10-29 19:30
+github  k8sconfig  .github:kubernetes/k8s-deployment.yml              0   0   0   11  2026-10-29  2026-10-30 21:04
+github  maven      SmartPot-API:pom.xml                               8  14  23    2  2026-10-29  2026-10-30 22:03
+github  pip        SmartPot-Proxy:requirements.txt                    2   7   7    0  2026-10-29  2026-10-30 21:03
+github  pnpm       SmartPot-Web-Solid:package.json                    0   0   0    0  2026-10-29  2026-10-30 23:05
+github  pnpm       SmartPot-Web:package.json                          0   0   0    0  2026-10-29  2026-10-29 19:29
+github  sast       .github                                            0   0   6    2  2026-10-29  2026-11-01 16:23
+github  sast       SmartPot-AI                                        0   0   0    0  2026-10-29  2026-11-01 00:15
+github  sast       SmartPot-API                                       0   0   1    0  2026-10-29  2026-11-01 03:53
+github  sast       SmartPot-API-Go                                    0   0   0    2  2026-10-29  2026-11-01 16:17
+github  sast       SmartPot-DB                                        0   0   1    1  2026-10-29  2026-10-29 19:30
+github  sast       SmartPot-DataGenerator                             0   0   0    1  2026-10-29  2026-10-30 21:03
+github  sast       SmartPot-IoT                                       0   0   0    0  2026-10-29  2026-10-29 19:30
+github  sast       SmartPot-IoT-Rust                                  0   0   0    0  2026-10-29  2026-11-01 00:12
+github  sast       SmartPot-Proxy                                     0   0   0    0  2026-10-29  2026-10-30 21:03
+github  sast       SmartPot-Web                                       0   1   1    0  2026-10-29  2026-11-01 03:53
+github  sast       SmartPot-Web-Solid                                 0   0   0    0  2026-10-29  2026-11-01 16:18
+----------------------------------------------------------------------------------------------------------------------
+44 proyectos · origen github = importación del 2026-10-29 · origen cli = snyk monitor (CI y local)

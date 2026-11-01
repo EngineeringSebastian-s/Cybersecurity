@@ -1,0 +1,13 @@
+diff --git a/go.mod b/go.mod
+index 4340e90..0f0eb60 100644
+--- a/go.mod
++++ b/go.mod
+@@ -2,6 +2,8 @@ module github.com/SmartPotTech/SmartPot-API-Go
+ 
+ go 1.26.10
+ 
++toolchain go1.27.3
++
+ require (
+ 	github.com/eclipse/paho.mqtt.golang v1.5.1
+ 	github.com/golang-jwt/jwt/v5 v5.3.1

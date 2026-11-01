@@ -1,0 +1,39 @@
+PS SmartPot-DB-Postgre> sh tests/validate.sh smartpot-db-postgre:lab5-despues false; sh tests/validate.sh smartpot-db-postgre:lab5-despues true
+
+OK   once tablas
+OK   el alcance de una conexión se restringe
+OK   readings es una hipertabla de TimescaleDB
+OK   readings tiene política de retención
+OK   el usuario de la app escribe en su base
+OK   el usuario de la app no crea tablas (sin DDL)
+OK   el CHECK rechaza un rol inválido
+OK   el CHECK rechaza un modo de simulación desconocido
+OK   el CHECK rechaza un resumen diario con hora inválida no aplica (texto libre), pero sí un delivery inválido
+OK   la restricción única por cultivo y tipo de actuador
+OK   los agregados continuos incluyen lo no materializado
+OK   el rol lector ve la telemetría
+OK   el rol lector no ve el dueño del cultivo
+OK   el rol lector no escribe
+OK   la migración es idempotente (segunda corrida sin error)
+OK   sin cultivos
+EXIT demo=false: 0
+OK   once tablas
+OK   el alcance de una conexión se restringe
+OK   readings es una hipertabla de TimescaleDB
+OK   readings tiene política de retención
+OK   el usuario de la app escribe en su base
+OK   el usuario de la app no crea tablas (sin DDL)
+OK   el CHECK rechaza un rol inválido
+OK   el CHECK rechaza un modo de simulación desconocido
+OK   el CHECK rechaza un resumen diario con hora inválida no aplica (texto libre), pero sí un delivery inválido
+OK   la restricción única por cultivo y tipo de actuador
+OK   los agregados continuos incluyen lo no materializado
+OK   el rol lector ve la telemetría
+OK   el rol lector no ve el dueño del cultivo
+OK   el rol lector no escribe
+OK   la migración es idempotente (segunda corrida sin error)
+OK   cuenta demo
+OK   cultivos demo
+OK   cultivos demo al aire libre en Medellín
+OK   48 h de lecturas por cultivo (576)
+EXIT demo=true: 0

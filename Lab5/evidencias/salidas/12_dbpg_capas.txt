@@ -1,0 +1,14 @@
+== ANTES (main, symlink): 23 capas en la imagen
+  capa  3: /usr/local/bin/gosu  [archivo regular 2355481 bytes]
+  capa 15: /usr/local/bin/timescaledb-tune  [archivo regular 3351043 bytes]
+  capa 19: /usr/local/bin/gosu  [enlace -> /sbin/su-exec]
+  capa 19: /usr/local/bin/.wh.timescaledb-tune  [borrado (whiteout)]
+== DESPUES (rama, aplanada): 1 capas en la imagen
+  capa  1: /usr/local/bin/gosu  [archivo regular 14152 bytes]
+
+PS> docker cp <timescale/timescaledb:2.17.2-pg17>:/usr/local/bin/gosu gosu_base ; go version -m gosu_base
+gosu_base: go1.18.2
+	path	github.com/tianon/gosu
+	mod	github.com/tianon/gosu	(devel)	
+	dep	github.com/moby/sys/user	v0.1.0	h1:WmZ93f5Ux6het5iituh9x2zAG7NFY9Aqi49jjE1PaQg=
+	dep	golang.org/x/sys	v0.13.0	h1:Af8nKPmuFypiUBjVoU9V20FiaFXOcuZI21p0ycVYYGE=

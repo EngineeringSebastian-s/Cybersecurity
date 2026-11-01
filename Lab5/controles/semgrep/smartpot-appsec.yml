@@ -1,0 +1,79 @@
+# Reglas Semgrep derivadas de los hallazgos del Laboratorio 5 sobre SmartPot.
+# Uso: semgrep --config controles/semgrep/smartpot-appsec.yml --error <repositorio>
+rules:
+  # V1 · CWE-918. Las clases del arnés de QA guardan la URL base en un atributo: debe salir de loopback_base_url().
+  - id: smartpot-qa-url-base-sin-validar
+    languages: [python]
+    severity: ERROR
+    message: >-
+      La URL base de una herramienta de QA se guarda sin pasar por loopback_base_url(). Con un destino arbitrario,
+      el script envía la cuenta demo y el JWT a otro host o lee file:// (CWE-918, OWASP A10:2021).
+    patterns:
+      - pattern-either:
+          - pattern: self.$NAME = $RHS
+          - pattern: $NAME = $RHS
+      - metavariable-regex:
+          metavariable: $NAME
+          regex: ^(base_url|url_a|url_b|target_url)$
+      - pattern-not: self.$NAME = loopback_base_url(...)
+      - pattern-not: $NAME = loopback_base_url(...)
+      - pattern-not: self.$NAME = loopback_base_url(...) if $COND else None
+      - pattern-not: $NAME = None
+    metadata:
+      cwe: "CWE-918: Server-Side Request Forgery (SSRF)"
+      owasp: "A10:2021 - Server-Side Request Forgery"
+      origen: "Snyk Code python/Ssrf en scripts/qa_audit_ab.py, diff_contract_suite.py y stress_ingestion_query.py"
+
+  # V1 · CWE-918. Las funciones reciben la URL directamente desde argparse: debe validarse antes de pasarla.
+  - id: smartpot-qa-argumento-url-directo
+    languages: [python]
+    severity: ERROR
+    message: >-
+      Un argumento de URL de la línea de comandos llega a una función sin pasar por loopback_base_url() (CWE-918).
+    patterns:
+      - pattern: $FUNC(..., $ARGS.$OPT, ...)
+      - metavariable-regex:
+          metavariable: $OPT
+          regex: ^(url|target|url_a|url_b)$
+      - metavariable-regex:
+          metavariable: $FUNC
+          regex: ^(?!loopback_base_url$|print$)[a-z_][a-z0-9_]*$
+    metadata:
+      cwe: "CWE-918: Server-Side Request Forgery (SSRF)"
+      owasp: "A10:2021 - Server-Side Request Forgery"
+
+  # V2 · CWE-502. Ningún ObjectMapper de SmartPot debe aceptar tipos por nombre de clase.
+  - id: smartpot-jackson-tipado-polimorfico
+    languages: [java]
+    severity: ERROR
+    message: >-
+      Tipado polimórfico por nombre de clase en Jackson: convierte la deserialización de JSON en una puerta a
+      gadgets del classpath (CWE-502, OWASP A08:2021). Usar tipos concretos o @JsonSubTypes con nombres lógicos.
+    pattern-either:
+      - pattern: $MAPPER.activateDefaultTyping(...)
+      - pattern: $MAPPER.enableDefaultTyping(...)
+      - pattern: $BUILDER.activateDefaultTyping(...)
+      - pattern: "@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, ...)"
+      - pattern: "@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, ...)"
+      - pattern: "@JsonTypeInfo(use = Id.CLASS, ...)"
+    metadata:
+      cwe: "CWE-502: Deserialization of Untrusted Data"
+      owasp: "A08:2021 - Software and Data Integrity Failures"
+      origen: "Snyk Open Source SNYK-JAVA-TOOLSJACKSONCORE-21761838 / CVE-2026-110879"
+
+  # V3 · Reemplazar un binario de la imagen base en una capa nueva no lo saca de la imagen.
+  - id: smartpot-dockerfile-enlace-sobre-binario-base
+    languages: [generic]
+    severity: WARNING
+    message: >-
+      Un enlace simbólico sobre un binario que viene de la imagen base solo lo tapa en tiempo de ejecución: el archivo
+      original sigue en su capa, viaja con la imagen y el escáner de contenedores lo sigue reportando. Aplanar con una
+      etapa final (FROM scratch + COPY --from) o reconstruir la base.
+    pattern-regex: ln\s+-s\w*\s+\S+\s+/usr/(local/)?s?bin/\S+
+    paths:
+      include:
+        - "**/Dockerfile*"
+    metadata:
+      cwe: "CWE-1104: Use of Unmaintained Third Party Components"
+      owasp: "A06:2021 - Vulnerable and Outdated Components"
+      origen: "Snyk Container, /usr/local/bin/gosu en SmartPot-DB-Postgre"

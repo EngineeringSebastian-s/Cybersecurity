@@ -1,0 +1,80 @@
+PS C:\auditoria-lab5\sca-api\antes> snyk test --org=smartpot      # pom.xml de ac52ab4^ (antes de #121 y #123)
+
+Testing  (pom.xml) ...
+
+Tested 119 dependencies for known issues, found 5 issues, 5 vulnerable paths.
+
+Open Security issues: 5
+
+ ✗ [LOW] Improper Validation of Specified Type of Input
+   Finding ID: SNYK-JAVA-JAKARTAVALIDATION-20936881
+   Info: https://snyk.io/vuln/SNYK-JAVA-JAKARTAVALIDATION-20936881
+   Introduced by: jakarta.validation:jakarta.validation-api
+   Introduced through: app.smartpot:smartpot-api@2.0.0 > org.springframework.boot:spring-boot-starter-validation@4.1.2 > org.springframework.boot:spring-boot-validation@4.1.2 > org.hibernate.validator:hibernate-validator@9.1.5.Final > jakarta.validation:jakarta.validation-api@3.1.1
+
+ ✗ [MEDIUM] Directory Traversal
+   Finding ID: SNYK-JAVA-CHQOSLOGBACK-19882330
+   Info: https://snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-19882330
+   Introduced by: ch.qos.logback:logback-classic
+   Introduced through: app.smartpot:smartpot-api@2.0.0 > org.springframework.boot:spring-boot-starter-webmvc@4.1.2 > org.springframework.boot:spring-boot-starter@4.1.2 > org.springframework.boot:spring-boot-starter-logging@4.1.2 > ch.qos.logback:logback-classic@1.5.38
+
+ ✗ [MEDIUM] Directory Traversal
+   Finding ID: SNYK-JAVA-CHQOSLOGBACK-20824362
+   Info: https://snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-20824362
+   Introduced by: ch.qos.logback:logback-classic
+   Introduced through: app.smartpot:smartpot-api@2.0.0 > org.springframework.boot:spring-boot-starter-webmvc@4.1.2 > org.springframework.boot:spring-boot-starter@4.1.2 > org.springframework.boot:spring-boot-starter-logging@4.1.2 > ch.qos.logback:logback-classic@1.5.38
+
+ ✗ [CRITICAL] Deserialization of Untrusted Data
+   Finding ID: SNYK-JAVA-COMFASTERXMLJACKSONCORE-21761837
+   Info: https://snyk.io/vuln/SNYK-JAVA-COMFASTERXMLJACKSONCORE-21761837
+   Introduced by: com.fasterxml.jackson.core:jackson-databind
+   Introduced through: app.smartpot:smartpot-api@2.0.0 > org.springdoc:springdoc-openapi-starter-webmvc-ui@3.2.0 > org.springdoc:springdoc-openapi-starter-webmvc-api@3.2.0 > org.springdoc:springdoc-openapi-starter-common@3.2.0 > com.fasterxml.jackson.core:jackson-databind@2.21.7
+
+ ✗ [CRITICAL] Deserialization of Untrusted Data
+   Finding ID: SNYK-JAVA-TOOLSJACKSONCORE-21761838
+   Info: https://snyk.io/vuln/SNYK-JAVA-TOOLSJACKSONCORE-21761838
+   Introduced by: tools.jackson.core:jackson-databind
+   Introduced through: app.smartpot:smartpot-api@2.0.0 > org.springframework.boot:spring-boot-starter-webmvc@4.1.2 > org.springframework.boot:spring-boot-starter-jackson@4.1.2 > org.springframework.boot:spring-boot-jackson@4.1.2 > tools.jackson.core:jackson-databind@3.1.7
+
+
+Issues with no direct upgrade or patch:
+  ✗ Improper Validation of Specified Type of Input [LOW] [https://security.snyk.io/vuln/SNYK-JAVA-JAKARTAVALIDATION-20936881] in jakarta.validation:jakarta.validation-api@3.1.1
+    introduced by app.smartpot:smartpot-api@2.0.0 > org.springframework.boot:spring-boot-starter-validation@4.1.2 > org.springframework.boot:spring-boot-validation@4.1.2 > org.hibernate.validator:hibernate-validator@9.1.5.Final > jakarta.validation:jakarta.validation-api@3.1.1
+  This issue was fixed in: 4.0.0-M1
+  ✗ Directory Traversal [MEDIUM] [https://security.snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-19882330] in ch.qos.logback:logback-classic@1.5.38
+    introduced by app.smartpot:smartpot-api@2.0.0 > org.springframework.boot:spring-boot-starter-webmvc@4.1.2 > org.springframework.boot:spring-boot-starter@4.1.2 > org.springframework.boot:spring-boot-starter-logging@4.1.2 > ch.qos.logback:logback-classic@1.5.38
+  This issue was fixed in: 1.6.3
+  ✗ Directory Traversal [MEDIUM] [https://security.snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-20824362] in ch.qos.logback:logback-classic@1.5.38
+    introduced by app.smartpot:smartpot-api@2.0.0 > org.springframework.boot:spring-boot-starter-webmvc@4.1.2 > org.springframework.boot:spring-boot-starter@4.1.2 > org.springframework.boot:spring-boot-starter-logging@4.1.2 > ch.qos.logback:logback-classic@1.5.38
+  This issue was fixed in: 1.6.5
+  ✗ Deserialization of Untrusted Data [CRITICAL] [https://security.snyk.io/vuln/SNYK-JAVA-COMFASTERXMLJACKSONCORE-21761837] in com.fasterxml.jackson.core:jackson-databind@2.21.7
+    introduced by app.smartpot:smartpot-api@2.0.0 > org.springdoc:springdoc-openapi-starter-webmvc-ui@3.2.0 > org.springdoc:springdoc-openapi-starter-webmvc-api@3.2.0 > org.springdoc:springdoc-openapi-starter-common@3.2.0 > com.fasterxml.jackson.core:jackson-databind@2.21.7
+  This issue was fixed in: 2.18.12, 2.21.8, 2.22.4
+  ✗ Deserialization of Untrusted Data [CRITICAL] [https://security.snyk.io/vuln/SNYK-JAVA-TOOLSJACKSONCORE-21761838] in tools.jackson.core:jackson-databind@3.1.7
+    introduced by app.smartpot:smartpot-api@2.0.0 > org.springframework.boot:spring-boot-starter-webmvc@4.1.2 > org.springframework.boot:spring-boot-starter-jackson@4.1.2 > org.springframework.boot:spring-boot-jackson@4.1.2 > tools.jackson.core:jackson-databind@3.1.7
+  This issue was fixed in: 3.1.8, 3.2.4
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Test Summary                                                                                                                                                                                 │
+│                                                                                                                                                                                              │
+│   Organization:      smartpot                                                                                                                                                                │
+│   Test type:         Software Composition Analysis                                                                                                                                           │
+│   Project name:      app.smartpot:smartpot-api                                                                                                                                               │
+│   Project path:      C:\auditoria-lab5\sca-api\antes    │
+│   Target file:       pom.xml                                                                                                                                                                 │
+│                                                                                                                                                                                              │
+│   Total security issues: 5                                                                                                                                                                   │
+│   Ignored: 0 [ 0 CRITICAL  0 HIGH  0 MEDIUM  0 LOW ]                                                                                                                                         │
+│   Open   : 5 [ 2 CRITICAL  0 HIGH  2 MEDIUM  1 LOW ]                                                                                                                                         │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+💡 Tip
+
+   Some capabilities, including the ability to apply ignores, are unavailable. Retest the project with the --remote-repo-url parameter or from within a repository to enable full functionality.
+                                                                                                                                                                                                
+
+💡 Tip
+
+   To view ignored issues, use the --include-ignores option.
+                                                            
+

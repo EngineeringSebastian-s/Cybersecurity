@@ -1,0 +1,22 @@
+PS> (Get-CimInstance Win32_OperatingSystem).Caption; [Environment]::OSVersion.VersionString
+Microsoft Windows 11 Pro
+Microsoft Windows NT 10.0.26300.0
+
+PS> snyk --version
+1.1308.3
+
+PS> snyk whoami --experimental      # usuario parcialmente oculto
+Seb***********O
+
+PS> snyk config get api; $env:SNYK_TOKEN   # credencial no expuesta
+api = (vacio: sesion OAuth guardada en el configstore del usuario, fuera de los repositorios)
+SNYK_TOKEN = (no definido en la sesion local; en CI llega como secret SNYK_PAT_ORG)
+
+PS> node --version; go version; java -version; mvn -v; python --version; docker --version; git --version
+v22.18.0
+go version go1.27.0 windows/amd64
+openjdk version "21.0.9" 2025-10-21 LTS
+Apache Maven 3.10.0 (c43a36b8d67be7e0805a411bc0898af1a51f5472)
+Python 3.13.6
+Docker version 28.5.1, build e180ab8
+git version 2.51.0.windows.1

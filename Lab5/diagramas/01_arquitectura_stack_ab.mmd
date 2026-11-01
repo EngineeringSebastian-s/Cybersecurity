@@ -1,0 +1,50 @@
+%%{init: {"theme": "base", "fontFamily": "Segoe UI, Arial, sans-serif", "themeVariables": {"fontFamily": "Segoe UI, Arial, sans-serif", "fontSize": "15px", "primaryColor": "#DDF5EA", "primaryTextColor": "#17261F", "primaryBorderColor": "#067A52", "secondaryColor": "#E3F2FB", "secondaryTextColor": "#17261F", "secondaryBorderColor": "#1F6FA0", "tertiaryColor": "#F2F7F4", "tertiaryTextColor": "#17261F", "tertiaryBorderColor": "#D5E3DC", "lineColor": "#5B6B63", "textColor": "#17261F", "mainBkg": "#DDF5EA", "nodeBorder": "#067A52", "clusterBkg": "#F7FAF8", "clusterBorder": "#D5E3DC", "edgeLabelBackground": "#FFFFFF", "actorBkg": "#067A52", "actorBorder": "#0B3D2B", "actorTextColor": "#FFFFFF", "actorLineColor": "#5B6B63", "signalColor": "#17261F", "signalTextColor": "#17261F", "labelBoxBkgColor": "#0B3D2B", "labelBoxBorderColor": "#0B3D2B", "labelTextColor": "#FFFFFF", "loopTextColor": "#0B3D2B", "noteBkgColor": "#FDF4DD", "noteBorderColor": "#C98D12", "noteTextColor": "#17261F", "activationBkgColor": "#DDF5EA", "activationBorderColor": "#067A52", "attributeBackgroundColorOdd": "#FFFFFF", "attributeBackgroundColorEven": "#F2F7F4"}}}%%
+flowchart LR
+  dev["Dispositivos<br/>ESP32 · Wokwi · simulador"]
+  user["Persona usuaria<br/>navegador · Telegram · cliente MCP"]
+  subgraph A["Stack A · producción en smartpot.app"]
+    direction TB
+    a_web["SmartPot-Web<br/>React 19 · nginx"]
+    a_api["SmartPot-API<br/>Spring Boot 4 · Java 21<br/>imagen Temurin JRE"]
+    a_db[("SmartPot-DB<br/>MongoDB 8")]
+    a_cache[("SmartPot-Cache<br/>Redis 8")]
+    a_broker["SmartPot-Broker<br/>Mosquitto 2.1"]
+    a_sim["SmartPot-DataGenerator<br/>Python"]
+  end
+  subgraph B["Stack B · destino demo-beta"]
+    direction TB
+    b_web["SmartPot-Web-Solid<br/>SolidJS · nginx sin privilegios"]
+    b_api["SmartPot-API-Go<br/>Echo · imagen scratch"]
+    b_db[("SmartPot-DB-Postgre<br/>PostgreSQL 17 + TimescaleDB")]
+    b_cache[("SmartPot-Cache-Valkey<br/>Valkey 9")]
+    b_broker["SmartPot-Broker-EMQX<br/>EMQX 5.8 · authn delegada en la API"]
+    b_sim["SmartPot-DataGenerator-Rust<br/>Axum · Tokio"]
+  end
+  subgraph S["Compartidos"]
+    direction TB
+    ai["SmartPot-AI<br/>FastAPI + núcleo C++20"]
+    mcp["SmartPot-MCP<br/>token por cuenta"]
+    mail["SmartPot-Mail<br/>Mailpit"]
+  end
+  user --> a_web & b_web
+  user --> mcp
+  dev -- "MQTT v1 · TLS 8883" --> a_broker & b_broker
+  a_web --> a_api --> a_db & a_cache
+  a_api --> a_broker
+  b_web --> b_api --> b_db & b_cache
+  b_api --> b_broker
+  a_api & b_api --> ai & mail
+  mcp --> b_api
+  a_sim --> a_broker
+  b_sim --> b_broker
+
+  classDef core fill:#DDF5EA,stroke:#067A52,color:#17261F
+  classDef platform fill:#E3F2FB,stroke:#1F6FA0,color:#17261F
+  classDef store fill:#F2F7F4,stroke:#5B6B63,color:#17261F
+  classDef device fill:#FDF4DD,stroke:#C98D12,color:#17261F
+  classDef alert fill:#FBE4E4,stroke:#B83232,color:#17261F
+  classDef dark fill:#0B3D2B,stroke:#06281C,color:#FFFFFF
+  class a_web,a_api,a_db,a_cache,a_broker,a_sim platform
+  class b_web,b_api,b_db,b_cache,b_broker,b_sim core
+  class ai,mcp,mail store
+  class dev,user device

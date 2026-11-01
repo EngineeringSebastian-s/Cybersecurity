@@ -1,0 +1,26 @@
+PS> snyk container test ghcr.io/smartpottech/smartpot-api:latest --json   # aplicaciones dentro de la imagen
+  aplicación: \app ( maven )
+    MEDIUM ch.qos.logback:logback-classic@1.5.38
+    MEDIUM ch.qos.logback:logback-classic@1.5.38
+    CRITICAL com.fasterxml.jackson.core:jackson-databind@2.21.7
+    LOW jakarta.validation:jakarta.validation-api@3.1.1
+    CRITICAL tools.jackson.core:jackson-databind@3.1.7
+
+PS> docker buildx imagetools inspect ghcr.io/smartpottech/smartpot-api:latest   # metadatos de la imagen
+  org.opencontainers.image.revision = c200afb57d306b6d1fd8f9d7624dc699bbfd497f   (main con los pins de #121 y #123)
+  org.opencontainers.image.created  = 2026-11-01T03:57:00Z
+
+PS> docker cp <contenedor>:/app/smartpot-api.jar . ; unzip -l smartpot-api.jar | Select-String 'jackson-databind|jackson-core|logback-classic'
+     291838  2026-09-30 17:31   BOOT-INF/lib/logback-classic-1.6.5.jar
+    1958993  2026-10-18 00:15   BOOT-INF/lib/jackson-databind-3.1.8.jar
+     606159  2026-10-17 17:03   BOOT-INF/lib/jackson-core-3.1.8.jar
+    1713950  2026-10-17 13:09   BOOT-INF/lib/jackson-databind-2.21.8.jar
+     599566  2026-10-17 12:58   BOOT-INF/lib/jackson-core-2.21.8.jar
+
+PS> unzip -p smartpot-api.jar META-INF/maven/app.smartpot/smartpot-api/pom.xml | Select-String 'bom.version|logback.version'
+  <jackson-bom.version>3.1.8</jackson-bom.version>
+  <jackson-2-bom.version>2.21.8</jackson-2-bom.version>
+  <logback.version>1.6.5</logback.version>
+
+Conclusión: el JAR publicado trae las versiones corregidas; Snyk Container resuelve el pom.xml incrustado con las
+versiones que gestiona spring-boot-starter-parent 4.1.2 e ignora los overrides de propiedades (falso positivo).

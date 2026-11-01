@@ -1,0 +1,15 @@
+PS> python -c "from local_target import loopback_base_url ..."   # 5 destinos locales y 9 hostiles
+OK    http://localhost:8091                         -> http://127.0.0.1:8091
+OK    http://127.0.0.1:8091/                        -> http://127.0.0.1:8091
+OK    https://localhost                             -> https://127.0.0.1:443
+OK    http://[::1]:8092                             -> http://[::1]:8092
+OK    HTTP://LOCALHOST:8091                         -> http://127.0.0.1:8091
+BLOQ  file:///etc/passwd                            -> Destino no permitido
+BLOQ  http://169.254.169.254/latest/meta-data/      -> Destino no permitido
+BLOQ  http://evil.example:8091                      -> Destino no permitido
+BLOQ  ftp://127.0.0.1/                              -> Destino no permitido
+BLOQ  http://127.0.0.1.evil.example/                -> Destino no permitido
+BLOQ  http://localhost:99999                        -> Destino no permitido
+BLOQ  http://user@evil.example                      -> Destino no permitido
+BLOQ  gopher://localhost:70                         -> Destino no permitido
+BLOQ  http://localhost@evil.example:8091            -> Destino no permitido

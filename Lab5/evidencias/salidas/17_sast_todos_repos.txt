@@ -1,0 +1,36 @@
+PS> foreach ($r in .github, SmartPot-*) { snyk code test $r --org=smartpot --json }
+
+repositorio           nivel  regla                          archivo:línea                        CWE
+------------------------------------------------------------------------------------------------------------
+AI                    ok     0 hallazgos
+API-Go                low    Use of Hardcoded Credentials   internal/config/config.go:218        798
+API-Go                low    Use of Hardcoded Credentials   …nal/httpserver/server_test.go:167   798
+API                   medium Use of Hardcoded Passwords     …rity/service/AuthService.java:63    798,259
+Broker-EMQX           -      sin código analizable (solo Dockerfile)
+Broker                -      sin código analizable (solo Dockerfile)
+Cache-Valkey          -      sin código analizable (solo Dockerfile)
+Cache                 -      sin código analizable (solo Dockerfile)
+DB-Postgre            -      sin código analizable (solo Dockerfile)
+DB                    low    Use of Hardcoded Credentials   init/01_app_user.js:14               798
+DB                    medium Use of Hardcoded Passwords     init/03_demo_data.js:19              798,259
+DataGenerator-Rust    ok     0 hallazgos
+DataGenerator         low    Hardcoded Non-Cryptographic Se tests/test_virtual_pots.py:16        547
+IoT-Rust              ok     0 hallazgos
+IoT                   ok     0 hallazgos
+MCP                   ok     0 hallazgos
+Mail                  -      sin código analizable (solo Dockerfile)
+Proxy                 ok     0 hallazgos
+Trainer               ok     0 hallazgos
+Web-Solid             ok     0 hallazgos
+Web                   high   Hardcoded Non-Cryptographic Se src/features/auth/session.ts:3       547
+Web                   medium Observable Timing Discrepancy  …uth/PasswordRecoveryPages.tsx:71    208
+.github               medium Command Injection              docs/tools/md_to_docx.py:867         78
+.github               medium Use of Hardcoded Passwords     scripts/qa_audit_ab.py:91            798,259
+.github               medium Use of Hardcoded Passwords     …pts/stress_ingestion_query.py:112   798,259
+.github               low    Use of Hardcoded Passwords     docker/demo-beta/test.py:109         798,259
+.github               low    Path Traversal                 docs/tools/md_to_docx.py:843         23
+.github               medium Server-Side Request Forgery (S scripts/diff_contract_suite.py:64    918
+.github               medium Server-Side Request Forgery (S scripts/qa_audit_ab.py:54            918
+.github               medium Server-Side Request Forgery (S …pts/stress_ingestion_query.py:115   918
+------------------------------------------------------------------------------------------------------------
+Total: 16 hallazgos SAST en 20 repositorios (antes de la remediación de la V1) · repositorios sin el prefijo SmartPot-

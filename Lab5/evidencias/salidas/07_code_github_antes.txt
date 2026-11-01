@@ -1,0 +1,65 @@
+PS SmartPot\.github> git stash -u; snyk code test --org=smartpot      # estado de origin/main
+
+Testing C:\Users\auditor\Documents\GitHub\SmartPot\.github ...
+
+Open Issues
+
+ ✗ [LOW] Use of Hardcoded Passwords
+   Finding ID: 4954cdfa-72d3-41dc-b2df-08cef5d82dab
+   Path: docker/demo-beta/test.py, line 109
+   Info: Do not hardcode passwords in code. Found hardcoded password used in a dictionary key.
+
+ ✗ [LOW] Path Traversal
+   Finding ID: 6fc3a7fd-ab83-4d86-aad1-b1f03610b05f
+   Path: docs/tools/md_to_docx.py, line 843
+   Info: Unsanitized input from a command line argument flows into zipfile.ZipFile, where it is used as a path. This may result in a Path Traversal vulnerability and allow an attacker to write arbitrary files.
+
+ ✗ [MEDIUM] Command Injection
+   Finding ID: 9fa04415-6d45-47a5-aad9-5f96406cde7f
+   Path: docs/tools/md_to_docx.py, line 867
+   Info: Unsanitized input from a command line argument flows into subprocess.run, where it is used as a shell command. This may result in a Command Injection vulnerability.
+
+ ✗ [MEDIUM] Use of Hardcoded Passwords
+   Finding ID: 75a0c8ad-46ab-433f-bf37-a4bb9222dfdd
+   Path: scripts/qa_audit_ab.py, line 91
+   Info: Do not hardcode passwords in code. Found hardcoded password used in a dictionary key.
+
+ ✗ [MEDIUM] Use of Hardcoded Passwords
+   Finding ID: 84c32237-dcb1-49fd-9f04-fc8769526001
+   Path: scripts/stress_ingestion_query.py, line 112
+   Info: Do not hardcode passwords in code. Found hardcoded password used in a dictionary key.
+
+ ✗ [MEDIUM] Server-Side Request Forgery (SSRF)
+   Finding ID: 130aa1a6-53f0-4659-bcab-9c21252e5dff
+   Path: scripts/diff_contract_suite.py, line 64
+   Info: Unsanitized input from a command line argument flows into urllib.request.urlopen, where it is used as an URL to perform a request. This may result in a Server-Side Request Forgery vulnerability.
+
+ ✗ [MEDIUM] Server-Side Request Forgery (SSRF)
+   Finding ID: b9ae6d72-1897-4cb2-95be-05dc5a708298
+   Path: scripts/qa_audit_ab.py, line 54
+   Info: Unsanitized input from a command line argument flows into urllib.request.urlopen, where it is used as an URL to perform a request. This may result in a Server-Side Request Forgery vulnerability.
+
+ ✗ [MEDIUM] Server-Side Request Forgery (SSRF)
+   Finding ID: 861c1e87-9a1c-483f-881a-da3d8d0cf14b
+   Path: scripts/stress_ingestion_query.py, line 115
+   Info: Unsanitized input from a command line argument flows into urllib.request.urlopen, where it is used as an URL to perform a request. This may result in a Server-Side Request Forgery vulnerability.
+
+
+
+╭──────────────────────────────────────────────────────────────────────────────────╮
+│ Test Summary                                                                     │
+│                                                                                  │
+│   Organization:      smartpot                                                    │
+│   Test type:         Static code analysis                                        │
+│   Project path:      C:\Users\auditor\Documents\GitHub\SmartPot\.github    │
+│                                                                                  │
+│   Total issues:   8                                                              │
+│   Ignored issues: 0 [ 0 HIGH  0 MEDIUM  0 LOW ]                                  │
+│   Open issues:    8 [ 0 HIGH  6 MEDIUM  2 LOW ]                                  │
+╰──────────────────────────────────────────────────────────────────────────────────╯
+    
+💡 Tip
+
+   To view ignored issues, use the --include-ignores option.
+                                                            
+

@@ -1,0 +1,49 @@
+PS SmartPot-DB-Postgre> docker build -t smartpot-db-postgre:lab5-antes .   # main (1f6067f)
+PS SmartPot-DB-Postgre> snyk container test smartpot-db-postgre:lab5-antes --file=Dockerfile --org=smartpot
+
+Testing smartpot-db-postgre:lab5-antes...
+Target OS:         Alpine Linux v3.21 · Base image: timescale/timescaledb:2.17.2-pg17
+✔ Tested 121 dependencies for known issues, no vulnerable paths found.
+
+   [… 810 líneas: 116 hallazgos altos, medios y bajos en stdlib@1.18.2 de /usr/local/bin/gosu …]
+
+
+✗ Critical severity vulnerability found in stdlib
+  Description: Improper Encoding or Escaping of Output
+  Introduced through: stdlib@1.18.2
+  Fixed in: 1.19.9, 1.20.4
+
+✗ Critical severity vulnerability found in stdlib
+  Description: Cross-site Scripting (XSS)
+  Introduced through: stdlib@1.18.2
+  Fixed in: 1.19.8, 1.20.3
+
+✗ Critical severity vulnerability found in stdlib
+  Description: HTTP Request Smuggling
+  Introduced through: stdlib@1.18.2
+  Fixed in: 1.23.8, 1.24.2
+
+✗ Critical severity vulnerability found in stdlib
+  Description: Improper Check for Unusual or Exceptional Conditions
+  Introduced through: stdlib@1.18.2
+  Fixed in: 1.21.11, 1.22.4
+
+
+
+Organization:      smartpot
+Package manager:   gomodules
+Target file:       \usr\local\bin\gosu
+Project name:      github.com/tianon/gosu
+Docker image:      smartpot-db-postgre:lab5-antes
+Licenses:          enabled
+
+Tested 3 dependencies for known issues, found 120 issues.
+
+Pro tip: use `--exclude-base-image-vulns` to exclude from display Docker base image vulnerabilities.
+
+Snyk found some vulnerabilities in your image applications (Snyk searches for these vulnerabilities by default). See https://snyk.co/app-vulns for more information.
+
+To remove these messages in the future, please run `snyk config set disableSuggestions=true`
+
+
+Tested 2 projects, 1 contained vulnerable paths.
