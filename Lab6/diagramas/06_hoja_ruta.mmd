@@ -1,0 +1,23 @@
+%%{init: {"theme": "base", "fontFamily": "Segoe UI, Arial, sans-serif", "themeVariables": {"fontFamily": "Segoe UI, Arial, sans-serif", "fontSize": "17px", "primaryColor": "#DDF5EA", "primaryTextColor": "#17261F", "primaryBorderColor": "#067A52", "secondaryColor": "#E3F2FB", "secondaryTextColor": "#17261F", "secondaryBorderColor": "#1F6FA0", "tertiaryColor": "#F2F7F4", "tertiaryTextColor": "#17261F", "tertiaryBorderColor": "#D5E3DC", "lineColor": "#5B6B63", "textColor": "#17261F", "mainBkg": "#DDF5EA", "nodeBorder": "#067A52", "clusterBkg": "#F7FAF8", "clusterBorder": "#D5E3DC", "edgeLabelBackground": "#FFFFFF", "actorBkg": "#067A52", "actorBorder": "#0B3D2B", "actorTextColor": "#FFFFFF", "actorLineColor": "#5B6B63", "signalColor": "#17261F", "signalTextColor": "#17261F", "labelBoxBkgColor": "#0B3D2B", "labelBoxBorderColor": "#0B3D2B", "labelTextColor": "#FFFFFF", "loopTextColor": "#0B3D2B", "noteBkgColor": "#FDF4DD", "noteBorderColor": "#C98D12", "noteTextColor": "#17261F", "activationBkgColor": "#DDF5EA", "activationBorderColor": "#067A52", "attributeBackgroundColorOdd": "#FFFFFF", "attributeBackgroundColorEven": "#F2F7F4"}, "gantt": {"fontSize": 19, "sectionFontSize": 19, "barHeight": 32, "barGap": 8, "topPadding": 70, "leftPadding": 300, "gridLineStartPadding": 45}}}%%
+gantt
+  title Hoja de ruta de cierre de brechas
+  dateFormat YYYY-MM-DD
+  axisFormat %d/%m
+  section Contención, 0 a 7 días
+  Aislar la base de datos y rotar credenciales :crit, a1, 2026-03-10, 3d
+  Inspección de ARP y seguridad de puertos :crit, a2, 2026-03-10, 7d
+  Notificaciones a AEPD, DGSFP y afectados :crit, a3, 2026-03-10, 3d
+  section Corrección, 8 a 30 días
+  TLS mutuo entre aplicación y base de datos :b1, 2026-03-17, 21d
+  Retirar la autorización por dirección IP :b2, 2026-03-17, 14d
+  Casos de uso de detección en el SIEM :b3, 2026-03-20, 21d
+  section Refuerzo, 31 a 90 días
+  Segmentación y cortafuegos interno :c1, 2026-04-10, 45d
+  Control de acceso a la red :c2, 2026-04-20, 45d
+  Cifrado por campo y enmascaramiento :c3, 2026-04-15, 50d
+  Auditoría de cambios con doble validación :c4, 2026-04-10, 30d
+  section Consolidación, 91 a 180 días
+  Prueba de intrusión de verificación :d1, 2026-06-10, 15d
+  Simulacro de recuperación y de crisis :d2, 2026-06-25, 10d
+  Auditoría interna y revisión por la dirección :d3, 2026-07-10, 30d
+  Declaración de aplicabilidad actualizada :milestone, d4, 2026-09-06, 0d

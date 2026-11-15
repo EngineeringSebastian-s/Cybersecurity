@@ -1,0 +1,21 @@
+%%{init: {"theme": "base", "fontFamily": "Segoe UI, Arial, sans-serif", "themeVariables": {"fontFamily": "Segoe UI, Arial, sans-serif", "fontSize": "17px", "primaryColor": "#DDF5EA", "primaryTextColor": "#17261F", "primaryBorderColor": "#067A52", "secondaryColor": "#E3F2FB", "secondaryTextColor": "#17261F", "secondaryBorderColor": "#1F6FA0", "tertiaryColor": "#F2F7F4", "tertiaryTextColor": "#17261F", "tertiaryBorderColor": "#D5E3DC", "lineColor": "#5B6B63", "textColor": "#17261F", "mainBkg": "#DDF5EA", "nodeBorder": "#067A52", "clusterBkg": "#F7FAF8", "clusterBorder": "#D5E3DC", "edgeLabelBackground": "#FFFFFF", "actorBkg": "#067A52", "actorBorder": "#0B3D2B", "actorTextColor": "#FFFFFF", "actorLineColor": "#5B6B63", "signalColor": "#17261F", "signalTextColor": "#17261F", "labelBoxBkgColor": "#0B3D2B", "labelBoxBorderColor": "#0B3D2B", "labelTextColor": "#FFFFFF", "loopTextColor": "#0B3D2B", "noteBkgColor": "#FDF4DD", "noteBorderColor": "#C98D12", "noteTextColor": "#17261F", "activationBkgColor": "#DDF5EA", "activationBorderColor": "#067A52", "attributeBackgroundColorOdd": "#FFFFFF", "attributeBackgroundColorEven": "#F2F7F4"}, "flowchart": {"wrappingWidth": 330}}}%%
+flowchart TB
+  D0["Detección de la violación de datos<br/>10 de marzo, hora 0"]:::alert
+  R0["Registro interno y evaluación del riesgo<br/>DPD, CISO y Asesoría Jurídica · art. 33.5 del RGPD"]:::core
+  D0 --> R0
+  R0 --> Q1{"¿Riesgo para<br/>las personas?"}:::device
+  R0 --> Q3{"¿Incidente grave<br/>según DORA?"}:::device
+  R0 --> A4["Otros avisos<br/>denuncia penal (art. 197 bis),<br/>INCIBE-CERT, encargados,<br/>reaseguradores y ciberseguro"]:::platform
+  R0 --> Q4{"¿Información<br/>privilegiada?"}:::device
+  Q1 -->|Sí| A1["AEPD<br/>máximo 72 horas<br/>art. 33 del RGPD"]:::dark
+  Q1 -->|No| A0["Documentar la decisión<br/>y conservar evidencias"]:::store
+  A1 --> Q2{"¿Riesgo<br/>alto?"}:::device
+  Q2 -->|Sí| A2["Afectados<br/>sin dilación indebida<br/>art. 34 del RGPD"]:::dark
+  Q3 -->|Sí| A3["DGSFP<br/>inicial: 4 h (tope 24 h)<br/>intermedio: 72 h<br/>final: un mes"]:::dark
+  Q4 -->|Sí| A6["Mercado<br/>art. 17 del Reglamento<br/>(UE) 596/2014"]:::platform
+  classDef core fill:#DDF5EA,stroke:#067A52,color:#17261F
+  classDef platform fill:#E3F2FB,stroke:#1F6FA0,color:#17261F
+  classDef store fill:#F2F7F4,stroke:#5B6B63,color:#17261F
+  classDef device fill:#FDF4DD,stroke:#C98D12,color:#17261F
+  classDef alert fill:#FBE4E4,stroke:#B83232,color:#17261F
+  classDef dark fill:#0B3D2B,stroke:#06281C,color:#FFFFFF

@@ -1,0 +1,24 @@
+================================================================================================
+3. INTEGRIDAD DEL PROPIO REGISTRO DE AUDITORÍA
+================================================================================================
+Verificación inicial -> Cadena íntegra: 6 registros verificados
+
+Intento de borrar las huellas con una cuenta normal:
+  DELETE FROM auditoria_polizas WHERE tique_cambio IS NULL;
+  BLOQUEADO: el registro de auditoría es de solo anexado
+
+Intento con privilegios de administrador (se elimina la protección y se borra el registro [4]):
+Verificación posterior -> CADENA ROTA en el registro [5]: falta o se alteró un registro anterior
+Contraste con la copia enviada al almacén inmutable: falta el registro [4]; se recupera de la copia.
+
+================================================================================================
+4. TRATAMIENTO: REVERSIÓN CON LOS VALORES ANTERIORES (TAMBIÉN AUDITADA)
+================================================================================================
+  Revertido VID-2025-000310 · beneficiario: Tercero no vinculado -> Ignacio Vera Cano   (tique INC-2026-0031)
+  Revertido VID-2025-000310 · iban_cobro: ES00 **** **** 6666 -> ES12 **** **** 7750   (tique INC-2026-0031)
+  Revertido VID-2024-000187 · capital_asegurado: 250000 -> 60000   (tique INC-2026-0031)
+
+Estado final de las pólizas afectadas:
+  VID-2024-000187 | beneficiario: Andrés Pastor Gil | cobro: ES91 **** **** 1332 | capital: 60000 | vigente
+  VID-2025-000310 | beneficiario: Ignacio Vera Cano | cobro: ES12 **** **** 7750 | capital: 120000 | vigente
+Registros de auditoría tras la reversión: 8 (las reversiones quedan registradas con su tique).

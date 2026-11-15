@@ -1,0 +1,26 @@
+%%{init: {"theme": "base", "fontFamily": "Segoe UI, Arial, sans-serif", "themeVariables": {"fontFamily": "Segoe UI, Arial, sans-serif", "fontSize": "16px", "primaryColor": "#DDF5EA", "primaryTextColor": "#17261F", "primaryBorderColor": "#067A52", "secondaryColor": "#E3F2FB", "secondaryTextColor": "#17261F", "secondaryBorderColor": "#1F6FA0", "tertiaryColor": "#F2F7F4", "tertiaryTextColor": "#17261F", "tertiaryBorderColor": "#D5E3DC", "lineColor": "#5B6B63", "textColor": "#17261F", "mainBkg": "#DDF5EA", "nodeBorder": "#067A52", "clusterBkg": "#F7FAF8", "clusterBorder": "#D5E3DC", "edgeLabelBackground": "#FFFFFF", "actorBkg": "#067A52", "actorBorder": "#0B3D2B", "actorTextColor": "#FFFFFF", "actorLineColor": "#5B6B63", "signalColor": "#17261F", "signalTextColor": "#17261F", "labelBoxBkgColor": "#0B3D2B", "labelBoxBorderColor": "#0B3D2B", "labelTextColor": "#FFFFFF", "loopTextColor": "#0B3D2B", "noteBkgColor": "#FDF4DD", "noteBorderColor": "#C98D12", "noteTextColor": "#17261F", "activationBkgColor": "#DDF5EA", "activationBorderColor": "#067A52", "attributeBackgroundColorOdd": "#FFFFFF", "attributeBackgroundColorEven": "#F2F7F4"}}}%%
+flowchart LR
+  subgraph EXT["Marco externo: lo que la organización debe o decide seguir"]
+    direction TB
+    L["LEYES · obligatorias en su ámbito<br/>RGPD · LOPDGDD · DORA · Código Penal<br/>Espejo colombiano: Ley 1581 · Ley 1273"]:::dark
+    N["NORMA · requisitos de un sistema de gestión<br/>ISO/IEC 27001:2022 · ISO 22301"]:::core
+    M["MARCOS · estructura para gestionar<br/>NIST CSF 2.0 · COBIT · ITIL"]:::platform
+    B["BUENAS PRÁCTICAS · cómo implementar<br/>ISO/IEC 27002 · CIS Controls · guías técnicas"]:::store
+    L --> N --> M --> B
+  end
+  subgraph INT["Normativa interna de la aseguradora"]
+    direction TB
+    P["POLÍTICA DE SEGURIDAD DE LA INFORMACIÓN<br/>aprobada por la Dirección y comunicada"]:::dark
+    NI["NORMAS INTERNAS<br/>red · acceso · cifrado · clasificación<br/>incidentes · continuidad"]:::core
+    PR["PROCEDIMIENTOS E INSTRUCTIVOS<br/>quién hace qué, cuándo y con qué herramienta"]:::platform
+    R["REGISTROS Y EVIDENCIAS<br/>lo que el auditor pide para comprobar el control"]:::device
+    P --> NI --> PR --> R
+    R -. "auditoría, revisión por la<br/>dirección y mejora continua" .-> P
+  end
+  EXT ==>|"se traduce en"| INT
+  classDef core fill:#DDF5EA,stroke:#067A52,color:#17261F
+  classDef platform fill:#E3F2FB,stroke:#1F6FA0,color:#17261F
+  classDef store fill:#F2F7F4,stroke:#5B6B63,color:#17261F
+  classDef device fill:#FDF4DD,stroke:#C98D12,color:#17261F
+  classDef alert fill:#FBE4E4,stroke:#B83232,color:#17261F
+  classDef dark fill:#0B3D2B,stroke:#06281C,color:#FFFFFF

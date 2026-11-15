@@ -1,0 +1,13 @@
+# Resumen ejecutivo
+
+El 10 de marzo el equipo de TI de Mapfre Seguros España detectó accesos no autorizados a la base de datos de clientes de seguros de vida. Los atacantes usaron dos técnicas combinadas, el envenenamiento ARP y la suplantación de direcciones IP, para interceptar el tráfico entre la aplicación y la base de datos y para entrar en ella haciéndose pasar por un servidor de confianza. Se expusieron nombres, direcciones, documentos de identidad y detalles de pólizas. Hubo fraude, daño reputacional e interrupción de la operación.
+
+Este informe responde las trece actividades de la guía con la perspectiva de un auditor. Parte del contexto de la empresa, identifica diez activos críticos y los clasifica, deduce nueve vulnerabilidades, valora diez riesgos y propone dieciséis controles, cada uno con la evidencia que lo demuestra y un indicador que lo mide.
+
+El análisis concluye que el ataque explotó decisiones de diseño de la red interna y no fallos de software: una red sin segmentar ni proteger en capa 2, tráfico sin cifrar y acceso autorizado por dirección IP. Cualquiera de las tres barreras habría bastado para detenerlo. El riesgo no figuraba en ningún registro ni tenía responsable, y por eso el problema de fondo es de gestión.
+
+El modelo normativo distingue ley, norma, marco y buena práctica. Como ley aplican el RGPD, la LOPDGDD, el Reglamento DORA y el Código Penal, con su equivalente colombiano en las Leyes 1581 de 2012 y 1273 de 2009. La norma es ISO/IEC 27001:2022; los marcos, NIST CSF 2.0, COBIT e ITIL. La compañía debe notificar al supervisor de seguros en 4 horas desde que clasifica el incidente como grave, a la Agencia Española de Protección de Datos en 72 horas y a los clientes sin dilación indebida.
+
+El impacto financiero se estima en 8,1 millones de euros en el escenario base, con un rango de 1,5 a 35,4 millones según el número de afectados. La mitad corresponde a la multa, a la pérdida de clientes y al refuerzo técnico que se había aplazado. Dos precedentes del mismo sector marcan la diferencia que hacen las medidas previas y la reacción: el archivo sin sanción del ataque que la propia Mapfre sufrió en 2020 y la multa de 5 millones de euros a Generali.
+
+El plan propuesto cierra las brechas en cuatro horizontes hasta los 180 días, incluye un plan de monitoreo con ocho casos de uso, un plan de recuperación ante desastres con tiempos objetivo por proceso y un plan de comunicación para las primeras 72 horas. Reduce en un 66 % la puntuación total de riesgo. La actividad 13 se resuelve con una demostración ejecutada de auditoría de registros, que detecta tres cambios indebidos en pólizas sin fiarse de la dirección IP y delata la manipulación del propio registro.

@@ -1,0 +1,62 @@
+
+================================================================================================
+1. CAMBIOS DEL DÍA 9 Y DE LA MADRUGADA DEL 10 DE MARZO
+================================================================================================
+Registro de auditoría completo (una fila por cada cambio en un campo crítico):
+[1] 2026-03-09 10:14:07 | app_polizas | IP 10.10.20.15 | core-polizas | CHG-2026-0412
+     VID-2024-000245 · beneficiario: Marta Solís Rey -> Lucía Herrero Vidal   hash 43e2193a9ecc…
+[2] 2026-03-09 16:42:31 | app_polizas | IP 10.10.20.15 | core-polizas | CHG-2026-0415
+     VID-2025-000402 · iban_cobro: ES45 **** **** 2206 -> ES45 **** **** 9914   hash d394b90566c6…
+[3] 2026-03-10 02:47:19 | app_polizas | IP 10.10.20.15 | cliente-sql | (sin tique)
+     VID-2025-000310 · beneficiario: Ignacio Vera Cano -> Tercero no vinculado   hash 00413c182e8f…
+[4] 2026-03-10 02:48:02 | app_polizas | IP 10.10.20.15 | cliente-sql | (sin tique)
+     VID-2025-000310 · iban_cobro: ES12 **** **** 7750 -> ES00 **** **** 6666   hash 27a2f0518484…
+[5] 2026-03-10 02:49:40 | app_polizas | IP 10.10.20.15 | cliente-sql | (sin tique)
+     VID-2024-000187 · capital_asegurado: 60000 -> 250000   hash c68a21e05092…
+[6] 2026-03-10 09:05:12 | app_polizas | IP 10.10.20.15 | core-polizas | CHG-2026-0420
+     VID-2024-000245 · estado: vigente -> suspendida   hash 5415da4f8baa…
+
+================================================================================================
+2. CONSULTAS DE AUDITORÍA: ¿QUÉ CAMBIOS NO ESTÁN AUTORIZADOS?
+================================================================================================
+Regla A. Cambios en campos críticos sin tique de cambio aprobado:
+  SELECT * FROM auditoria_polizas WHERE tique_cambio IS NULL;
+[3] 2026-03-10 02:47:19 | app_polizas | IP 10.10.20.15 | cliente-sql | (sin tique)
+     VID-2025-000310 · beneficiario: Ignacio Vera Cano -> Tercero no vinculado   hash 00413c182e8f…
+[4] 2026-03-10 02:48:02 | app_polizas | IP 10.10.20.15 | cliente-sql | (sin tique)
+     VID-2025-000310 · iban_cobro: ES12 **** **** 7750 -> ES00 **** **** 6666   hash 27a2f0518484…
+[5] 2026-03-10 02:49:40 | app_polizas | IP 10.10.20.15 | cliente-sql | (sin tique)
+     VID-2024-000187 · capital_asegurado: 60000 -> 250000   hash c68a21e05092…
+
+Regla B. Cambios fuera del horario de operación (08:00 a 20:00) o hechos sin la aplicación:
+  SELECT ... WHERE time(fecha_hora) NOT BETWEEN '08:00:00' AND '20:00:00' OR aplicacion <> 'core-polizas';
+  HALLAZGO: 3 cambios en 2 pólizas el 2026-03-10 entre las 02:47:19 y las 02:49:40
+            usuario app_polizas, IP 10.10.20.15, aplicación cliente-sql
+
+Lectura del auditor: la IP coincide con la del servidor de aplicaciones porque fue suplantada, así que
+la dirección de origen no sirve como prueba. Delatan el cambio la falta de tique, la hora y el cliente.
+
+================================================================================================
+3. INTEGRIDAD DEL PROPIO REGISTRO DE AUDITORÍA
+================================================================================================
+Verificación inicial -> Cadena íntegra: 6 registros verificados
+
+Intento de borrar las huellas con una cuenta normal:
+  DELETE FROM auditoria_polizas WHERE tique_cambio IS NULL;
+  BLOQUEADO: el registro de auditoría es de solo anexado
+
+Intento con privilegios de administrador (se elimina la protección y se borra el registro [4]):
+Verificación posterior -> CADENA ROTA en el registro [5]: falta o se alteró un registro anterior
+Contraste con la copia enviada al almacén inmutable: falta el registro [4]; se recupera de la copia.
+
+================================================================================================
+4. TRATAMIENTO: REVERSIÓN CON LOS VALORES ANTERIORES (TAMBIÉN AUDITADA)
+================================================================================================
+  Revertido VID-2025-000310 · beneficiario: Tercero no vinculado -> Ignacio Vera Cano   (tique INC-2026-0031)
+  Revertido VID-2025-000310 · iban_cobro: ES00 **** **** 6666 -> ES12 **** **** 7750   (tique INC-2026-0031)
+  Revertido VID-2024-000187 · capital_asegurado: 250000 -> 60000   (tique INC-2026-0031)
+
+Estado final de las pólizas afectadas:
+  VID-2024-000187 | beneficiario: Andrés Pastor Gil | cobro: ES91 **** **** 1332 | capital: 60000 | vigente
+  VID-2025-000310 | beneficiario: Ignacio Vera Cano | cobro: ES12 **** **** 7750 | capital: 120000 | vigente
+Registros de auditoría tras la reversión: 8 (las reversiones quedan registradas con su tique).
