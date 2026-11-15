@@ -113,4 +113,4 @@ La declaración de aplicabilidad es el documento que indica qué controles del A
 
 *Tabla [[t:soa]].* Resumen de la declaración de aplicabilidad para el servicio de pólizas de vida, con las inclusiones y las exclusiones justificadas.
 
-Las exclusiones no son descuidos. Cada una remite al alcance definido en el apartado 2.2 y dejaría de valer si ese alcance cambiara.
+Cada exclusión remite al alcance definido en el apartado 2.2 y dejaría de valer si ese alcance cambiara.

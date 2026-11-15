@@ -41,7 +41,7 @@ Los registros de auditoría (A6) tienen disponibilidad media, ya que la operaci�
 
 ## 5.3 De la clasificación al manejo
 
-Clasificar no sirve de nada si no cambia la forma de tratar el activo. El material del curso incluye el esquema de cuatro niveles de una gran empresa española, que liga cada nivel a la valoración de la confidencialidad y pide reflejar la etiqueta en el propio documento (Grupo Renfe, s. f.). Propongo para Mapfre un esquema equivalente, resumido en la Tabla [[t:etiquetas]], que debería quedar recogido en una norma interna de clasificación conforme a los controles 5.12 y 5.13 del Anexo A (ISO/IEC, 2022b).
+La clasificación tiene que cambiar la forma de tratar el activo. El material del curso incluye el esquema de cuatro niveles de una gran empresa española, que liga cada nivel a la valoración de la confidencialidad y pide reflejar la etiqueta en el propio documento (Grupo Renfe, s. f.). Propongo para Mapfre un esquema equivalente, resumido en la Tabla [[t:etiquetas]], que debería quedar recogido en una norma interna de clasificación conforme a los controles 5.12 y 5.13 del Anexo A (ISO/IEC, 2022b).
 
 | Etiqueta | Quién accede | Cómo se protege |
 |---|---|---|

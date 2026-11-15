@@ -109,3 +109,5 @@ Convenciones al redactar: tablas y figuras con clave `[[t:clave]]` y `[[f:clave]
 
 - 13/11/2026: plan aprobado; F0 cerrada.
 - 13/11/2026 (madrugada): F1 y F2 cerradas (3 clases transcritas, 31 documentos a texto). F3 cerrada: notas, `instrucciones_clase.md` y `ESQUEMA.md`. Siguiente: terminar F4 (dos verificaciones pendientes), luego F5 diagramas y F6 redacción.
+
+- 15/11/2026: ciclo 3 (`validacion/ciclo_3_factcheck.md`): retirada la cifra no verificable de clientes de Mapfre, ajustados ingresos y artículos de la multa a Generali; guion de la presentación reescrito con criterios de HumanScope (769 palabras); informe y presentación regenerados.

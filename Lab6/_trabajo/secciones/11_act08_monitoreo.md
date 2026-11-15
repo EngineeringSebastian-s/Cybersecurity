@@ -38,7 +38,7 @@ El SIEM es la pieza que une las demás. El video visto en clase advierte que la 
 
 ## 11.4 Casos de uso de detección
 
-Un SIEM sin casos de uso es un almacén de registros caro. La Tabla [[t:casosuso]] define los ocho que cubren el ataque del caso, con la condición que dispara la alerta, su severidad y la primera acción.
+Sin casos de uso, un SIEM solo almacena registros. La Tabla [[t:casosuso]] define los ocho que cubren el ataque del caso, con la condición que dispara la alerta, su severidad y la primera acción.
 
 | Caso de uso | Fuente | Condición de alerta | Severidad | Respuesta inicial |
 |---|---|---|---|---|

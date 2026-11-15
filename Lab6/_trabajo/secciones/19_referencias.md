@@ -19,8 +19,7 @@
 - ISO/IEC. (2022c). *ISO/IEC 27005:2022. Information security, cybersecurity and privacy protection: Guidance on managing information security risks*. International Organization for Standardization.
 - MAPFRE. (2026a). *Informe consolidado 2025*. https://www.mapfre.com/media/2026/03/Informe-Consolidado-ESP.pdf
 - MAPFRE. (2026b). *Informe sobre la situación financiera y de solvencia del Grupo MAPFRE 2025*. https://www.mapfre.com/media/2026/05/2025-sfcr-grupo-mapfre.pdf
-- MAPFRE. (2026c). *Presentación a la Junta General de Accionistas 2026*. https://www.mapfre.com/media/2026/03/presentacion-inchausti-jga-2026.pdf
-- MAPFRE. (2026d). *Resultados 2025*. https://www.mapfre.com/media/2026/02/RESULTADOS-2025-ESP.pdf
+- MAPFRE. (2026c). *Resultados 2025*. https://www.mapfre.com/media/2026/02/RESULTADOS-2025-ESP.pdf
 - Merino Bada, C. (s. f.). *Análisis de riesgos* [Diapositivas]. Universidad Internacional de La Rioja. Material del Diplomado en Ciberseguridad.
 - MITRE. (s. f.). *Adversary-in-the-Middle: ARP cache poisoning (T1557.002)*. MITRE ATT&CK. https://attack.mitre.org/techniques/T1557/002/
 - National Institute of Standards and Technology. (2024). *The NIST Cybersecurity Framework (CSF) 2.0* (NIST CSWP 29). https://doi.org/10.6028/NIST.CSWP.29

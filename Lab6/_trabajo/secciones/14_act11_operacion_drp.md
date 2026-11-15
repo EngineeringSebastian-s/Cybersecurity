@@ -81,7 +81,7 @@ La quinta fase, la validación, es la que este caso hace imprescindible. Reabrir
 
 ### Pruebas y mantenimiento
 
-Un plan que no se prueba es una hipótesis. Propongo una restauración de copias cada trimestre, con medición del tiempo real; un simulacro de mesa cada semestre, que el curso incluye en la fase de anticipación (Ochoa Agudelo, 2026e), y una prueba de conmutación al centro de respaldo una vez al año. El plan se revisa tras cada prueba, tras cada incidente y cuando cambia la arquitectura. DORA respalda esta exigencia: sus artículos 11 y 12 obligan a tener una política de continuidad de las TIC, planes de respuesta y recuperación probados de forma periódica y políticas de copia de seguridad.
+Propongo una restauración de copias cada trimestre, con medición del tiempo real; un simulacro de mesa cada semestre, que el curso incluye en la fase de anticipación (Ochoa Agudelo, 2026e), y una prueba de conmutación al centro de respaldo una vez al año. El plan se revisa tras cada prueba, tras cada incidente y cuando cambia la arquitectura. DORA respalda esta exigencia: sus artículos 11 y 12 obligan a tener una política de continuidad de las TIC, planes de respuesta y recuperación probados de forma periódica y políticas de copia de seguridad.
 
 ### Evidencias
 

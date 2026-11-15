@@ -50,9 +50,9 @@ La empresa del caso existe y publica sus cifras, de modo que las respuestas usan
 
 | Pregunta del docente | Respuesta para Mapfre Seguros España | Consecuencia para la seguridad |
 |--------------|------------------------------------------------------|---------------------------------|
-| ¿Qué hace la empresa? | Aseguradora y reaseguradora multinacional de origen español. El caso se centra en su negocio de seguros de vida en España. El grupo opera en 37 países, ingresó 34.501 millones de euros en 2025, superó por primera vez los 1.000 millones de beneficio y emplea a unas 30.000 personas (MAPFRE, 2026d, 2026b, 2026a). | Es una entidad financiera supervisada. Sus procesos de emisión, cobro y pago de prestaciones no admiten paradas largas y cualquier incidente tiene lectura regulatoria. |
+| ¿Qué hace la empresa? | Aseguradora y reaseguradora multinacional de origen español. El caso se centra en su negocio de seguros de vida en España. El grupo opera en 37 países, ingresó unos 34.500 millones de euros en 2025, superó por primera vez los 1.000 millones de beneficio y emplea a unas 30.000 personas (MAPFRE, 2026c, 2026b, 2026a). | Es una entidad financiera supervisada. Sus procesos de emisión, cobro y pago de prestaciones no admiten paradas largas y cualquier incidente tiene lectura regulatoria. |
 | ¿Qué información maneja? | Datos identificativos y de contacto, documentos de identidad, datos bancarios de cobro y el detalle de cada póliza: capitales, beneficiarios y vigencias. En el seguro de vida la suscripción suele incluir declaraciones de salud (supuesto S6). | Trata datos personales a gran escala y posiblemente categorías especiales. Eso obliga a medidas reforzadas y a evaluación de impacto (arts. 9, 32 y 35 del RGPD). |
-| ¿Quiénes son sus clientes? | Personas y familias que contratan como tomadores, asegurados o beneficiarios, y empresas con pólizas colectivas. El grupo declara más de 50 millones de clientes en el mundo (MAPFRE, 2026c). | Los perjudicados por una filtración son personas físicas con derechos propios. El fraude y la suplantación recaen sobre ellas. |
+| ¿Quiénes son sus clientes? | Personas y familias que contratan como tomadores, asegurados o beneficiarios, y empresas con pólizas colectivas. | Los perjudicados por una filtración son personas físicas con derechos propios. El fraude y la suplantación recaen sobre ellas. |
 | ¿Qué sistemas utiliza? | Un núcleo asegurador que gestiona pólizas, cobros y siniestros; la base de datos de clientes; el portal y la aplicación móvil; interfaces con mediadores; un centro de proceso de datos con su red interna, y un Centro de Control General que vigila los sistemas (AEPD, 2021). La arquitectura detallada es un supuesto. | La base de datos y la red que la conecta con las aplicaciones concentran el valor. El ataque del caso ocurrió justo en ese tramo. |
 | ¿Qué leyes debe cumplir? | Protección de datos: RGPD y LOPDGDD, bajo la AEPD. Resiliencia operativa digital: Reglamento DORA, bajo la Dirección General de Seguros y Fondos de Pensiones. Seguridad de redes: Real Decreto-ley 12/2018 y Real Decreto 43/2021 si está designada operador de servicios esenciales. Además, el Código Penal y la normativa de abuso de mercado por ser cotizada. | Los plazos de notificación van de 4 a 72 horas y las multas pueden llegar al 4 % del volumen de negocio anual. |
 | ¿Qué proveedores tiene? | Proveedores de tecnología y de nube, reaseguradores, una red de mediadores y agentes, proveedores asistenciales y auditores. En el incidente real de 2020 el acceso inicial se hizo con las credenciales de una colaboradora externa (AEPD, 2021). | El riesgo de terceros es parte del problema: contratos de encargado (art. 28 del RGPD), gestión de proveedores TIC (arts. 28 a 30 de DORA) y controles 5.19 a 5.22 del Anexo A. |
@@ -207,7 +207,7 @@ Los registros de auditoría (A6) tienen disponibilidad media, ya que la operaci�
 
 ## 5.3 De la clasificación al manejo
 
-Clasificar no sirve de nada si no cambia la forma de tratar el activo. El material del curso incluye el esquema de cuatro niveles de una gran empresa española, que liga cada nivel a la valoración de la confidencialidad y pide reflejar la etiqueta en el propio documento (Grupo Renfe, s. f.). Propongo para Mapfre un esquema equivalente, resumido en la Tabla 7, que debería quedar recogido en una norma interna de clasificación conforme a los controles 5.12 y 5.13 del Anexo A (ISO/IEC, 2022b).
+La clasificación tiene que cambiar la forma de tratar el activo. El material del curso incluye el esquema de cuatro niveles de una gran empresa española, que liga cada nivel a la valoración de la confidencialidad y pide reflejar la etiqueta en el propio documento (Grupo Renfe, s. f.). Propongo para Mapfre un esquema equivalente, resumido en la Tabla 7, que debería quedar recogido en una norma interna de clasificación conforme a los controles 5.12 y 5.13 del Anexo A (ISO/IEC, 2022b).
 
 | Etiqueta | Quién accede | Cómo se protege |
 |--------------|--------------------------|------------------------------------------------------------|
@@ -588,7 +588,7 @@ La declaración de aplicabilidad es el documento que indica qué controles del A
 
 *Tabla 20.* Resumen de la declaración de aplicabilidad para el servicio de pólizas de vida, con las inclusiones y las exclusiones justificadas.
 
-Las exclusiones no son descuidos. Cada una remite al alcance definido en el apartado 2.2 y dejaría de valer si ese alcance cambiara.
+Cada exclusión remite al alcance definido en el apartado 2.2 y dejaría de valer si ese alcance cambiara.
 
 # 10. Actividad 7: cierre de brechas de seguridad
 
@@ -679,7 +679,7 @@ El SIEM es la pieza que une las demás. El video visto en clase advierte que la 
 
 ## 11.4 Casos de uso de detección
 
-Un SIEM sin casos de uso es un almacén de registros caro. La Tabla 23 define los ocho que cubren el ataque del caso, con la condición que dispara la alerta, su severidad y la primera acción.
+Sin casos de uso, un SIEM solo almacena registros. La Tabla 23 define los ocho que cubren el ataque del caso, con la condición que dispara la alerta, su severidad y la primera acción.
 
 | Caso de uso | Fuente | Condición de alerta | Severidad | Respuesta inicial |
 |-------------------------|--------------|-------------------------------|-------------|-----------------|
@@ -767,17 +767,17 @@ El refuerzo técnico urgente merece una observación. Es, en esencia, el plan de
 
 ## 12.5 Multas
 
-El RGPD fija dos techos. Las infracciones de las obligaciones del responsable, entre ellas las medidas de seguridad del artículo 32 y las notificaciones de los artículos 33 y 34, pueden sancionarse con hasta 10 millones de euros o el 2 % del volumen de negocio anual mundial, la cifra que sea mayor (artículo 83.4). Las infracciones de los principios del artículo 5, incluido el de integridad y confidencialidad, llegan a 20 millones o el 4 % (artículo 83.5). Para un grupo que ingresó 34.501 millones de euros en 2025 (MAPFRE, 2026d), esos porcentajes equivalen a 690 y 1.380 millones. Son techos teóricos. Las sanciones reales en España quedan muy por debajo, como muestra la Tabla 26.
+El RGPD fija dos techos. Las infracciones de las obligaciones del responsable, entre ellas las medidas de seguridad del artículo 32 y las notificaciones de los artículos 33 y 34, pueden sancionarse con hasta 10 millones de euros o el 2 % del volumen de negocio anual mundial, la cifra que sea mayor (artículo 83.4). Las infracciones de los principios del artículo 5, incluido el de integridad y confidencialidad, llegan a 20 millones o el 4 % (artículo 83.5). Para un grupo que ingresó unos 34.500 millones de euros en 2025 (MAPFRE, 2026c), esos porcentajes equivalen a unos 690 y 1.380 millones. Son techos teóricos. Las sanciones reales en España quedan muy por debajo, como muestra la Tabla 26.
 
 | Referencia | Hechos | Resultado |
-|--------------|--------------------------------|------------------------------------------------------|
+|--------------|--------------------------|------------------------------------------------------------|
 | Techo legal del RGPD | Infracción del artículo 5 o de los artículos 25, 32, 33 y 34 | Hasta 20 millones de euros o el 4 % del volumen de negocio; hasta 10 millones o el 2 % |
-| Generali España | Ciberataque de 2022 con filtración de datos de antiguos clientes | Multa de 5 millones de euros, reducida a 4 millones por pronto pago, por los artículos 5.1.f, 25, 32 y 35 del RGPD (Europa Press, 2025) |
+| Generali España | Ciberataque de 2022 con filtración de datos de antiguos clientes | Multa de 5 millones de euros, reducida a 4 millones por pronto pago, por infringir entre otros el artículo 5.1.f del RGPD, que exige una seguridad adecuada de los datos (Europa Press, 2025). La compañía la ha recurrido |
 | Mapfre España | Ataque con programa de secuestro en agosto de 2020 | Archivo de las actuaciones sin sanción: la compañía tenía medidas razonables y reaccionó con diligencia (AEPD, 2021) |
 
 *Tabla 26.* Techo legal y dos precedentes españoles en el sector asegurador.
 
-Los dos precedentes son del mismo sector y tienen resultados opuestos. La diferencia no está en la gravedad del ataque. Está en lo que la autoridad encontró al investigar: medidas previas adecuadas, detección rápida, notificación en plazo y transparencia en un caso; deficiencias en la seguridad y en la evaluación de impacto en el otro. Por eso el modelo usa 0, 1,5 y 5 millones como multa de cada escenario. La ley orgánica española añade criterios para graduar la sanción, como el carácter continuado de la infracción o la vinculación de la actividad del infractor con el tratamiento de datos (artículo 76 de la LOPDGDD), y este último pesa en contra de una aseguradora, cuyo negocio consiste en tratar datos personales.
+Los dos precedentes son del mismo sector y tienen resultados opuestos. La diferencia no está en la gravedad del ataque. Está en lo que la autoridad encontró al investigar: medidas previas adecuadas, detección rápida, notificación en plazo y transparencia en un caso; deficiencias en la seguridad de los datos en el otro. Por eso el modelo usa 0, 1,5 y 5 millones como multa de cada escenario. La ley orgánica española añade criterios para graduar la sanción, como el carácter continuado de la infracción o la vinculación de la actividad del infractor con el tratamiento de datos (artículo 76 de la LOPDGDD), y este último pesa en contra de una aseguradora, cuyo negocio consiste en tratar datos personales.
 
 Si la base de datos fuera de una filial colombiana, la Superintendencia de Industria y Comercio podría imponer multas de hasta 2.000 salarios mínimos mensuales, sucesivas mientras persista el incumplimiento, además de suspender las actividades de tratamiento hasta por seis meses (artículo 23 de la Ley 1581 de 2012).
 
@@ -955,7 +955,7 @@ La quinta fase, la validación, es la que este caso hace imprescindible. Reabrir
 
 ### Pruebas y mantenimiento
 
-Un plan que no se prueba es una hipótesis. Propongo una restauración de copias cada trimestre, con medición del tiempo real; un simulacro de mesa cada semestre, que el curso incluye en la fase de anticipación (Ochoa Agudelo, 2026e), y una prueba de conmutación al centro de respaldo una vez al año. El plan se revisa tras cada prueba, tras cada incidente y cuando cambia la arquitectura. DORA respalda esta exigencia: sus artículos 11 y 12 obligan a tener una política de continuidad de las TIC, planes de respuesta y recuperación probados de forma periódica y políticas de copia de seguridad.
+Propongo una restauración de copias cada trimestre, con medición del tiempo real; un simulacro de mesa cada semestre, que el curso incluye en la fase de anticipación (Ochoa Agudelo, 2026e), y una prueba de conmutación al centro de respaldo una vez al año. El plan se revisa tras cada prueba, tras cada incidente y cuando cambia la arquitectura. DORA respalda esta exigencia: sus artículos 11 y 12 obligan a tener una política de continuidad de las TIC, planes de respuesta y recuperación probados de forma periódica y políticas de copia de seguridad.
 
 ### Evidencias
 
@@ -1225,9 +1225,7 @@ De este trabajo me llevo dos hábitos. El primero es no meter en el mismo saco l
 
 - MAPFRE. (2026b). *Informe sobre la situación financiera y de solvencia del Grupo MAPFRE 2025*. https://www.mapfre.com/media/2026/05/2025-sfcr-grupo-mapfre.pdf
 
-- MAPFRE. (2026c). *Presentación a la Junta General de Accionistas 2026*. https://www.mapfre.com/media/2026/03/presentacion-inchausti-jga-2026.pdf
-
-- MAPFRE. (2026d). *Resultados 2025*. https://www.mapfre.com/media/2026/02/RESULTADOS-2025-ESP.pdf
+- MAPFRE. (2026c). *Resultados 2025*. https://www.mapfre.com/media/2026/02/RESULTADOS-2025-ESP.pdf
 
 - Merino Bada, C. (s. f.). *Análisis de riesgos* [Diapositivas]. Universidad Internacional de La Rioja. Material del Diplomado en Ciberseguridad.
 
