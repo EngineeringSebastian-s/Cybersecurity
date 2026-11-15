@@ -12,3 +12,8 @@ CLAUDE.md
 
 # Archivos temporales de Office (bloqueo de Word)
 ~$*
+
+# Material de clase pesado e intermedios de transcripción (solo local)
+/material/*.mp4
+/material/_audio/
+/.claude
